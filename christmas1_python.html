@@ -51,24 +51,24 @@
     <hr />
 
     <h2>問題文</h2>
-    <p>サンタであるあなたは、\(M\) 円持っています。</p>
-    <p>プレゼントを配るべき \(N\) 人の子供がいて、それぞれ \(A_i\) 円のプレゼントを欲しがってます。</p>
+    <p>サンタであるあなたは、<var>M</var> 円持っています。</p>
+    <p>プレゼントを配るべき <var>N</var> 人の子供がいて、それぞれ <var>A_i</var> 円のプレゼントを欲しがってます。</p>
     <p>できるだけ多くの子供にプレゼントをあげたいのですが、はたして最大何人の子供にあげられるでしょうか？</p>
 
     <h2>制約</h2>
     <ul>
-      <li>\(1 ≤ M ≤ 10^9\)</li>
-      <li>\(1 ≤ N ≤ 100000\)</li>
-      <li>\(1 ≤ A_i ≤ 10^9\)</li>
+      <li><var>1 ≤ M ≤ 10^9</var></li>
+      <li><var>1 ≤ N ≤ 100000</var></li>
+      <li><var>1 ≤ A_i ≤ 10^9</var></li>
       <li>入力される値はすべて整数である。</li>
     </ul>
     <hr />
 
     <h2>入力</h2>
     記入例：入力は以下の形式で標準入力から与えられる。
-    <div class="io_format"><var>\(M\)</var>
-<var>\(N\)</var>
-<var>\(A_1\)</var> <var>\(A_2\)</var> <var>\(\cdots\)</var> <var>\(A_N\)</var>
+    <div class="io_format"><var>M</var>
+<var>N</var>
+<var>A_1</var> <var>A_2</var> <var>\cdots</var> <var>A_N</var>
 </div>
 
     <h2>出力</h2>
@@ -163,6 +163,11 @@ editor.setOption("extraKeys", {
     "Ctrl-Enter": function(cm) {
         OnBrowserJudge.runButtonPressed()
     }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
 })
 
 MicroModal.init()
