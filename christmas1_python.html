@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="micromodal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- ↓ 書き換え不可 -->
     <script src="onbrowserjudge.js"></script>
-    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
     <!-- ↑ 書き換え不可 -->
     <script>
       // ↓ 必ず定義
       OnBrowserJudge.getProgram = () => editor.getValue()
       // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
 
       OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
       OnBrowserJudge.dict.running = "■停止"
@@ -147,8 +149,8 @@
     <script>
 const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
     lineNumbers: true,
-    mode: "ruby",
-    indentUnit: 2
+    mode: "python",
+    indentUnit: 4
 })
 editor.setOption("extraKeys", {
     "Tab": function(cm) {
