@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>お年玉 [Python]</title>
+  </head>
+
+  <body>
+    <h1>お年玉 [Python]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>榎本くんには A, B, C, D, E, F, G の 4 人の親戚がいて、1 月 1 日～ 7 日に挨拶に行けば、お年玉をもらえます。</p>
+    <p>この親戚たちは変わり者たちで、訪れる日によって お年玉の額が変わります。A さんのところに <var>i</var> 日に訪れた場合の額を <var>A_i</var> で表します。（B～G さんも同様。）</p>
+    <p>当然、同じ人から 2 回以上お年玉をもらうことはできません。また、1 つの日に訪れることができるのは 1 人のところだけです。</p>
+    <p>榎本くんは、最大でいくらお年玉をもらえるでしょうか？</p>
+
+    <h2>制約</h2>
+    <ul>
+      <li><var>0 ≤ A_i ≤ 10^8 (1 ≤ i ≤ 7)</var></li>
+      <li>B～G も同様。</li>
+    </ul>
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>A_1</var> <var>A_2</var> <var>A_3</var> <var>A_4</var> <var>A_5</var> <var>A_6</var> <var>A_7</var>
+<var>B_1</var> <var>B_2</var> <var>B_3</var> <var>B_4</var> <var>B_5</var> <var>B_6</var> <var>B_7</var>
+<var>C_1</var> <var>C_2</var> <var>C_3</var> <var>C_4</var> <var>C_5</var> <var>C_6</var> <var>C_7</var>
+<var>D_1</var> <var>D_2</var> <var>D_3</var> <var>D_4</var> <var>D_5</var> <var>D_6</var> <var>D_7</var>
+<var>E_1</var> <var>E_2</var> <var>E_3</var> <var>E_4</var> <var>E_5</var> <var>E_6</var> <var>E_7</var>
+<var>F_1</var> <var>F_2</var> <var>F_3</var> <var>F_4</var> <var>F_5</var> <var>F_6</var> <var>F_7</var>
+<var>G_1</var> <var>G_2</var> <var>G_3</var> <var>G_4</var> <var>G_5</var> <var>G_6</var> <var>G_7</var></div>
+
+    <h2>出力</h2>
+    <p>もらうことができるお年玉の合計額として考えられる最大の値を 1 行で出力せよ。</p>
+    <hr />
+
+    <h2>小課題</h2>
+    <p>親戚を A, B, C の 3 人、期間を 1 日～ 3 日に限定する。</p>
+    <p>入力自体は前述の通り 7 × 7 の形で与えられるが、左上の 3 × 3 以外はすべて 0 で与えられる。</p>
+
+    <h2>入力例1（小課題）</h2>
+    <pre id="小課題sample1_input" class="sample">10000 9000 8000 0 0 0 0
+5000 3000 1000 0 0 0 0
+1000 1500 2000 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0</pre>
+
+    <h2>出力例1</h2>
+    <pre id="小課題sample1_output" class="sample">16000</pre>
+    <p>1 日に B さん(5000円)、2 日に A さん(9000円)、3 日に C さん(2000円)のところを訪れれば、5000 + 9000 + 2000 = 16000 円手に入ります。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">15000 6500 9500 11500 6500 3500 14000
+11500 11000 6000 13500 2500 6000 14000
+10000 5500 13500 8500 4500 12000 14000
+13500 5500 11500 7500 10500 9500 14500
+9500 5500 10500 14500 8000 5500 0
+500 11000 9500 5000 7000 14500 6000
+12500 1500 5000 3500 9500 10000 4000</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">92500</pre>
+    <p>1 日に A さん(15000円)、2 日に B さん(11000円)、3 日に C さん(13500円)、4 日に E さん(14500円)、5 日に G さん(9500円)、6 日に F さん(14500円)、7 日に D さん(14500円)のところを訪れれば、92500 円手に入ります。</p>
+    <hr />
+    <div class="testcase">
+<pre id="小課題testcase1_input">12500 8000 5500 0 0 0 0
+11500 7000 7000 0 0 0 0
+13500 12000 500 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0</pre>
+<pre id="小課題testcase1_output">31500</pre>
+<pre id="小課題testcase2_input">27013731 46446871 12101281 0 0 0 0
+10094871 36255587 95317171 0 0 0 0
+53873854 47083427 10551299 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0</pre>
+<pre id="小課題testcase2_output">195637896</pre>
+<pre id="testcase3_input">7155500 7801500 5763500 1561500 3811500 9576000 4014000
+8977000 2936000 1621500 8186500 9114500 1230500 1822000
+3205500 7205000 8416500 736000 6882500 5107500 22500
+1204000 3788500 7807000 6602500 2763500 7988000 5211000
+425000 8284000 276000 5244000 3883500 9020500 3145000
+4595000 887500 4553500 324000 5504500 1726000 3577000
+1532000 3975500 7475500 2182500 3209000 8234500 8715000</pre>
+<pre id="testcase3_output">56075500</pre>
+<pre id="testcase4_input">8574809 32461476 63368824 49775496 7057415 15613983 90729716
+22413797 38467415 45469091 1509978 12113018 43238866 76545848
+80998837 15737966 37979172 82488784 33709922 56764466 51748850
+13730968 18912451 48220885 46977363 3916990 45870540 36897004
+9731856 12847813 54261664 88376410 76691631 92360943 22841366
+78829385 48277669 5255712 21820461 1941390 16839392 48648871
+43893341 10069354 90485959 77514567 56624555 64480596 39488060</pre>
+<pre id="testcase4_output">503563430</pre>
+        
+    </div>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button> 
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">💴</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
