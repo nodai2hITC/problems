@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>節分追加問題 [Python]</title>
+  </head>
+
+  <body>
+    <h1>節分追加問題 [Python]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>先程の問題には「与えられる年・月・日は、（中略）有効な年・月・日である。」との制約がありました。</p>
+    <p>年（西暦）<var>Y</var>、月 <var>M</var> 、日 <var>D</var> の 3 つの整数が与えられるので、それが「有効な年・月・日」であれば「Yes」を、そうでなければ「No」を表示するプログラムを書きましょう。</p>
+    <p>※ 「有効な年・月・日」とは、月に関して「1～12」であり、日に関して「1～その月の最終日」であることを指すものとします。詳しくは入出力例を見てください。</p>
+
+    <h2>制約</h2>
+    <ul>
+      <li><var>Y</var>、月 <var>M</var> 、日 <var>D</var> はいずれも 0 以上の整数である。</li>
+    </ul>
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>Y</var>
+<var>M</var>
+<var>D</var></div>
+
+    <h2>出力</h2>
+    <p>「有効な年・月・日」であれば「Yes」を、そうでなければ「No」を出力せよ。</p>
+    <hr />
+
+    <h2>入力例1</h2>
+    <pre id="sample1_input" class="sample">1900
+13
+1</pre>
+
+    <h2>出力例1</h2>
+    <pre id="sample1_output" class="sample">No</pre>
+    <p>13月という月はありません。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">2001
+2
+29</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">No</pre>
+    <p>2001年2月は28日までしか無いので、「2001年2月29日」は有効な年・月・日ではありません。</p>
+    <hr />
+
+    <h2>入力例3</h2>
+    <pre id="sample3_input" class="sample">2000
+2
+29</pre>
+
+    <h2>出力例3</h2>
+    <pre id="sample3_output" class="sample">Yes</pre>
+    <p>2000年であれば うるう年なので、「2000年2月29日」は有効な年・月・日です。</p>
+    <p>※ なお、ある年がうるう年かどうかについては「年が 4 の倍数であれば基本的にうるう年。ただし 4 の倍数であっても、『100 の倍数ではあるが、400 の倍数ではない』場合はうるう年ではない」というルールがある。</p>
+    <hr />
+
+    <div class="testcase">
+    <pre id="testcase1_input">2001
+13
+1</pre>
+    <pre id="testcase1_output">No</pre>
+    <pre id="testcase2_input">2001
+0
+1</pre>
+    <pre id="testcase2_output">No</pre>
+    <pre id="testcase3_input">2001
+1
+0</pre>
+    <pre id="testcase3_output">No</pre>
+    <pre id="testcase4_input">2001
+1
+1</pre>
+    <pre id="testcase4_output">Yes</pre>
+    <pre id="testcase5_input">2001
+1
+31</pre>
+    <pre id="testcase5_output">Yes</pre>
+    <pre id="testcase6_input">2001
+1
+32</pre>
+    <pre id="testcase6_output">No</pre>
+    <pre id="testcase7_input">2001
+3
+31</pre>
+    <pre id="testcase7_output">Yes</pre>
+    <pre id="testcase8_input">2001
+3
+32</pre>
+    <pre id="testcase8_output">No</pre>
+    <pre id="testcase9_input">2001
+4
+30</pre>
+    <pre id="testcase9_output">Yes</pre>
+    <pre id="testcase10_input">2001
+4
+31</pre>
+    <pre id="testcase10_output">No</pre>
+    <pre id="testcase11_input">2001
+5
+31</pre>
+    <pre id="testcase11_output">Yes</pre>
+    <pre id="testcase12_input">2001
+5
+32</pre>
+    <pre id="testcase12_output">No</pre>
+    <pre id="testcase13_input">2001
+6
+30</pre>
+    <pre id="testcase13_output">Yes</pre>
+    <pre id="testcase14_input">2001
+6
+31</pre>
+    <pre id="testcase14_output">No</pre>
+    <pre id="testcase15_input">2001
+7
+31</pre>
+    <pre id="testcase15_output">Yes</pre>
+    <pre id="testcase16_input">2001
+7
+32</pre>
+    <pre id="testcase16_output">No</pre>
+    <pre id="testcase17_input">2001
+8
+31</pre>
+    <pre id="testcase17_output">Yes</pre>
+    <pre id="testcase18_input">2001
+8
+32</pre>
+    <pre id="testcase18_output">No</pre>
+    <pre id="testcase19_input">2001
+9
+30</pre>
+    <pre id="testcase19_output">Yes</pre>
+    <pre id="testcase20_input">2001
+9
+31</pre>
+    <pre id="testcase20_output">No</pre>
+    <pre id="testcase21_input">2001
+10
+31</pre>
+    <pre id="testcase21_output">Yes</pre>
+    <pre id="testcase22_input">2001
+10
+32</pre>
+    <pre id="testcase22_output">No</pre>
+    <pre id="testcase23_input">2001
+11
+30</pre>
+    <pre id="testcase23_output">Yes</pre>
+    <pre id="testcase24_input">2001
+11
+31</pre>
+    <pre id="testcase24_output">No</pre>
+    <pre id="testcase25_input">2001
+12
+31</pre>
+    <pre id="testcase25_output">Yes</pre>
+    <pre id="testcase26_input">2001
+12
+32</pre>
+    <pre id="testcase26_output">No</pre>
+    <pre id="testcase27_input">2001
+2
+28</pre>
+    <pre id="testcase27_output">Yes</pre>
+    <pre id="testcase28_input">2001
+2
+29</pre>
+    <pre id="testcase28_output">No</pre>
+    <pre id="testcase29_input">2004
+2
+29</pre>
+    <pre id="testcase29_output">Yes</pre>
+    <pre id="testcase30_input">2004
+2
+30</pre>
+    <pre id="testcase30_output">No</pre>
+    <pre id="testcase31_input">1900
+2
+28</pre>
+    <pre id="testcase31_output">Yes</pre>
+    <pre id="testcase32_input">1900
+2
+29</pre>
+    <pre id="testcase32_output">No</pre>
+    <pre id="testcase33_input">2400
+2
+29</pre>
+    <pre id="testcase33_output">Yes</pre>
+    <pre id="testcase34_input">2400
+2
+30</pre>
+    <pre id="testcase34_output">No</pre>
+
+    </div>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">📅</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
