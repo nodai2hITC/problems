@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>競技プログラミング例題 [Python]</title>
+  </head>
+
+  <body>
+    <h1>競技プログラミング例題 [Python]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>整数 <var>A</var> が与えられる。<var>A</var> を 5 倍した数値を求めよ。</p>
+
+    <h2>制約</h2>
+    <ul>
+      <li><var>1 ≤ A ≤ 10000</var></li>
+      <li><var>A</var> は整数である。</li>
+    </ul>
+    <p>※ 補足：この「制約」というのは、たとえばこの問題の場合「<var>A</var> は必ず 1 から 10000 までの整数ですよ。それ以外のもの（もっと大きな数や小数、文字列など）が与えられる場合は無いので、そうした場合のことは考えなくていいですよ。」という説明をしているだけなので、最初のうちは問題を解く上で気にする必要はない。ただし後々難しい問題を解く場合には、この制約がヒントになる場合がある。</p>
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>A</var></div>
+    <p>※ 補足：「標準入力」とは、とりあえず現時点では「キーボードからの入力」のことだと思ってしまってよい。</p>
+
+    <h2>出力</h2>
+    <p><var>A</var> を 5 倍した数値を 1 行で出力せよ。</p>
+    <p>※ 補足：「出力せよ」とは、とりあえず現時点では「いつもの黒い画面に表示されるようにせよ」ということだと思ってしまってよい。なお、余計なものは一切表示させてはならない。つまり例えば Python で <code>input('入力してください')</code> などと書いてしまうと「入力してください」という文字列も表示されてしまうので、不正解になってしまう。</p>
+    <hr />
+
+    <h2>入力例1</h2>
+    <pre id="sample1_input" class="sample">20</pre>
+
+    <h2>出力例1</h2>
+    <pre id="sample1_output" class="sample">100</pre>
+    <p>このように 20 が入力で与えられた場合には、20×5 = 100 であるので、100 を出力する。</p>
+    <p>※ このように出力例のところにはたいてい説明が書かれているので、問題文が複雑で読んでもよくわからない場合は、ここを読んで実際に手を動かして考えるとよい。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">13</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">65</pre>
+    <hr />
+
+    <div class="testcase">
+      <pre id="testcase1_input">10000</pre>
+      <pre id="testcase1_output">50000</pre>
+      <pre id="testcase2_input">1</pre>
+      <pre id="testcase2_output">5</pre>
+    </div>
+
+    <details>
+      <summary>【わからない人向け】クリックしてヒントを見る</summary>
+      <p>競技プログラミングの基本は、「入力」→「計算」→「出力」という 3 段階。</p>
+      <ul>
+        <li>入力： Python であれば、<code>input()</code> を用いるのが基本。ただし整数が入力されるのであれば、<code>int()</code> と組み合わせて <code>int(input())</code> という形が基本になる。これを何らかの変数に代入すればよいので、今回の例であれば <code>a = int(input())</code> のようにすればよい。
+        <ul>
+          <li>「入力」は、データの与えられ方に応じてパターン化できる。説明文の「入力」のところの記述を見て、どのパターンを使えばよいか判断する。</li>
+        </ul>
+        </li>
+        <li>計算： 今回の例であれば、その与えられた数値（「入力」を上の例のように書いたのであれば、変数 <code>a</code> に代入されている値）を 5 倍する。（その計算結果を別の変数に代入、あるいは <code>a</code> に再代入しておく。）</li>
+        <li>出力： Python であれば、<code>print()</code> を用いるのが基本。</li>
+      </ul>
+    </details>
+    <p>↓ 以下の部分に実際に指定された処理を行うプログラムを書き、書き上がったら「▶実行」ボタンを押す。</p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🎉</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
