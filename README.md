@@ -9,3 +9,4 @@
 - 数列と倍数(1) [Ruby](https://nodai2hitc.github.io/problems/suuretsu_baisuu1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/suuretsu_baisuu1_python.html)
 - 数列と倍数(2) [Ruby](https://nodai2hitc.github.io/problems/suuretsu_baisuu2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/suuretsu_baisuu2_python.html)
 - 数列と倍数(3) [Ruby](https://nodai2hitc.github.io/problems/suuretsu_baisuu3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/suuretsu_baisuu3_python.html)
+- 余り１ [Ruby](https://nodai2hitc.github.io/problems/remainder1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/remainder1_python.html)
