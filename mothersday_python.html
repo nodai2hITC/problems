@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>母の日 [Python]</title>
+  </head>
+
+  <body>
+    <h1>母の日 [Python]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>武揚くんは母の日に、折り紙で作ったカーネーションをできるだけたくさん送ろうと考えました。</p>
+    <p>武揚くんのお母さんは赤が好きなので、赤の折り紙で赤いカーネーションを作ります。ただし茎などを作るために緑の折り紙も必要です。</p>
+    <p>カーネーションの花びらは 5 枚なので、1 つのカーネーションを作るのに 赤の折り紙 5 枚と 緑の折り紙 1 枚が必要です。</p>
+    <p>武揚くんは赤の折り紙を <var>R</var> 枚、緑の折り紙を <var>G</var> 枚持っています。</p>
+    <p>武揚くんは、いくつカーネーションを作ることができるでしょうか？</p>
+
+    <h2>制約</h2>
+    <ul>
+      <li><var>0 ≤ R ≤ 10000</var></li>
+      <li><var>0 ≤ G ≤ 10000</var></li>
+      <li><var>R, G</var> は整数である。</li>
+    </ul>
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>R</var>
+<var>G</var></div>
+
+    <h2>出力</h2>
+    <p>武揚くんが作ることのできる最大のカーネーションの個数を 1 行で出力せよ。</p>
+    <hr />
+
+    <h2>入力例1</h2>
+    <pre id="sample1_input" class="sample">18
+5</pre>
+
+    <h2>出力例1</h2>
+    <pre id="sample1_output" class="sample">3</pre>
+    <ul>
+      <li>1 つめのカーネーションを作ると赤の折り紙を 5 枚 緑の折り紙を 1 枚消費するので、残りは赤 13 枚 緑 4 枚です。</li>
+      <li>2 つめのカーネーションを作ると、残りは赤 8 枚 緑 3 枚です。</li>
+      <li>3 つめのカーネーションを作ると、残りは赤 3 枚 緑 2 枚です。</li>
+      <li>赤の折り紙が 5 枚ないので、4 つめのカーネーションを作ることはできません。</li>
+    </ul>
+    <p>よって作ることのできるカーネーションの個数は 3 個であり、3 を出力します。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">10000
+0</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">0</pre>
+
+    <h2>入力例3</h2>
+    <pre id="sample3_input" class="sample">87
+12</pre>
+
+    <h2>出力例3</h2>
+    <pre id="sample3_output" class="sample">12</pre>
+    <hr />
+
+    <div class="testcase">
+      <pre id="testcase1_input">10000
+10000</pre>
+      <pre id="testcase1_output">2000</pre>
+      <pre id="testcase2_input">0
+10000</pre>
+      <pre id="testcase2_output">0</pre>
+      <pre id="testcase3_input">2264
+5421</pre>
+      <pre id="testcase3_output">452</pre>
+      <pre id="testcase4_input">5421
+2264</pre>
+      <pre id="testcase4_output">1084</pre>
+      <pre id="testcase5_input">9346
+535</pre>
+      <pre id="testcase5_output">535</pre>
+    </div>
+
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">💐</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
