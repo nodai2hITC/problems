@@ -11,3 +11,5 @@
 - 数列と倍数(3) [Ruby](https://nodai2hitc.github.io/problems/suuretsu_baisuu3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/suuretsu_baisuu3_python.html)
 - 余り１ [Ruby](https://nodai2hitc.github.io/problems/remainder1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/remainder1_python.html)
 - 母の日 [Ruby](https://nodai2hitc.github.io/problems/mothersday_ruby.html) / [Python](https://nodai2hitc.github.io/problems/mothersday_python.html)
+- 文化祭(1) [Ruby](https://nodai2hitc.github.io/problems/festival1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/festival1_python.html)
+- 文化祭(2) [Ruby](https://nodai2hitc.github.io/problems/festival2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/festival2_python.html)
