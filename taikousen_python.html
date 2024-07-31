@@ -43,81 +43,96 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>最長連続文字列 [Python]</title>
+    <title>対抗戦 [Python]</title>
   </head>
 
   <body>
-    <h1>最長連続文字列 [Python]</h1>
+    <h1>対抗戦 [Python]</h1>
     <hr />
 
     <h2>問題文</h2>
-    <p><code>A</code> と <code>B</code> のみからなる <var>N</var> 文字の文字列 <var>S</var> が与えられます。</p>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を求めるプログラムを書きましょう。</p>
+    <p>A 大学と B 大学の柔道部が恒例の対抗戦をおこなう。</p>
+    <p>A 大学には <var>M</var> 人の選手がおり、<var>i</var> 番目の選手の「体力」は <var>A_i</var> である。同じく B 大学には <var>N</var> 人の選手がおり、<var>i</var> 番目の選手の「体力」は <var>B_i</var> である。</p>
+    <p>対抗戦は以下のように行われる。</p>
+    <ul>
+      <li>まずはそれぞれ、1 番目の選手が対戦する。</li>
+      <li>勝ったほうはそのまま同じ選手が、負けたほうは次の選手が続いて対戦する。</li>
+      <li>最終的に、最後の選手が負けた側が負けとなる。</li>
+    </ul>
+    <p>また、試合の勝ち負け および 試合後の「体力」は以下のようになる。</p>
+    <ul>
+      <li>試合は、「体力」が高いほうが勝つ。ただし「体力」が同じ場合は A 大学の選手が勝つ。</li>
+      <li>試合後の勝者の「体力」は、試合前の体力 - 対戦相手の体力 + 1 となる。</li>
+    </ul>
+    <p>A 大学と B 大学、どちらが勝つかを出力せよ。</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、<code>A</code> と <code>B</code> だけからなる 1 文字以上 1000 文字以内の文字列である。</li>
+      <li><var>1 ≤ M, N ≤ 100</var></li>
+      <li><var>1 ≤ A_i, B_i ≤ 10000</var></li>
     </ul>
     <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>M</var>
+<var>N</var>
+<var>A_1</var> <var>A_2</var> <var>A_3</var> <var>\cdots</var> <var>A_M</var>
+<var>B_1</var> <var>B_2</var> <var>B_3</var> <var>\cdots</var> <var>A_N</var></div>
 
     <h2>出力</h2>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を出力せよ。</p>
+    <p>A 大学が勝つなら <code>A</code> と、B 大学が勝つなら <code>B</code> と出力せよ。</p>
     <hr />
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">10
-ABBAAABBBB</pre>
+    <pre id="sample1_input" class="sample">2
+3
+10 5
+8 3 5</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">4</pre>
-    <p><code>ABBAAA<strong>BBBB</strong></code> と、最後の「<code>BBBB</code>」の部分が「同じ文字が連続している箇所のうち最長のもの」なので、<var>4</var> を出力します。</p>
+    <pre id="sample1_output" class="sample">A</pre>
+    <ol>
+      <li>A 大学の 1 番目の選手（体力 10）対 B 大学の 1 番目の選手（体力 8）。A 大学が勝ち、体力は 10 - 8 + 1 = 3 となる。</li>
+      <li>A 大学の 1 番目の選手（体力 3）対 B 大学の 2 番目の選手（体力 3）。A 大学が勝ち、体力は 3 - 3 + 1 = 1 となる。</li>
+      <li>A 大学の 1 番目の選手（体力 1）対 B 大学の 3 番目の選手（体力 5）。B 大学が勝ち、体力は 5 - 1 + 1 = 5 となる。</li>
+      <li>A 大学の 2 番目の選手（体力 5）対 B 大学の 3 番目の選手（体力 5）。A 大学が勝ち、体力は 5 - 5 + 1 = 1 となる。</li>
+    </ol>
+    <p>これで B 大学は最後の選手が敗れたので、A 大学の勝ちとなる。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">10
-BBBBBBBBBB</pre>
+    <pre id="sample2_input" class="sample">1
+30
+1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">10</pre>
-    <hr />
+    <pre id="sample2_output" class="sample">A</pre>
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">4
-ABAB</pre>
+    <pre id="sample3_input" class="sample">20
+1
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+999</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">1</pre>
-    <p>この場合は、2 文字以上連続している箇所はないため、「<code>A</code>」「<code>B</code>」「<code>A</code>」「<code>B</code>」が「同じ文字が連続している箇所のうち最長のもの」となるので、<var>1</var> を出力します。</p>
+    <pre id="sample3_output" class="sample">B</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">15
-AAAAABBBBAAABBA</pre>
-    <pre id="testcase1_output">5</pre>
-    <pre id="testcase2_input">1
-A</pre>
-    <pre id="testcase2_output">1</pre>
-    <pre id="testcase3_input">100
-BABAABBBBBBABABBABAABAAAAABABABAAAABABABABBBBAAAAAABAAABABBABBABBAABBBAABBBABABBBAABAABBBABAABAAAABA</pre>
-    <pre id="testcase3_output">6</pre>
-    <pre id="testcase4_input">1000
-AAAAAAABBAABBABAABAABBABABABBBABAABBABABAABBABABBABABBBBBBBBBBABBAAABBABBAABAABAABBBBBAABABAAAAAABAABBAAABABBABABBBAAAAABBBBAAABBBBBAABABBABAAABBBBBAAAABAABAAABABABBBBBAAAAAABBBAAABBAAABBABABAAAAAABAAAABBBAABBAAABABABBABAAABBAABAABAAABABBAABBBABAAAAABAAAABAAAABBAABBABAAABBABAAAAAABAABABBABBABAAABBAABAAAAAABABBBBBAAABBBAABBBABAABBABBAAAABAABAABAAAABAABBABBAABAAAAABBBBBAAABABBABBABABBBBBBAAAAABAAAABBAABAABBBAABBBAABBBBBBABBBABBAAABBAABBBABAAABABBAAABBBBBBAABBAABBBABAABAABBAAABABBAAABBAABBBBBABABABBBABAAABABABABABABBABABAAAAAAAAABABBBAABAABAAABBABBBABBBABBAAABBAAAABABAABABBBAAAABABBAABBABAABBAAAAABAAABBBAABAABABBAABBAAAABBAAAABBABAAABAABBBAABAABABAABABABBBBBBBBBBABBBBBAAAABAAAABBBBBAAAAAABBABABABAAAABBAAAABBABBABBBAABAABABBAAAAABBABBABBAABBAAAAAABBBBBAABABBBAABAABBAAABAAAAAAABBAAABABBABABBABBABBBBAAABABBAABBAABABBBBBBAAABBBBAAAAABAAABBBAABBAABAABBAABBBBBBAABABBAAABABBBBBABABBABAABBBBBABABBABABAABABBBAAAABABABBABAAAAABAAABBBBAAABBBBBBAAABBBABBBBAAABAAABABABBBAAAAABABAABABBBAAABBAAABABBABBB</pre>
-    <pre id="testcase4_output">10</pre>
-    <pre id="testcase5_input">1
-B</pre>
-    <pre id="testcase5_output">1</pre>
-    <pre id="testcase6_input">10
-AAAAAAAAAA</pre>
-    <pre id="testcase6_output">10</pre>
-    <pre id="testcase7_input">10
-BABABABABABABAB</pre>
-    <pre id="testcase7_output">1</pre>
+      <pre id="testcase1_input">64
+40
+644 230 340 105 83 251 116 557 91 648 314 3 28 213 756 826 218 510 414 349 620 414 139 241 282 597 263 587 326 395 104 902 277 528 832 541 715 318 819 748 940 795 464 666 99 591 729 508 493 449 88 705 360 481 800 385 720 395 123 342 651 217 746 990
+597 537 409 355 260 884 32 69 987 632 713 469 296 441 241 762 838 204 652 197 247 155 700 525 296 257 257 855 203 358 398 59 781 762 22 455 790 450 136 743</pre>
+      <pre id="testcase1_output">A</pre>
+      <pre id="testcase2_input">79
+61
+278 377 68 267 237 707 593 192 646 753 445 241 228 662 64 294 400 7 741 753 435 23 288 770 250 727 132 473 519 243 290 668 562 109 396 369 391 200 123 561 748 432 742 338 279 9 647 733 640 390 261 280 763 126 146 182 721 792 264 462 788 160 738 152 53 31 39 433 667 739 44 349 605 452 108 54 399 697 621
+236 278 935 318 690 931 849 434 974 31 860 987 961 334 547 494 611 842 623 144 594 305 43 246 94 812 281 260 606 190 539 984 371 637 898 816 231 392 865 764 897 315 645 964 535 505 524 681 686 790 991 741 201 305 822 296 823 320 406 925 460</pre>
+      <pre id="testcase2_output">B</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -137,7 +152,7 @@ BABABABABABABAB</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">🎊</p>
+            <p class="cracker">🥋</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>

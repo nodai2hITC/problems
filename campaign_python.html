@@ -43,81 +43,70 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>最長連続文字列 [Python]</title>
+    <title>キャンペーン [Python]</title>
   </head>
 
   <body>
-    <h1>最長連続文字列 [Python]</h1>
+    <h1>キャンペーン [Python]</h1>
     <hr />
 
     <h2>問題文</h2>
-    <p><code>A</code> と <code>B</code> のみからなる <var>N</var> 文字の文字列 <var>S</var> が与えられます。</p>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を求めるプログラムを書きましょう。</p>
+    <p>武揚くんは、毎日近所のコンビニで買物をする。</p>
+    <p>このコンビニで、8 月限定のキャンペーンが始まった。買い物をするたびにシールを 1 つもらえ、シール <var>X</var> 枚でアメ 1 個と交換してもらうことができる。</p>
+    <p>また、<var>Y</var> の倍数の日にはシールが追加でもう 1 つもらえる。</p>
+    <p>武揚くんは、8 月にいくつアメを交換できるだろうか？</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、<code>A</code> と <code>B</code> だけからなる 1 文字以上 1000 文字以内の文字列である。</li>
+      <li><var>1 ≤ X ≤ 10000</var></li>
+      <li><var>1 ≤ Y ≤ 31</var></li>
+      <li><var>X, Y</var> は整数である。</li>
     </ul>
     <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>X</var>
+<var>Y</var></div>
 
     <h2>出力</h2>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を出力せよ。</p>
+    <p>武揚くんが交換してもらえるアメの個数を 1 行で出力せよ。</p>
     <hr />
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">10
-ABBAAABBBB</pre>
+    <pre id="sample1_input" class="sample">7
+5</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">4</pre>
-    <p><code>ABBAAA<strong>BBBB</strong></code> と、最後の「<code>BBBB</code>」の部分が「同じ文字が連続している箇所のうち最長のもの」なので、<var>4</var> を出力します。</p>
+    <pre id="sample1_output" class="sample">5</pre>
+    <p>8 月の 31 日間に 5 の倍数の日は 5, 10, 15, 20, 25, 30 日の計 6 日あるので、武揚くんは 31 + 6 = 37 枚のシールをもらうことができる。</p>
+    <p>シール 7 枚でアメ 1 つもらえるので、37 枚のシールでもらえるアメの個数は 5 個である。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">10
-BBBBBBBBBB</pre>
+    <pre id="sample2_input" class="sample">10000
+31</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">10</pre>
-    <hr />
+    <pre id="sample2_output" class="sample">0</pre>
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">4
-ABAB</pre>
+    <pre id="sample3_input" class="sample">1
+1</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">1</pre>
-    <p>この場合は、2 文字以上連続している箇所はないため、「<code>A</code>」「<code>B</code>」「<code>A</code>」「<code>B</code>」が「同じ文字が連続している箇所のうち最長のもの」となるので、<var>1</var> を出力します。</p>
+    <pre id="sample3_output" class="sample">62</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">15
-AAAAABBBBAAABBA</pre>
-    <pre id="testcase1_output">5</pre>
-    <pre id="testcase2_input">1
-A</pre>
-    <pre id="testcase2_output">1</pre>
-    <pre id="testcase3_input">100
-BABAABBBBBBABABBABAABAAAAABABABAAAABABABABBBBAAAAAABAAABABBABBABBAABBBAABBBABABBBAABAABBBABAABAAAABA</pre>
-    <pre id="testcase3_output">6</pre>
-    <pre id="testcase4_input">1000
-AAAAAAABBAABBABAABAABBABABABBBABAABBABABAABBABABBABABBBBBBBBBBABBAAABBABBAABAABAABBBBBAABABAAAAAABAABBAAABABBABABBBAAAAABBBBAAABBBBBAABABBABAAABBBBBAAAABAABAAABABABBBBBAAAAAABBBAAABBAAABBABABAAAAAABAAAABBBAABBAAABABABBABAAABBAABAABAAABABBAABBBABAAAAABAAAABAAAABBAABBABAAABBABAAAAAABAABABBABBABAAABBAABAAAAAABABBBBBAAABBBAABBBABAABBABBAAAABAABAABAAAABAABBABBAABAAAAABBBBBAAABABBABBABABBBBBBAAAAABAAAABBAABAABBBAABBBAABBBBBBABBBABBAAABBAABBBABAAABABBAAABBBBBBAABBAABBBABAABAABBAAABABBAAABBAABBBBBABABABBBABAAABABABABABABBABABAAAAAAAAABABBBAABAABAAABBABBBABBBABBAAABBAAAABABAABABBBAAAABABBAABBABAABBAAAAABAAABBBAABAABABBAABBAAAABBAAAABBABAAABAABBBAABAABABAABABABBBBBBBBBBABBBBBAAAABAAAABBBBBAAAAAABBABABABAAAABBAAAABBABBABBBAABAABABBAAAAABBABBABBAABBAAAAAABBBBBAABABBBAABAABBAAABAAAAAAABBAAABABBABABBABBABBBBAAABABBAABBAABABBBBBBAAABBBBAAAAABAAABBBAABBAABAABBAABBBBBBAABABBAAABABBBBBABABBABAABBBBBABABBABABAABABBBAAAABABABBABAAAAABAAABBBBAAABBBBBBAAABBBABBBBAAABAAABABABBBAAAAABABAABABBBAAABBAAABABBABBB</pre>
-    <pre id="testcase4_output">10</pre>
-    <pre id="testcase5_input">1
-B</pre>
-    <pre id="testcase5_output">1</pre>
-    <pre id="testcase6_input">10
-AAAAAAAAAA</pre>
-    <pre id="testcase6_output">10</pre>
-    <pre id="testcase7_input">10
-BABABABABABABAB</pre>
-    <pre id="testcase7_output">1</pre>
+      <pre id="testcase1_input">8
+15</pre>
+      <pre id="testcase1_output">4</pre>
+      <pre id="testcase2_input">2
+4</pre>
+      <pre id="testcase2_output">19</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -137,7 +126,7 @@ BABABABABABABAB</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">🎊</p>
+            <p class="cracker">🍭</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>

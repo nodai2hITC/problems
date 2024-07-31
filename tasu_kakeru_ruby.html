@@ -7,19 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- ↓ 書き換え不可 -->
     <script src="onbrowserjudge.js"></script>
-    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
     <!-- ↑ 書き換え不可 -->
     <script>
       // ↓ 必ず定義
       OnBrowserJudge.getProgram = () => editor.getValue()
       // ↑ 必ず定義
-
-      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
 
       OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
       OnBrowserJudge.dict.running = "■停止"
@@ -43,81 +41,92 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>最長連続文字列 [Python]</title>
+    <title>足す・掛ける [Ruby]</title>
   </head>
 
   <body>
-    <h1>最長連続文字列 [Python]</h1>
+    <h1>足す・掛ける [Ruby]</h1>
     <hr />
 
     <h2>問題文</h2>
-    <p><code>A</code> と <code>B</code> のみからなる <var>N</var> 文字の文字列 <var>S</var> が与えられます。</p>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を求めるプログラムを書きましょう。</p>
+    <p>２つの整数 <var>A, B</var> が与えられます。</p>
+    <p><var>A + B</var> と <var>A × B</var> のうち、大きい方の（あるいは、等しければその）計算結果を出力してください。</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、<code>A</code> と <code>B</code> だけからなる 1 文字以上 1000 文字以内の文字列である。</li>
+      <li><var>-10000 ≤ A ≤ 10000</var></li>
+      <li><var>-10000 ≤ B ≤ 10000</var></li>
+      <li><var>X, Y</var> は整数である。</li>
     </ul>
     <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>A</var>
+<var>B</var></div>
 
     <h2>出力</h2>
-    <p><var>S</var> の中で、同じ文字が連続している箇所のうち最長のものの文字数を出力せよ。</p>
+    <p><var>A + B</var> と <var>A × B</var> のうち、大きい方の計算結果を 1 行で出力せよ。</p>
     <hr />
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">10
-ABBAAABBBB</pre>
+    <pre id="sample1_input" class="sample">1
+2</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">4</pre>
-    <p><code>ABBAAA<strong>BBBB</strong></code> と、最後の「<code>BBBB</code>」の部分が「同じ文字が連続している箇所のうち最長のもの」なので、<var>4</var> を出力します。</p>
+    <pre id="sample1_output" class="sample">3</pre>
+    <p>1 + 2 = 3、1 × 2 = 2 より、大きい方の 3 を出力します。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">10
-BBBBBBBBBB</pre>
+    <pre id="sample2_input" class="sample">-10000
+-10000</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">10</pre>
-    <hr />
+    <pre id="sample2_output" class="sample">100000000</pre>
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">4
-ABAB</pre>
+    <pre id="sample3_input" class="sample">2
+2</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">1</pre>
-    <p>この場合は、2 文字以上連続している箇所はないため、「<code>A</code>」「<code>B</code>」「<code>A</code>」「<code>B</code>」が「同じ文字が連続している箇所のうち最長のもの」となるので、<var>1</var> を出力します。</p>
+    <pre id="sample3_output" class="sample">4</pre>
+    <p>2 + 2 = 4、2 × 2 = 4 と等しいので、この場合は 4 を出力します。</p>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">15
-AAAAABBBBAAABBA</pre>
-    <pre id="testcase1_output">5</pre>
-    <pre id="testcase2_input">1
-A</pre>
-    <pre id="testcase2_output">1</pre>
-    <pre id="testcase3_input">100
-BABAABBBBBBABABBABAABAAAAABABABAAAABABABABBBBAAAAAABAAABABBABBABBAABBBAABBBABABBBAABAABBBABAABAAAABA</pre>
-    <pre id="testcase3_output">6</pre>
-    <pre id="testcase4_input">1000
-AAAAAAABBAABBABAABAABBABABABBBABAABBABABAABBABABBABABBBBBBBBBBABBAAABBABBAABAABAABBBBBAABABAAAAAABAABBAAABABBABABBBAAAAABBBBAAABBBBBAABABBABAAABBBBBAAAABAABAAABABABBBBBAAAAAABBBAAABBAAABBABABAAAAAABAAAABBBAABBAAABABABBABAAABBAABAABAAABABBAABBBABAAAAABAAAABAAAABBAABBABAAABBABAAAAAABAABABBABBABAAABBAABAAAAAABABBBBBAAABBBAABBBABAABBABBAAAABAABAABAAAABAABBABBAABAAAAABBBBBAAABABBABBABABBBBBBAAAAABAAAABBAABAABBBAABBBAABBBBBBABBBABBAAABBAABBBABAAABABBAAABBBBBBAABBAABBBABAABAABBAAABABBAAABBAABBBBBABABABBBABAAABABABABABABBABABAAAAAAAAABABBBAABAABAAABBABBBABBBABBAAABBAAAABABAABABBBAAAABABBAABBABAABBAAAAABAAABBBAABAABABBAABBAAAABBAAAABBABAAABAABBBAABAABABAABABABBBBBBBBBBABBBBBAAAABAAAABBBBBAAAAAABBABABABAAAABBAAAABBABBABBBAABAABABBAAAAABBABBABBAABBAAAAAABBBBBAABABBBAABAABBAAABAAAAAAABBAAABABBABABBABBABBBBAAABABBAABBAABABBBBBBAAABBBBAAAAABAAABBBAABBAABAABBAABBBBBBAABABBAAABABBBBBABABBABAABBBBBABABBABABAABABBBAAAABABABBABAAAAABAAABBBBAAABBBBBBAAABBBABBBBAAABAAABABABBBAAAAABABAABABBBAAABBAAABABBABBB</pre>
-    <pre id="testcase4_output">10</pre>
-    <pre id="testcase5_input">1
-B</pre>
-    <pre id="testcase5_output">1</pre>
-    <pre id="testcase6_input">10
-AAAAAAAAAA</pre>
-    <pre id="testcase6_output">10</pre>
-    <pre id="testcase7_input">10
-BABABABABABABAB</pre>
-    <pre id="testcase7_output">1</pre>
+      <pre id="testcase1_input">0
+-3403</pre>
+      <pre id="testcase1_output">0</pre>
+      <pre id="testcase2_input">-4514
+1</pre>
+      <pre id="testcase2_output">-4513</pre>
+      <pre id="testcase3_input">1
+0</pre>
+      <pre id="testcase3_output">1</pre>
+      <pre id="testcase4_input">0
+3798</pre>
+      <pre id="testcase4_output">3798</pre>
+      <pre id="testcase5_input">8649
+-1679</pre>
+      <pre id="testcase5_output">6970</pre>
+      <pre id="testcase6_input">1
+1</pre>
+      <pre id="testcase6_output">2</pre>
+      <pre id="testcase7_input">7377
+1</pre>
+      <pre id="testcase7_output">7378</pre>
+      <pre id="testcase8_input">0
+0</pre>
+      <pre id="testcase8_output">0</pre>
+      <pre id="testcase9_input">2
+2</pre>
+      <pre id="testcase9_output">4</pre>
+      <pre id="testcase10_input">4089
+380</pre>
+      <pre id="testcase10_output">1553820</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -137,7 +146,7 @@ BABABABABABABAB</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">🎊</p>
+            <p class="cracker">➕</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
@@ -149,8 +158,8 @@ BABABABABABABAB</pre>
     <script>
 const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
     lineNumbers: true,
-    mode: "python",
-    indentUnit: 4
+    mode: "ruby",
+    indentUnit: 2
 })
 editor.setOption("extraKeys", {
     "Tab": function(cm) {

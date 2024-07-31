@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>対抗戦 [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>対抗戦 [Ruby]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>A 大学と B 大学の柔道部が恒例の対抗戦をおこなう。</p>
+    <p>A 大学には <var>M</var> 人の選手がおり、<var>i</var> 番目の選手の「体力」は <var>A_i</var> である。同じく B 大学には <var>N</var> 人の選手がおり、<var>i</var> 番目の選手の「体力」は <var>B_i</var> である。</p>
+    <p>対抗戦は以下のように行われる。</p>
+    <ul>
+      <li>まずはそれぞれ、1 番目の選手が対戦する。</li>
+      <li>勝ったほうはそのまま同じ選手が、負けたほうは次の選手が続いて対戦する。</li>
+      <li>最終的に、最後の選手が負けた側が負けとなる。</li>
+    </ul>
+    <p>また、試合の勝ち負け および 試合後の「体力」は以下のようになる。</p>
+    <ul>
+      <li>試合は、「体力」が高いほうが勝つ。ただし「体力」が同じ場合は A 大学の選手が勝つ。</li>
+      <li>試合後の勝者の「体力」は、試合前の体力 - 対戦相手の体力 + 1 となる。</li>
+    </ul>
+    <p>A 大学と B 大学、どちらが勝つかを出力せよ。</p>
+
+    <h2>制約</h2>
+    <ul>
+      <li><var>1 ≤ M, N ≤ 100</var></li>
+      <li><var>1 ≤ A_i, B_i ≤ 10000</var></li>
+    </ul>
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>M</var>
+<var>N</var>
+<var>A_1</var> <var>A_2</var> <var>A_3</var> <var>\cdots</var> <var>A_M</var>
+<var>B_1</var> <var>B_2</var> <var>B_3</var> <var>\cdots</var> <var>A_N</var></div>
+
+    <h2>出力</h2>
+    <p>A 大学が勝つなら <code>A</code> と、B 大学が勝つなら <code>B</code> と出力せよ。</p>
+    <hr />
+
+    <h2>入力例1</h2>
+    <pre id="sample1_input" class="sample">2
+3
+10 5
+8 3 5</pre>
+
+    <h2>出力例1</h2>
+    <pre id="sample1_output" class="sample">A</pre>
+    <ol>
+      <li>A 大学の 1 番目の選手（体力 10）対 B 大学の 1 番目の選手（体力 8）。A 大学が勝ち、体力は 10 - 8 + 1 = 3 となる。</li>
+      <li>A 大学の 1 番目の選手（体力 3）対 B 大学の 2 番目の選手（体力 3）。A 大学が勝ち、体力は 3 - 3 + 1 = 1 となる。</li>
+      <li>A 大学の 1 番目の選手（体力 1）対 B 大学の 3 番目の選手（体力 5）。B 大学が勝ち、体力は 5 - 1 + 1 = 5 となる。</li>
+      <li>A 大学の 2 番目の選手（体力 5）対 B 大学の 3 番目の選手（体力 5）。A 大学が勝ち、体力は 5 - 5 + 1 = 1 となる。</li>
+    </ol>
+    <p>これで B 大学は最後の選手が敗れたので、A 大学の勝ちとなる。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">1
+30
+1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">A</pre>
+
+    <h2>入力例3</h2>
+    <pre id="sample3_input" class="sample">20
+1
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+999</pre>
+
+    <h2>出力例3</h2>
+    <pre id="sample3_output" class="sample">B</pre>
+    <hr />
+
+    <div class="testcase">
+      <pre id="testcase1_input">64
+40
+644 230 340 105 83 251 116 557 91 648 314 3 28 213 756 826 218 510 414 349 620 414 139 241 282 597 263 587 326 395 104 902 277 528 832 541 715 318 819 748 940 795 464 666 99 591 729 508 493 449 88 705 360 481 800 385 720 395 123 342 651 217 746 990
+597 537 409 355 260 884 32 69 987 632 713 469 296 441 241 762 838 204 652 197 247 155 700 525 296 257 257 855 203 358 398 59 781 762 22 455 790 450 136 743</pre>
+      <pre id="testcase1_output">A</pre>
+      <pre id="testcase2_input">79
+61
+278 377 68 267 237 707 593 192 646 753 445 241 228 662 64 294 400 7 741 753 435 23 288 770 250 727 132 473 519 243 290 668 562 109 396 369 391 200 123 561 748 432 742 338 279 9 647 733 640 390 261 280 763 126 146 182 721 792 264 462 788 160 738 152 53 31 39 433 667 739 44 349 605 452 108 54 399 697 621
+236 278 935 318 690 931 849 434 974 31 860 987 961 334 547 494 611 842 623 144 594 305 43 246 94 812 281 260 606 190 539 984 371 637 898 816 231 392 865 764 897 315 645 964 535 505 524 681 686 790 991 741 201 305 822 296 823 320 406 925 460</pre>
+      <pre id="testcase2_output">B</pre>
+    </div>
+
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥋</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

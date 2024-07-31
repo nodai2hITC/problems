@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>プール [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>プール [Ruby]</h1>
+    <hr />
+
+    <h2>問題文</h2>
+    <p>武揚くんはプールが大好きで、6 月 1 日のプール開き以降はできるだけ近所のプールに行って朝から晩まで泳ぎ続けたいと思っています。武揚くんは、近所のプールに行ける状況であれば必ず行きます。</p>
+    <p>ですが、6 月といえば梅雨。武揚くんの行くプールは、雨の日は営業していません。</p>
+    <p>また、プールに行ったら水着を洗濯して乾かさないと再びプールに行くことはできません。武揚くんは水着を一着しか持っておらず武揚くんの家では洗濯は朝おこなうので、プールに入った翌日はまだ水着が洗濯中でプールに行けません。また、プールに入った翌日が雨でなければその日のうちに乾いてくれるので その次の日（つまり前回プールに行った 2 日後）にはプールに行けますが、プールに入った翌日が雨の場合はその次の日も干し続ける必要があるので、その場合は次にプールに行けるのは前回プールに行ってから 3 日後です。</p>
+    <p>武揚くんは、6 月の 30 日中、何日プールに行けるでしょうか？</p>
+
+    <hr />
+
+    <h2>入力</h2>
+    <p>入力は以下の形式で標準入力から与えられる。</p>
+    <div class="io_format"><var>A_1</var> <var>A_2</var> <var>A_3</var> <var>\cdots</var> <var>A_{30}</var></div>
+    <p><var>A_i</var> が 6 月 <var>i</var> 日の天気を表しており、<var>0</var> ならば雨ではなく、<var>1</var> ならば雨である。（一日を通じて天気は常に同じであり、午前午後で天気が異なることはない。）</p>
+
+    <h2>出力</h2>
+    <p>武揚くんがプールに行ける日数を 1 行で出力せよ。</p>
+    <hr />
+
+    <h2>入力例1</h2>
+    <pre id="sample1_input" class="sample">0 1 1 0 0 1 1 1 1 1 1 0 1 1 1 0 1 0 1 1 1 0 0 0 0 0 1 1 0 0</pre>
+
+    <h2>出力例1</h2>
+    <pre id="sample1_output" class="sample">8</pre>
+    <ul>
+      <li>1 日は、雨でないので武揚くんはプールに行きます。</li>
+      <li>2 日は、水着が洗濯中なのでプールに行けません。また、雨なので水着は翌 3 日も干す必要があります。</li>
+      <li>4 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>5 日は、水着が洗濯中なのでプールに行けません。ただし雨でないので水着はこの日のうちに乾きます。</li>
+      <li>6～11 日は、水着は乾いていますが雨なので武揚くんはプールに行けません。</li>
+      <li>12 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>13 日は、水着が洗濯中なのでプールに行けません。また、雨なので水着は翌 14 日も干す必要があります。</li>
+      <li>15 日は、水着は乾いていますが雨なので武揚くんはプールに行けません。</li>
+      <li>16 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>17 日は、水着が洗濯中なのでプールに行けません。また、雨なので水着は翌 18 日も干す必要があります。</li>
+      <li>19～21 日は、水着は乾いていますが雨なので武揚くんはプールに行けません。</li>
+      <li>22 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>23 日は、水着が洗濯中なのでプールに行けません。ただし雨でないので水着はこの日のうちに乾きます。</li>
+      <li>24 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>25 日は、水着が洗濯中なのでプールに行けません。ただし雨でないので水着はこの日のうちに乾きます。</li>
+      <li>26 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>27 日は、水着が洗濯中なのでプールに行けません。また、雨なので水着は翌 28 日も干す必要があります。</li>
+      <li>29 日は、雨でなく水着も乾いているので武揚くんはプールに行きます。</li>
+      <li>30 日は、水着が洗濯中なのでプールに行けません。</li>
+    </ul>
+    <p>よって武揚くんがプールに行けるのは 8 日なので、8 を出力します。</p>
+    <hr />
+
+    <h2>入力例2</h2>
+    <pre id="sample2_input" class="sample">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</pre>
+
+    <h2>出力例2</h2>
+    <pre id="sample2_output" class="sample">0</pre>
+
+    <h2>入力例3</h2>
+    <pre id="sample3_input" class="sample">1 0 0 1 0 0 1 1 1 1 1 1 0 0 1 0 0 1 0 0 0 1 0 1 1 1 1 1 0 0</pre>
+
+    <h2>出力例3</h2>
+    <pre id="sample3_output" class="sample">7</pre>
+    <hr />
+
+    <div class="testcase">
+      <pre id="testcase1_input">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</pre>
+      <pre id="testcase1_output">15</pre>
+      <pre id="testcase2_input">0 1 0 1 0 0 1 1 0 1 0 0 1 0 1 0 0 1 0 1 0 1 0 0 0 0 1 1 1 0</pre>
+      <pre id="testcase2_output">9</pre>
+      <pre id="testcase3_input">0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</pre>
+      <pre id="testcase3_output">8</pre>
+      <pre id="testcase4_input">1 1 0 1 0 0 0 0 0 1 0 0 1 0 1 0 1 1 0 1 1 1 0 0 0 1 1 0 1 0</pre>
+      <pre id="testcase4_output">9</pre>
+    </div>
+
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🏊</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
