@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- ↓ 書き換え不可 -->
     <script src="onbrowserjudge.js"></script>
-    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
     <!-- ↑ 書き換え不可 -->
     <script>
       // ↓ 必ず定義
       OnBrowserJudge.getProgram = () => editor.getValue()
       // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
 
       OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
       OnBrowserJudge.dict.running = "■停止"
@@ -41,71 +43,72 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>回文 [Ruby]</title>
+    <title>袋 [Python]</title>
   </head>
 
   <body>
-    <h1>回文 [Ruby]</h1>
+    <h1>袋 [Python]</h1>
     <hr />
 
+
+
     <h2>問題文</h2>
-    <p>文字列 <var>S</var> が与えられる。この文字列が回文、つまり前から読んでも後ろから読んでも同じかどうかを判定せよ。</p>
+    <p>武揚くんは大根を <var>X</var> 本買いました。マイバッグを用意していなかったので袋を買うことにしましたが、袋には大根が <var>5</var> 本までしか入りません。</p>
+    <p>大根をすべて袋に入れて持ち帰るためには、最低何個の袋を買う必要があるでしょうか？</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、アルファベット大文字だけからなる 100 文字以内の文字列である。</li>
+      <li><var>1 ≦ X ≦ 1000</var></li>
+      <li><var>X</var> は整数</li>
     </ul>
-    <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <div class="io_format"><var>X</var></div>
+    <ul>
+      <li><var>1</var> 行目に大根の本数 <var>X</var> が与えられます。</li>
+    </ul>
 
     <h2>出力</h2>
-    <p>与えられた文字列が回文であれば「Yes」を、回文でなければ「No」を出力せよ。</p>
-    <hr />
+    <p>必要な袋の個数を出力してください。</p>
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">9
-ABCDEDCBB</pre>
+    <pre id="sample1_input" class="sample">13</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">No</pre>
-    <p><code>ABCDEDCBB</code> を後ろから読むと <code>BBCDEDCBA</code> なので、これは回文ではない。よって <code>No</code> を出力する。</p>
+    <pre id="sample1_output" class="sample">3</pre>
+    <p><var>2</var> 袋では <var>5 × 2 = 10</var> 本しか入らないので、<var>13</var> 本の大根を入れるには足りません。<var>3</var> 袋であれば最大 <var>5 × 3 = 15</var> 本の大根を入れることができるので、<var>13</var> 本の大根を入れることができます。よって <var>3</var> を出力します。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">8
-ABCDDCBA</pre>
+    <pre id="sample2_input" class="sample">20</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">Yes</pre>
-    <hr />
+    <pre id="sample2_output" class="sample">4</pre>
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">1
-A</pre>
+    <pre id="sample3_input" class="sample">1</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">Yes</pre>
-    <p>1 文字しかない場合も、「後ろから読んでも同じ」である以上回文である。</p>
+    <pre id="sample3_output" class="sample">1</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">10
-JZTQWWQTZJ</pre>
-    <pre id="testcase1_output">Yes</pre>
-    <pre id="testcase2_input">12
-GESXPABPXSEG</pre>
-    <pre id="testcase2_output">No</pre>
-    <pre id="testcase3_input">53
-QCSIUKBHEPDZAFMNRVWJXTOYLGAGLYOTXJWVRNMFAZDPEHBKUISCQ</pre>
-    <pre id="testcase3_output">Yes</pre>
-    <pre id="testcase4_input">53
-GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
-    <pre id="testcase4_output">No</pre>
+      <pre id="testcase1_input">1000</pre>
+      <pre id="testcase1_output">200</pre>
+
+      <pre id="testcase2_input">16</pre>
+      <pre id="testcase2_output">4</pre>
+
+      <pre id="testcase3_input">789</pre>
+      <pre id="testcase3_output">158</pre>
+
+      <pre id="testcase4_input">253</pre>
+      <pre id="testcase4_output">51</pre>
+
+      <pre id="testcase5_input">367</pre>
+      <pre id="testcase5_output">74</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -125,7 +128,7 @@ GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">📜</p>
+            <p class="cracker">🛍️</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
@@ -137,8 +140,8 @@ GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
     <script>
 const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
     lineNumbers: true,
-    mode: "ruby",
-    indentUnit: 2
+    mode: "python",
+    indentUnit: 4
 })
 editor.setOption("extraKeys", {
     "Tab": function(cm) {

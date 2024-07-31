@@ -41,71 +41,76 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>回文 [Ruby]</title>
+    <title>ツルとカメ [Ruby]</title>
   </head>
 
   <body>
-    <h1>回文 [Ruby]</h1>
+    <h1>ツルとカメ [Ruby]</h1>
     <hr />
 
+
     <h2>問題文</h2>
-    <p>文字列 <var>S</var> が与えられる。この文字列が回文、つまり前から読んでも後ろから読んでも同じかどうかを判定せよ。</p>
+    <p>ツルが <var>X</var> 羽、カメが <var>Y</var> 匹います。足は全部で何本あるでしょうか？</p>
+    <p>（※ ツルには足が <var>2</var> 本、カメには足が <var>4</var> 本あります。）</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、アルファベット大文字だけからなる 100 文字以内の文字列である。</li>
+      <li><var>1 ≦ X, Y ≦ 100000</var></li>
+      <li>数値はすべて整数</li>
     </ul>
-    <hr />
-
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <div class="io_format"><var>X</var>
+<var>Y</var></div>
+    <ul>
+      <li><var>1</var> 行目にツルの数 <var>X</var> が与えられます。</li>
+      <li><var>2</var> 行目にカメの数 <var>Y</var> が与えられます。</li>
+    </ul>
 
     <h2>出力</h2>
-    <p>与えられた文字列が回文であれば「Yes」を、回文でなければ「No」を出力せよ。</p>
-    <hr />
+    <p>足の全本数を出力してください。</p>
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">9
-ABCDEDCBB</pre>
+    <pre id="sample1_input" class="sample">3
+5</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">No</pre>
-    <p><code>ABCDEDCBB</code> を後ろから読むと <code>BBCDEDCBA</code> なので、これは回文ではない。よって <code>No</code> を出力する。</p>
+    <pre id="sample1_output" class="sample">26</pre>
+    <p>ツルは <var>3</var> 羽いるので、その足の本数は <var>3 × 2 = 6</var> 本。カメは <var>5</var> 匹いるので、その足の本数は <var>5 × 4 = 20</var> 本。よって合計 <var>6 + 20 = 26</var> 本の足があります。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">8
-ABCDDCBA</pre>
+    <pre id="sample2_input" class="sample">1
+1</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">Yes</pre>
-    <hr />
+    <pre id="sample2_output" class="sample">6</pre>
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">1
-A</pre>
+    <pre id="sample3_input" class="sample">1000
+1000</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">Yes</pre>
-    <p>1 文字しかない場合も、「後ろから読んでも同じ」である以上回文である。</p>
+    <pre id="sample3_output" class="sample">6000</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">10
-JZTQWWQTZJ</pre>
-    <pre id="testcase1_output">Yes</pre>
-    <pre id="testcase2_input">12
-GESXPABPXSEG</pre>
-    <pre id="testcase2_output">No</pre>
-    <pre id="testcase3_input">53
-QCSIUKBHEPDZAFMNRVWJXTOYLGAGLYOTXJWVRNMFAZDPEHBKUISCQ</pre>
-    <pre id="testcase3_output">Yes</pre>
-    <pre id="testcase4_input">53
-GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
-    <pre id="testcase4_output">No</pre>
+      <pre id="testcase1_input">34995
+42146</pre>
+      <pre id="testcase1_output">238574</pre>
+
+      <pre id="testcase2_input">90778
+80554</pre>
+      <pre id="testcase2_output">503772</pre>
+
+      <pre id="testcase3_input">1
+100000</pre>
+      <pre id="testcase3_output">400002</pre>
+
+      <pre id="testcase4_input">100000
+1</pre>
+      <pre id="testcase4_output">200004</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -125,7 +130,7 @@ GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">📜</p>
+            <p class="cracker">🐢</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>

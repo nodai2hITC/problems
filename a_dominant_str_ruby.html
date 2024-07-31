@@ -41,71 +41,125 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>回文 [Ruby]</title>
+    <title>A優勢文字列 [Ruby]</title>
   </head>
 
   <body>
-    <h1>回文 [Ruby]</h1>
+    <h1>A優勢文字列 [Ruby]</h1>
     <hr />
 
+
+
     <h2>問題文</h2>
-    <p>文字列 <var>S</var> が与えられる。この文字列が回文、つまり前から読んでも後ろから読んでも同じかどうかを判定せよ。</p>
+`A` と `B` だけからなる文字列 <var>S</var> が与えられます。
+    <p>この文字列が以下の性質を持つ場合、「A優勢文字列」と呼ぶことにします。</p>
+    <ul>
+      <li>左から何文字を取り出したとしても、必ずその中に含まれる `A` の文字数が `B` の文字数より少なくなることがない。</li>
+    </ul>
+    <p>与えられた文字列が「A優勢文字列」かどうか、判定してください。</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、アルファベット大文字だけからなる 100 文字以内の文字列である。</li>
+      <li><var>1 ≦ N ≦ 100</var></li>
+      <li><var>S</var> は `A` と `B` だけからなる</li>
     </ul>
-    <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
     <div class="io_format"><var>N</var>
 <var>S</var></div>
+    <ul>
+      <li><var>1</var> 行目で文字列の長さ <var>N</var> が与えられます。</li>
+      <li><var>2</var> 行目で文字列 <var>S</var> が与えられます。</li>
+    </ul>
 
     <h2>出力</h2>
-    <p>与えられた文字列が回文であれば「Yes」を、回文でなければ「No」を出力せよ。</p>
-    <hr />
+    <p><var>S</var> が「A優勢文字列」であれば `Yes` を、そうでなければ `No` を出力してください。</p>
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">9
-ABCDEDCBB</pre>
+    <pre id="sample1_input" class="sample">5
+ABABA</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">No</pre>
-    <p><code>ABCDEDCBB</code> を後ろから読むと <code>BBCDEDCBA</code> なので、これは回文ではない。よって <code>No</code> を出力する。</p>
+    <pre id="sample1_output" class="sample">Yes</pre>
+    <p><var>S</var> を左から何文字か取り出した場合…</p>
+    <ul>
+      <li>1文字取り出すと `A` → `A` が <var>1</var> 文字、`B` が <var>0</var> 文字</li>
+      <li>2文字取り出すと `AB` → `A` が <var>1</var> 文字、`B` が <var>1</var> 文字</li>
+      <li>3文字取り出すと `ABA` → `A` が <var>2</var> 文字、`B` が <var>1</var> 文字</li>
+      <li>4文字取り出すと `ABAB` → `A` が <var>2</var> 文字、`B` が <var>2</var> 文字</li>
+      <li>5文字取り出すと `ABABA` → `A` が <var>3</var> 文字、`B` が <var>2</var> 文字</li>
+    </ul>
+    <p>となり、「その中に含まれる `A` の文字数が `B` の文字数より少なくなることがない」ので、これは「A優勢文字列」である。よって `Yes` を出力する。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">8
-ABCDDCBA</pre>
+    <pre id="sample2_input" class="sample">4
+ABBA</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">Yes</pre>
+    <pre id="sample2_output" class="sample">No</pre>
+    <p>左から <var>3</var> 文字取り出すと `ABB` となり、`A` が <var>1</var> 文字 `B` が <var>2</var> 文字である。</p>
+    <p>「その中に含まれる `A` の文字数が `B` の文字数より少なく」なってしまう場合があるので、これは「A優勢文字列」ではない。よって `No` を出力する。</p>
     <hr />
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">1
-A</pre>
+    <pre id="sample3_input" class="sample">10
+AAAAAAAAAA</pre>
 
     <h2>出力例3</h2>
     <pre id="sample3_output" class="sample">Yes</pre>
-    <p>1 文字しかない場合も、「後ろから読んでも同じ」である以上回文である。</p>
+
+    <h2>入力例4</h2>
+    <pre id="sample4_input" class="sample">20
+BBBBBBBBBBBBBBBBBBBB</pre>
+
+    <h2>出力例4</h2>
+    <pre id="sample4_output" class="sample">No</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">10
-JZTQWWQTZJ</pre>
-    <pre id="testcase1_output">Yes</pre>
-    <pre id="testcase2_input">12
-GESXPABPXSEG</pre>
-    <pre id="testcase2_output">No</pre>
-    <pre id="testcase3_input">53
-QCSIUKBHEPDZAFMNRVWJXTOYLGAGLYOTXJWVRNMFAZDPEHBKUISCQ</pre>
-    <pre id="testcase3_output">Yes</pre>
-    <pre id="testcase4_input">53
-GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
-    <pre id="testcase4_output">No</pre>
+      <pre id="testcase1_input">1
+A</pre>
+      <pre id="testcase1_output">Yes</pre>
+
+      <pre id="testcase2_input">2
+AB</pre>
+      <pre id="testcase2_output">Yes</pre>
+
+      <pre id="testcase3_input">3
+ABA</pre>
+      <pre id="testcase3_output">Yes</pre>
+
+      <pre id="testcase4_input">3
+BAA</pre>
+      <pre id="testcase4_output">No</pre>
+
+      <pre id="testcase5_input">100
+AABBABBABABABABABABAAAABAABABBAAAABABAABABABAAABAAABAAAABBABABABBAABBAABBBBBBBBABAAABABBABBAAABAAABB</pre>
+      <pre id="testcase5_output">No</pre>
+
+      <pre id="testcase6_input">100
+AAAABABBBAABBBAAAAAAAABABABBBBABBBABAABBAABAABBBAAAAAAAABAAAAABBBBAAABBABBBAABAAAAAABBAABABAABAAAAAA</pre>
+      <pre id="testcase6_output">Yes</pre>
+
+      <pre id="testcase7_input">100
+BAAAABBAAAAAAAAAAAAAAABBBAAAAAABBABAAAABAAAAABAAAAAAAABBAAAAAAAAAAAAABAABAAABAAAAAAAABAAAAAAAAAAAAAB</pre>
+      <pre id="testcase7_output">No</pre>
+
+      <pre id="testcase8_input">1
+B</pre>
+      <pre id="testcase8_output">No</pre>
+
+      <pre id="testcase9_input">100
+AAAAABAAAAAABAAAABAAAAABAAAAAAABBAAAAAAAAAAAAAABBAAAAABAABAABBAABABAAAAAAAAABABBAAABAAAABABAAAAABAAA</pre>
+      <pre id="testcase9_output">Yes</pre>
+
+      <pre id="testcase10_input">100
+ABAAAAAABABAABABAABBAAAAABAAAABBAAABABAAAAABBAAAAAABABBAAABBBBABAAABAABBAAAAAAABBBAAABAAABAAAAAAABAA</pre>
+      <pre id="testcase10_output">Yes</pre>
     </div>
+
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -125,7 +179,7 @@ GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">📜</p>
+            <p class="cracker">🅰️</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>

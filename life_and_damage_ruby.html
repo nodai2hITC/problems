@@ -41,71 +41,78 @@
       // ↓ 正解時に実行する関数
       OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
     </script>
-    <title>回文 [Ruby]</title>
+    <title>ライフ＆ダメージ [Ruby]</title>
   </head>
 
   <body>
-    <h1>回文 [Ruby]</h1>
+    <h1>ライフ＆ダメージ [Ruby]</h1>
     <hr />
 
+
+
     <h2>問題文</h2>
-    <p>文字列 <var>S</var> が与えられる。この文字列が回文、つまり前から読んでも後ろから読んでも同じかどうかを判定せよ。</p>
+    <p>武揚くんがゲームをしています。</p>
+    <p>武揚くんのキャラクターのライフは <var>L</var> でしたが、敵から攻撃され <var>D</var> のダメージを受けてしまいました。</p>
+    <p>ダメージを受けるとライフがそのダメージだけ減少します。ただしライフの最小値は <var>0</var> であり、マイナスになることはありません。</p>
+    <p>武揚くんのキャラクターのライフはいくつになったでしょうか？</p>
 
     <h2>制約</h2>
     <ul>
-      <li>与えられる文字列は、アルファベット大文字だけからなる 100 文字以内の文字列である。</li>
+      <li><var>1 ≦ L, D ≦ 100000</var></li>
+      <li>数値はすべて整数</li>
     </ul>
-    <hr />
 
     <h2>入力</h2>
-    <p>入力は以下の形式で標準入力から与えられる。1 行目が与えられる文字列の文字数、2 行目が実際の文字列である。</p>
-    <div class="io_format"><var>N</var>
-<var>S</var></div>
+    <div class="io_format"><var>L</var>
+<var>D</var></div>
+    <ul>
+      <li><var>1</var> 行目でライフ <var>L</var> が与えられます。</li>
+      <li><var>2</var> 行目でダメージ <var>D</var> が与えられます。</li>
+    </ul>
 
     <h2>出力</h2>
-    <p>与えられた文字列が回文であれば「Yes」を、回文でなければ「No」を出力せよ。</p>
-    <hr />
+    <p>ダメージを受けたあとのキャラクターのライフを出力してください。</p>
 
     <h2>入力例1</h2>
-    <pre id="sample1_input" class="sample">9
-ABCDEDCBB</pre>
+    <pre id="sample1_input" class="sample">200
+50</pre>
 
     <h2>出力例1</h2>
-    <pre id="sample1_output" class="sample">No</pre>
-    <p><code>ABCDEDCBB</code> を後ろから読むと <code>BBCDEDCBA</code> なので、これは回文ではない。よって <code>No</code> を出力する。</p>
+    <pre id="sample1_output" class="sample">150</pre>
+    <p>ライフ <var>200</var> のところにダメージ <var>50</var> を受けたので、ライフは <var>200 - 50 = 150</var> になります。</p>
     <hr />
 
     <h2>入力例2</h2>
-    <pre id="sample2_input" class="sample">8
-ABCDDCBA</pre>
+    <pre id="sample2_input" class="sample">50
+100</pre>
 
     <h2>出力例2</h2>
-    <pre id="sample2_output" class="sample">Yes</pre>
+    <pre id="sample2_output" class="sample">0</pre>
+    <p>ライフ <var>50</var> のところにダメージ <var>100</var> を受けたので、ライフは <var>50 - 100 = -50</var> になるところですが、ライフの最小値は <var>0</var> なので <var>0</var> を出力します。</p>
     <hr />
 
     <h2>入力例3</h2>
-    <pre id="sample3_input" class="sample">1
-A</pre>
+    <pre id="sample3_input" class="sample">1000
+200</pre>
 
     <h2>出力例3</h2>
-    <pre id="sample3_output" class="sample">Yes</pre>
-    <p>1 文字しかない場合も、「後ろから読んでも同じ」である以上回文である。</p>
+    <pre id="sample3_output" class="sample">800</pre>
     <hr />
 
     <div class="testcase">
-    <pre id="testcase1_input">10
-JZTQWWQTZJ</pre>
-    <pre id="testcase1_output">Yes</pre>
-    <pre id="testcase2_input">12
-GESXPABPXSEG</pre>
-    <pre id="testcase2_output">No</pre>
-    <pre id="testcase3_input">53
-QCSIUKBHEPDZAFMNRVWJXTOYLGAGLYOTXJWVRNMFAZDPEHBKUISCQ</pre>
-    <pre id="testcase3_output">Yes</pre>
-    <pre id="testcase4_input">53
-GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
-    <pre id="testcase4_output">No</pre>
+      <pre id="testcase1_input">2235
+90904</pre>
+      <pre id="testcase1_output">0</pre>
+
+      <pre id="testcase2_input">38482
+38482</pre>
+      <pre id="testcase2_output">0</pre>
+
+      <pre id="testcase3_input">55046
+25237</pre>
+      <pre id="testcase3_output">29809</pre>
     </div>
+
     <textarea id="txt-editor"></textarea>
     <p>
       <!-- ↓ button#run は必ず用意 -->
@@ -125,7 +132,7 @@ GYOEBRDKZWLMJCPTFVNHQSUXIAAAIXUSQHNVFTPCJMLWZKDRBEOYH</pre>
             </h2>
           </header>
           <main class="modal__content" id="modal-1-content">
-            <p class="cracker">📜</p>
+            <p class="cracker">❤</p>
           </main>
           <footer class="modal__footer">
             <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
