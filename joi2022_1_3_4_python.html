@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>マラソン大会 (Marathon Race) [Python]</title>
+  </head>
+
+  <body>
+    <h1>マラソン大会 (Marathon Race) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+JOI 高校には <var>N</var> 人の生徒がおり，<var>1</var> から <var>N</var> までの番号が付けられている．
+</p>
+
+<p>
+先月 JOI 高校ではマラソン大会が開催され，生徒全員がこれに参加した．生徒 <var>i</var> (<var>1 ≦ i ≦ N</var>) の記録は <var>A_i</var> 分であった．
+</p>
+
+<p>
+マラソン大会における各生徒の順位を求めよ．ただし，生徒 <var>i</var> (<var>1 ≦ i ≦ N</var>) の順位は，(記録が <var>A_i</var> 分未満の生徒の人数)<var> + 1</var> で計算される．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>1 ≦ A_i ≦ 1 000</var> (<var>1 ≦ i ≦ N</var>)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>…</var> <var>A_N</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>N</var> 行出力せよ．<var>i</var> 行目 (<var>1 ≦ i ≦ N</var>) には，生徒 <var>i</var> の順位を出力せよ．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+3
+44 42 69
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+2
+1
+3
+</pre>
+
+<ul>
+<li>生徒 <var>1</var> の記録は <var>44</var> 分である．記録が <var>44</var> 分未満の生徒は <var>1</var> 人いるので，生徒 <var>1</var> の順位は <var>2</var> 位である．したがって，<var>1</var> 行目には <var>2</var> を出力する．</li>
+<li>生徒 <var>2</var> の記録は <var>42</var> 分である．記録が <var>42</var> 分未満の生徒はいないので，生徒 <var>2</var> の順位は <var>1</var> 位である．したがって，<var>2</var> 行目には <var>1</var> を出力する．</li>
+<li>生徒 <var>3</var> の記録は <var>69</var> 分である．記録が <var>69</var> 分未満の生徒は <var>2</var> 人いるので，生徒 <var>3</var> の順位は <var>3</var> 位である．したがって，<var>3</var> 行目には <var>3</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+4
+40 60 40 60
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+1
+3
+1
+3
+</pre>
+
+<ul>
+<li>生徒 <var>1</var> の記録は <var>40</var> 分である．記録が <var>40</var> 分未満の生徒はいないので，生徒 <var>1</var> の順位は <var>1</var> 位である．したがって，<var>1</var> 行目には <var>1</var> を出力する．</li>
+<li>生徒 <var>2</var> の記録は <var>60</var> 分である．記録が <var>60</var> 分未満の生徒は <var>2</var> 人いるので，生徒 <var>2</var> の順位は <var>3</var> 位である．したがって，<var>2</var> 行目には <var>3</var> を出力する．</li>
+<li>生徒 <var>3</var> の記録は <var>40</var> 分である．記録が <var>40</var> 分未満の生徒はいないので，生徒 <var>3</var> の順位は <var>1</var> 位である．したがって，<var>3</var> 行目には <var>1</var> を出力する．</li>
+<li>生徒 <var>4</var> の記録は <var>60</var> 分である．記録が <var>60</var> 分未満の生徒は <var>2</var> 人いるので，生徒 <var>4</var> の順位は <var>3</var> 位である．したがって，<var>4</var> 行目には <var>3</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+10
+766 152 595 926 663 509 368 595 175 622
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+9
+1
+5
+10
+8
+4
+3
+5
+2
+7
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">1
+495</pre>
+  <pre id="testcase1_output">1</pre>
+  <pre id="testcase2_input">100
+461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461 461</pre>
+  <pre id="testcase2_output">1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1</pre>
+  <pre id="testcase3_input">100
+120 781 831 269 839 972 830 140 427 821 745 736 764 704 587 594 203 928 741 726 332 131 47 35 286 92 557 840 686 740 486 470 284 951 500 69 570 237 280 412 470 985 500 552 741 621 573 791 662 802 309 258 305 444 229 627 284 71 453 224 174 821 972 298 332 398 889 238 565 887 547 46 581 207 353 334 342 481 540 592 47 519 829 464 43 714 971 876 103 112 445 139 724 92 724 654 83 224 707 238</pre>
+  <pre id="testcase3_output">13
+82
+89
+27
+90
+98
+88
+16
+42
+85
+80
+76
+81
+70
+62
+64
+18
+95
+78
+75
+35
+14
+4
+1
+31
+9
+57
+91
+69
+77
+50
+47
+29
+96
+51
+6
+59
+23
+28
+41
+47
+100
+51
+56
+78
+65
+60
+83
+68
+84
+34
+26
+33
+43
+22
+66
+29
+7
+45
+20
+17
+85
+98
+32
+35
+40
+94
+24
+58
+93
+55
+3
+61
+19
+39
+37
+38
+49
+54
+63
+4
+53
+87
+46
+2
+72
+97
+92
+11
+12
+44
+15
+73
+9
+73
+67
+8
+20
+71
+24</pre>
+  <pre id="testcase4_input">100
+665 361 665 361 665 665 361 665 361 665 908 361 908 908 361 665 665 908 361 665 361 665 361 665 665 665 361 908 908 908 908 361 665 665 908 908 908 908 908 908 908 665 908 361 908 665 361 665 908 361 908 908 908 361 665 361 665 908 361 908 908 665 665 908 665 908 665 908 665 908 665 361 361 665 908 908 361 908 665 665 665 908 665 361 665 361 361 665 908 908 361 908 665 361 665 908 665 665 908 908</pre>
+  <pre id="testcase4_output">26
+1
+26
+1
+26
+26
+1
+26
+1
+26
+63
+1
+63
+63
+1
+26
+26
+63
+1
+26
+1
+26
+1
+26
+26
+26
+1
+63
+63
+63
+63
+1
+26
+26
+63
+63
+63
+63
+63
+63
+63
+26
+63
+1
+63
+26
+1
+26
+63
+1
+63
+63
+63
+1
+26
+1
+26
+63
+1
+63
+63
+26
+26
+63
+26
+63
+26
+63
+26
+63
+26
+1
+1
+26
+63
+63
+1
+63
+26
+26
+26
+63
+26
+1
+26
+1
+1
+26
+63
+63
+1
+63
+26
+1
+26
+63
+26
+26
+63
+63</pre>
+  <pre id="testcase5_input">100
+824 880 880 691 824 691 880 230 926 926 230 691 691 926 230 230 691 880 824 880 824 824 926 926 691 880 824 926 926 230 691 926 880 691 880 926 230 230 824 230 880 880 880 824 691 824 824 880 230 824 230 691 824 230 926 824 926 691 824 926 230 824 230 230 691 880 926 880 880 230 230 926 691 880 926 230 880 691 691 691 880 824 880 691 880 926 880 824 880 824 230 926 880 880 926 824 824 880 880 824</pre>
+  <pre id="testcase5_output">36
+57
+57
+19
+36
+19
+57
+1
+83
+83
+1
+19
+19
+83
+1
+1
+19
+57
+36
+57
+36
+36
+83
+83
+19
+57
+36
+83
+83
+1
+19
+83
+57
+19
+57
+83
+1
+1
+36
+1
+57
+57
+57
+36
+19
+36
+36
+57
+1
+36
+1
+19
+36
+1
+83
+36
+83
+19
+36
+83
+1
+36
+1
+1
+19
+57
+83
+57
+57
+1
+1
+83
+19
+57
+83
+1
+57
+19
+19
+19
+57
+36
+57
+19
+57
+83
+57
+36
+57
+36
+1
+83
+57
+57
+83
+36
+36
+57
+57
+36</pre>
+  <pre id="testcase6_input">100
+749 736 698 127 587 488 917 606 483 488 222 137 637 985 373 248 854 839 364 501 400 212 557 877 199 929 154 656 631 666 511 509 298 298 637 521 811 72 147 240 870 44 364 698 242 594 612 749 357 7 152 548 265 171 242 38 815 582 374 456 209 311 177 882 48 281 501 410 752 666 883 357 882 542 221 501 881 450 736 199 471 257 208 920 445 990 587 782 744 290 281 101 588 369 677 606 749 672 101 393</pre>
+  <pre id="testcase6_output">81
+78
+76
+8
+61
+49
+96
+65
+48
+49
+21
+9
+69
+99
+39
+25
+89
+88
+36
+51
+42
+19
+59
+91
+15
+98
+12
+71
+68
+72
+55
+54
+31
+31
+69
+56
+86
+5
+10
+22
+90
+3
+36
+76
+23
+64
+67
+81
+34
+1
+11
+58
+27
+13
+23
+2
+87
+60
+40
+46
+18
+33
+14
+93
+4
+28
+51
+43
+84
+72
+95
+34
+93
+57
+20
+51
+92
+45
+78
+15
+47
+26
+17
+97
+44
+100
+61
+85
+80
+30
+28
+6
+63
+38
+75
+65
+81
+74
+6
+41</pre>
+  <pre id="testcase7_input">12
+447 871 871 284 871 868 871 871 871 575 871 875</pre>
+  <pre id="testcase7_output">2
+5
+5
+1
+5
+4
+5
+5
+5
+3
+5
+12</pre>
+  <pre id="testcase8_input">5
+896 778 878 931 896</pre>
+  <pre id="testcase8_output">3
+1
+2
+5
+3</pre>
+  <pre id="testcase9_input">38
+622 440 614 79 805 73 334 937 415 218 121 781 799 118 498 146 22 93 664 719 889 67 449 879 677 421 243 618 46 651 857 844 787 781 85 880 634 923</pre>
+  <pre id="testcase9_output">21
+16
+19
+5
+31
+4
+13
+38
+14
+11
+9
+27
+30
+8
+18
+10
+1
+7
+24
+26
+36
+3
+17
+34
+25
+15
+12
+20
+2
+23
+33
+32
+29
+27
+6
+35
+22
+37</pre>
+  <pre id="testcase10_input">13
+175 175 175 175 175 175 175 175 175 175 175 175 175</pre>
+  <pre id="testcase10_output">1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1</pre>
+  <pre id="testcase11_input">45
+756 444 228 658 563 876 563 876 367 910 80 674 127 3 661 34 70 345 234 605 590 20 831 890 364 3 955 3 627 655 690 75 605 364 367 111 858 690 34 586 756 70 586 68 634</pre>
+  <pre id="testcase11_output">37
+21
+14
+32
+22
+41
+22
+41
+19
+44
+11
+34
+13
+1
+33
+5
+8
+16
+15
+27
+26
+4
+39
+43
+17
+1
+45
+1
+29
+31
+35
+10
+27
+17
+19
+12
+40
+35
+5
+24
+37
+8
+24
+7
+30</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 22 回日本情報オリンピック JOI 2022/2023 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

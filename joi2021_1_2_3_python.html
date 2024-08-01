@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>次の文字 (Next Character) [Python]</title>
+  </head>
+
+  <body>
+    <h1>次の文字 (Next Character) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．
+</p>
+
+<p>
+ビーバーのビ太郎は，<var>N - 1</var> 回の動作を行った．<var>i</var> 回目 (<var>1 ≦ i ≦ N - 1</var>) の動作は，次のように行われた．
+</p>
+
+<ul>
+<li><var>S</var> の <var>i + 1</var> 文字目を確認する．さらに，<var>S</var> の <var>i + 1</var> 文字目が <code>J</code> であったならば，<var>S</var> の <var>i</var> 文字目を黒板に書く．</li>
+</ul>
+
+<p>
+<var>N - 1</var> 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>2 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．</li>
+<li><var>N</var> は整数である．</li>
+<li>黒板に書かれた文字が <var>1</var> つ以上存在する．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>N - 1</var> 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+6
+IOJOIJ
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+O
+I
+</pre>
+
+<p>
+ビ太郎は，以下のように <var>5</var> 回の動作を行った．
+</p>
+
+<ul>
+<li><var>1</var> 回目の動作では，<var>S</var> の <var>2</var> 文字目を確認した．</li>
+<li><var>2</var> 回目の動作では，<var>S</var> の <var>3</var> 文字目を確認した．さらに，<var>S</var> の <var>3</var> 文字目が <code>J</code> であったため，黒板に <var>S</var> の <var>2</var> 文字目である <code>O</code> を書いた．</li>
+<li><var>3</var> 回目の動作では，<var>S</var> の <var>4</var> 文字目を確認した．</li>
+<li><var>4</var> 回目の動作では，<var>S</var> の <var>5</var> 文字目を確認した．</li>
+<li><var>5</var> 回目の動作では，<var>S</var> の <var>6</var> 文字目を確認した．さらに，<var>S</var> の <var>6</var> 文字目が <code>J</code> であったため，黒板に <var>S</var> の <var>5</var> 文字目である <code>I</code> を書いた．</li>
+</ul>
+
+<p>
+したがって，ビ太郎が黒板に書いた <code>O</code> と <code>I</code> を，この順に改行区切りで出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+4
+JJOI
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+J
+</pre>
+
+<p>
+ビ太郎は，<var>1</var> 回目の動作で <var>S</var> の <var>1</var> 文字目である <code>J</code> を黒板に書いた．<var>2</var> 回目と <var>3</var> 回目の動作では，黒板に何も書かなかった．
+</p>
+
+<p>
+したがって，ビ太郎が黒板に書いた <code>J</code> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+7
+IOJOJOJ
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+O
+O
+O
+</pre>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+5
+JJJJJ
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+J
+J
+J
+J
+</pre><hr />
+
+<div class="testcase">
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 21 回日本情報オリンピック JOI 2021/2022 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

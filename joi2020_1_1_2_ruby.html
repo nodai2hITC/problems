@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>JOI ソート (JOI Sort) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>JOI ソート (JOI Sort) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は &#145;<code>J</code>&#146;，&#145;<code>O</code>&#146;，&#145;<code>I</code>&#146; のいずれかである．
+</p>
+
+<p>
+あなたは <var>S</var> の文字を並び替えて次の条件を満たすようにしたい．
+</p>
+
+<ul>
+<li>すべての文字 &#145;<code>J</code>&#146; と文字 &#145;<code>O</code>&#146; の組について &#145;<code>J</code>&#146; が &#145;<code>O</code>&#146; よりも前にある．</li>
+<li>すべての文字 &#145;<code>O</code>&#146; と文字 &#145;<code>I</code>&#146; の組について &#145;<code>O</code>&#146; が &#145;<code>I</code>&#146; よりも前にある．</li>
+<li>すべての文字 &#145;<code>J</code>&#146; と文字 &#145;<code>I</code>&#146; の組について &#145;<code>J</code>&#146; が &#145;<code>I</code>&#146; よりも前にある．</li>
+</ul>
+
+<p>
+文字列 <var>S</var> が与えられたとき，上の条件を満たすように <var>S</var> の文字を並び替えた文字列を出力するプログラムを作成せよ．</p>
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は &#145;<code>J</code>&#146;，&#145;<code>O</code>&#146;，&#145;<code>I</code>&#146; のいずれかである．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+条件を満たすように <var>S</var> の文字を並び替えた文字列を出力せよ．
+</p>
+
+<h2>
+  入出力例</h2>
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">6
+JIOIJO
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">JJOOII
+</pre>
+
+<ul>
+<li>&#145;<code>JIOIJO</code>&#146; の並べ替えである &#145;<code>JJOOII</code>&#146; は条件を満たす．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">4
+OOOI
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">OOOI
+</pre>
+
+<ul>
+<li>与えられた文字列がすでに条件を満たしているかもしれない．&#145;<code>J</code>&#146;，&#145;<code>O</code>&#146;，&#145;<code>I</code>&#146; がすべて含まれているとは限らない．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">10
+OIJJJIOIOI
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">JJJOOOIIII
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">100
+IIOOIJIJOJOIJOIIOIIIOOJJJJJJJJJJOJJOIJOIJIIOIIIJIOOIOJJOJJIIOOOJOOIJOOJIJJIIIIIIIOJOJIJOJOIOJIOOOOIO</pre>
+  <pre id="testcase1_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase2_input">100
+OOJIIJIJJIJIOOJOJOOIOIJJIIJIJIIJJJJOOOIOOIJJIIJOJJIJOIOIJIOOIIIOIOJIIOOOOIJJIOJJIOJOJJOOIIOOOJIOJIOJ</pre>
+  <pre id="testcase2_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase3_input">100
+OJJIIJJJIJJJOOJJOJIJOOJOOOIJOJJOOJOJJJIJOIJIIJJJJIJJJJJIOJOOOJJJJJJOIJJOJIJJIOIJOIOOOJOJOOJIOIIJJIOJ</pre>
+  <pre id="testcase3_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase4_input">60
+OIIOIJIIOOOJIOIJIOJIOOOIIIIIIIIIIOIIIOIJOOJJOOIIIJJJIOIIIOOO</pre>
+  <pre id="testcase4_output">JJJJJJJJJJOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase5_input">30
+JJOOJIOJJJOJOJOIIIJIIIOOIIOIJO</pre>
+  <pre id="testcase5_output">JJJJJJJJJJOOOOOOOOOOIIIIIIIIII</pre>
+  <pre id="testcase6_input">100
+OIIIIIOIOIIOOIOOOOIOOIIOIOIIIIIIIOIIIOOOOOIOIOOOOIOIOIOIOIOIIIOOOIOOIIOOIOIIIOOOOOIIIIIOOOIOIOIOIOOI</pre>
+  <pre id="testcase6_output">OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase7_input">100
+JIIIJIIIIIJIIIJIJIIJIJIIIJIIIIIIIIJIIIJJIIIIIJIIIIJJIIJJIIJIJIIIIIIJIJJIIIIIJIIIIIIIIJJJJJIIJJIIJIII</pre>
+  <pre id="testcase7_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase8_input">100
+JJOJJJJJOJJJOJJJOOJOJJJOOJJJJJJJJJJJOJJJJJJJJOJJJJJJJJJJJJJOJJJJJJJOJOJJJJJJJJJOJJOJOJOJOJJJJJJJJOOJ</pre>
+  <pre id="testcase8_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOO</pre>
+  <pre id="testcase9_input">100
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</pre>
+  <pre id="testcase9_output">OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</pre>
+  <pre id="testcase10_input">1
+J</pre>
+  <pre id="testcase10_output">J</pre>
+  <pre id="testcase11_input">100
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ</pre>
+  <pre id="testcase11_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase12_input">75
+IIIIIIIIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOOOOOOJJJJJJJJJJJJJJJJJJJJJJJJJ</pre>
+  <pre id="testcase12_output">JJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase13_input">100
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ</pre>
+  <pre id="testcase13_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase14_input">3
+IOJ</pre>
+  <pre id="testcase14_output">JOI</pre>
+  <pre id="testcase15_input">100
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIJ</pre>
+  <pre id="testcase15_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase16_input">100
+JOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJ</pre>
+  <pre id="testcase16_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 20 回日本情報オリンピック JOI 2020/2021 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

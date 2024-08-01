@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>JOI エディタ (JOI Editor) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>JOI エディタ (JOI Editor) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+ただ奇妙な発明で知られる JOI 社は，最近 JOI Editor というテキストエディタを開発した．
+</p>
+
+<p>
+このテキストエディタは，<code>j</code>，<code>o</code>，<code>i</code> の <var>3</var> つのキーで操作することができる．<code>j</code>，<code>o</code>，<code>i</code> のいずれかのキーを押すと，そのキーに書かれている英小文字が入力されるが，同じ英小文字が <var>2</var> つ隣接すると，ただちにその <var>2</var> 文字が対応する英大文字に置換される．すなわち，<code>jj</code> は <code>JJ</code> に，<code>oo</code> は <code>OO</code> に，<code>ii</code> は <code>II</code> に置換される．
+</p>
+
+<p>
+例えば，<code>j</code>，<code>o</code>，<code>o</code>，<code>o</code>，<code>i</code> のキーをこの順番で押すと，<code>j</code>，<code>o</code>，<code>o</code> までキーを押した直後，<var>2</var> 文字目と <var>3</var> 文字目の並びが <code>oo</code> となる．同じ英小文字が <var>2</var> つ隣接しているので，この <var>2</var> 文字がただちに <code>OO</code> に置換される．最終的に JOI Editor に書かれている文字列は <code>jOOoi</code> となる．<code>joOOi</code> や <code>jOOOi</code> とはならないことに注意せよ．
+</p>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．
+</p>
+
+<p>
+<var>N</var> 回キーを押す．<var>S</var> の <var>i</var> 文字目 (<var>1 ≦ i ≦ N</var>) は <var>i</var> 回目に押すキーを表す．最終的に JOI Editor に書かれている文字列を出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．</li>
+<li><var>N</var> は整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+最終的に JOI Editor に書かれている文字列を出力せよ．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+6
+jjoiii
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+JJoIIi
+</pre>
+
+<ul>
+<li><var>1</var> 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>j</code> となる．</li>
+<li><var>2</var> 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>jj</code> となる．
+<ul>
+<li>同じ英小文字が隣接しているので，<code>jj</code> が <code>JJ</code> に置換され，JOI Editor に書かれている文字列は <code>JJ</code> となる．</li>
+</ul>
+</li>
+<li><var>3</var> 回目に押すキーは <code>o</code> のキーである．JOI Editor に書かれている文字列は <code>JJo</code> となる．</li>
+<li><var>4</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoi</code> となる．</li>
+<li><var>5</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoii</code> となる．
+<ul>
+<li>同じ英小文字が隣接しているので，<code>ii</code> が <code>II</code> に置換され，JOI Editor に書かれている文字列は <code>JJoII</code> となる．</li>
+</ul>
+</li>
+<li><var>6</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoIIi</code> となる．</li>
+</ul>
+
+<p>
+最終的に JOI Editor に書かれている文字列は <code>JJoIIi</code> であるので，<code>JJoIIi</code> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+6
+joijoi
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+joijoi
+</pre>
+
+<ul>
+<li>この例では置換は行われない．最終的に JOI Editor に書かれている文字列は <code>joijoi</code> であるので，<code>joijoi</code> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+7
+ooooooo
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+OOOOOOo
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">98
+iiiooojjjoooiiiiooojjjjoooiiijjjiiiooooiiijjjjiiijjjoooojjjiiiijjjooooiiiioooojjjjooooiiiijjjjiiii</pre>
+  <pre id="testcase1_output">IIiOOoJJjOOoIIIIOOoJJJJOOoIIiJJjIIiOOOOIIiJJJJIIiJJjOOOOJJjIIIIJJjOOOOIIIIOOOOJJJJOOOOIIIIJJJJIIII</pre>
+  <pre id="testcase2_input">1
+j</pre>
+  <pre id="testcase2_output">j</pre>
+  <pre id="testcase3_input">2
+ij</pre>
+  <pre id="testcase3_output">ij</pre>
+  <pre id="testcase4_input">100
+iiiiiiojiooijjjoijijiiiioioijjjoijjoioiooiojjooojjijojiojoioijoijoiojojiojijoioojoioijijojjoioojoooi</pre>
+  <pre id="testcase4_output">IIIIIIojiOOiJJjoijijIIIIoioiJJjoiJJoioiOOioJJOOoJJijojiojoioijoijoiojojiojijoiOOjoioijijoJJoiOOjOOoi</pre>
+  <pre id="testcase5_input">100
+ijjoioooijjiojjoiojojjojjijiioojoijojioioiojjiiijooojoooioiojiojojooioiijoojjiijiiojjjjoioijioijjioo</pre>
+  <pre id="testcase5_output">iJJoiOOoiJJioJJoiojoJJoJJijIIOOjoijojioioioJJIIijOOojOOoioiojiojojOOioIIjOOJJIIjIIoJJJJoioijioiJJiOO</pre>
+  <pre id="testcase6_input">99
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii</pre>
+  <pre id="testcase6_output">IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIi</pre>
+  <pre id="testcase7_input">100
+jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</pre>
+  <pre id="testcase7_output">JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ</pre>
+  <pre id="testcase8_input">100
+iijjiiijjjjjjoojojjjojjiooiiiojoiiiiojjjijjjjjjoooiojjjjijioooiiooojjjjiijiiiiiooiooooooooooijooooii</pre>
+  <pre id="testcase8_output">IIJJIIiJJJJJJOOjoJJjoJJiOOIIiojoIIIIoJJjiJJJJJJOOoioJJJJijiOOoIIOOoJJJJIIjIIIIiOOiOOOOOOOOOOijOOOOII</pre>
+  <pre id="testcase9_input">100
+jjjjiiijiiijjooooojjjooiiiooojjiojjojjjjoojjjjoojjjoojoiojjiiijjoooooiojjjjjiijjooijjjiiiioooooiiioi</pre>
+  <pre id="testcase9_output">JJJJIIijIIiJJOOOOoJJjOOIIiOOoJJioJJoJJJJOOJJJJOOJJjOOjoioJJIIiJJOOOOoioJJJJjIIJJOOiJJjIIIIOOOOoIIioi</pre>
+  <pre id="testcase10_input">100
+oojjijjjjiijjioooooooiiiioooooiiijjjjiiiiiiojjjjiiiooojjjjjjijjjjiijjiiiiiiioooioooiiiiijiiiiioiijjj</pre>
+  <pre id="testcase10_output">OOJJiJJJJIIJJiOOOOOOoIIIIOOOOoIIiJJJJIIIIIIoJJJJIIiOOoJJJJJJiJJJJIIJJIIIIIIiOOoiOOoIIIIijIIIIioIIJJj</pre>
+  <pre id="testcase11_input">100
+jooooijjjjoooiiiiijjjjjoojooooooojjiijjjjoojjjojjoijjjjjiiojjjjjojjjjjjoojjoooooooooiiijiioojiijoooo</pre>
+  <pre id="testcase11_output">jOOOOiJJJJOOoIIIIiJJJJjOOjOOOOOOoJJIIJJJJOOJJjoJJoiJJJJjIIoJJJJjoJJJJJJOOJJOOOOOOOOoIIijIIOOjIIjOOOO</pre>
+  <pre id="testcase12_input">100
+ooojjjooooooooooooooooooooooiiiiiiijjiiiiiiijjjooojjjoooojjjjjjjjjojjjjjjoiiooiiojjiooooiiiiiiiiijjj</pre>
+  <pre id="testcase12_output">OOoJJjOOOOOOOOOOOOOOOOOOOOOOIIIIIIiJJIIIIIIiJJjOOoJJjOOOOJJJJJJJJjoJJJJJJoIIOOIIoJJiOOOOIIIIIIIIiJJj</pre>
+  <pre id="testcase13_input">100
+jjojjjjjjjjjjjjjiiiijjjjjjjjjjjjjjjjooooooooooooojiiiiiiiijjjooooiiiiiiioooooooooooiiiiiiiiiiiiiiiij</pre>
+  <pre id="testcase13_output">JJoJJJJJJJJJJJJjIIIIJJJJJJJJJJJJJJJJOOOOOOOOOOOOojIIIIIIIIJJjOOOOIIIIIIiOOOOOOOOOOoIIIIIIIIIIIIIIIIj</pre>
+  <pre id="testcase14_input">100
+jjjjjjjjjjjjjjjjjjjjjjjjjjiiiiiiiiiiiiooooooooooooooooooooooooooooiiiiiiiiiiiiiiiiiiiioooooooooooooo</pre>
+  <pre id="testcase14_output">JJJJJJJJJJJJJJJJJJJJJJJJJJIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOO</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 22 回日本情報オリンピック JOI 2022/2023 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

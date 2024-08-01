@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>最長昇順連続部分列 (Longest Ascending Contiguous Subsequence) [Python]</title>
+  </head>
+
+  <body>
+    <h1>最長昇順連続部分列 (Longest Ascending Contiguous Subsequence) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ <var>N</var> の正整数列 <var>A=(A_1, A_2, ..., A_N)</var> が与えられる．正整数列 <var>A</var> の連続部分列の中で昇順に並んでいるもののうち，最長のものの長さを求めよ．
+</p>
+
+<p>
+すなわち，<var>A_l ≦ A_{l+1} ≦ ... ≦ A_r</var> を満たすような <var>2</var> つの整数 <var>l, r</var> ( <var>1 ≦ l ≦ r ≦ N</var> ) について，<var>r-l+1</var> の最大値を求めよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>1 ≦ A_i ≦  2020</var> (<var>1 ≦ i ≦ N</var>)．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_N</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+正整数列 <var>A</var> の連続部分列の中で昇順に並んでいるもののうち，最長のものの長さを <var>1</var> 行で出力せよ．
+</p>
+
+<h2>
+  入出力例</h2>
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">10
+3 1 4 1 5 9 2 6 5 3
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">3
+</pre>
+
+<ul>
+<li>正整数列 <var>A</var> の <var>4</var> 項目から <var>6</var> 項目までに対応する連続部分列は <var>1, 5, 9</var> であり，これは昇順である．これより長い昇順な連続部分列は存在しない．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">10
+9 8 7 6 5 5 4 3 2 1
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">2
+</pre>
+
+<ul>
+<li>正整数列 <var>A</var> の <var>5</var> 項目から <var>6</var> 項目までに対応する連続部分列は <var>5, 5</var> であり，これは昇順である．これより長い昇順な連続部分列は存在しない．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">9
+1 2 2 12 120 210 202 1010 2020
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">6
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">1
+840</pre>
+  <pre id="testcase1_output">1</pre>
+  <pre id="testcase2_input">5
+1758 95 522 1645 969</pre>
+  <pre id="testcase2_output">3</pre>
+  <pre id="testcase3_input">3
+336 1396 1013</pre>
+  <pre id="testcase3_output">2</pre>
+  <pre id="testcase4_input">10
+1861 1244 1790 751 371 286 723 874 1046 1052</pre>
+  <pre id="testcase4_output">5</pre>
+  <pre id="testcase5_input">51
+724 192 819 546 1230 1009 1407 1079 881 502 1666 733 592 1595 484 391 783 946 284 1683 320 1092 228 1844 117 1198 1536 402 232 412 839 2012 384 576 25 1392 1348 1314 250 1204 1558 731 1053 1308 383 639 1348 1381 869 1945 1369</pre>
+  <pre id="testcase5_output">4</pre>
+  <pre id="testcase6_input">27
+175 222 230 536 697 960 963 1125 1341 1429 1556 1569 1735 1753 1527 1751 581 1035 1069 1560 1751 1718 1647 675 1194 906 160</pre>
+  <pre id="testcase6_output">14</pre>
+  <pre id="testcase7_input">86
+1080 1887 1603 52 1772 1847 1449 494 993 917 737 810 1080 930 1984 1354 1282 1476 1690 746 1006 17 1676 1332 1171 914 1649 1928 1940 1525 576 1097 1050 917 887 1407 17 144 1504 1049 525 979 413 5 47 154 199 221 330 363 426 427 449 494 495 518 653 669 686 731 738 761 819 938 1000 1007 1019 1089 1112 1122 1178 1181 1193 1214 1310 1331 1391 1475 1564 1694 1740 1804 1871 1935 1977 2019</pre>
+  <pre id="testcase7_output">43</pre>
+  <pre id="testcase8_input">26
+1573 1566 259 527 576 446 1149 594 220 24 463 1810 444 1356 10 1887 1941 64 364 25 1168 1550 1523 1636 1245 1825</pre>
+  <pre id="testcase8_output">3</pre>
+  <pre id="testcase9_input">95
+10 165 223 260 289 349 360 411 474 486 495 515 515 553 655 726 742 801 812 834 868 1010 1021 1098 1125 1151 1160 1227 1230 1319 1327 1377 1410 1477 1477 1534 1586 1613 1638 1650 1672 1736 1772 1871 1890 1925 1962 2010 902 836 1752 1921 1982 926 963 774 1379 1823 1674 1007 985 912 1381 1576 736 361 1529 1806 1845 416 236 1777 2004 565 886 1238 1960 1459 425 1474 1616 683 302 527 154 1917 1032 1963 751 419 2012 1316 869 1752 1393</pre>
+  <pre id="testcase9_output">48</pre>
+  <pre id="testcase10_input">25
+1849 1010 1343 842 1509 1595 510 509 350 330 1264 993 79 179 415 512 543 675 748 1024 1367 1476 1836 1886 1950</pre>
+  <pre id="testcase10_output">13</pre>
+  <pre id="testcase11_input">100
+57 609 940 1638 633 887 572 499 733 503 1389 1659 319 876 1946 857 162 569 1361 1030 1435 600 1803 1481 1732 891 685 930 1569 1657 574 371 115 1966 1361 735 44 1552 76 561 1508 13 1567 747 917 1466 1289 1470 252 11 1581 810 1932 437 1569 673 1767 198 853 124 46 1757 505 106 1387 725 1508 2002 1790 856 364 1978 1908 797 594 893 719 1321 594 1416 1194 1855 496 1340 1797 1901 1819 248 190 1870 99 679 545 1570 455 642 294 254 329 16</pre>
+  <pre id="testcase11_output">4</pre>
+  <pre id="testcase12_input">100
+46 66 67 133 152 160 204 271 313 335 367 378 428 539 561 647 689 800 867 870 902 926 1094 1111 1145 1158 1198 1299 1322 1349 1389 1413 1471 1488 1520 1543 1624 1675 1694 1720 1732 1851 1858 1884 1921 1942 1944 1976 1983 1999 2020 1683 1639 1197 1529 1605 269 1549 1969 1676 233 1313 267 879 220 211 451 440 1207 352 889 1691 2 1597 1509 685 257 1155 1653 967 871 1034 1155 339 339 1806 1841 745 792 1560 1352 1938 244 830 1635 1879 1010 1388 1744 619</pre>
+  <pre id="testcase12_output">51</pre>
+  <pre id="testcase13_input">100
+1594 583 938 803 1023 1248 449 496 23 2003 170 953 772 1850 990 659 488 1588 390 468 1311 1006 173 1337 1778 1888 301 933 899 1323 190 1459 759 164 1846 1351 1334 790 520 16 1019 679 1938 1512 1511 2014 1839 940 914 411 3 24 60 91 99 183 205 211 231 251 274 293 308 356 357 365 566 614 625 668 716 758 761 921 961 1109 1111 1204 1215 1357 1363 1453 1499 1523 1533 1540 1562 1595 1599 1600 1693 1749 1766 1794 1815 1879 1893 1954 1978 1989</pre>
+  <pre id="testcase13_output">50</pre>
+  <pre id="testcase14_input">100
+1985 1976 1976 1968 1958 1941 1905 1902 1879 1839 1790 1784 1779 1776 1772 1762 1720 1709 1676 1673 1666 1643 532 1586 1553 1531 1514 1502 1481 1479 1108 1476 1474 121 1433 1433 1410 1402 1372 1364 1345 1332 1292 1287 1231 1222 37 1211 1167 1130 1098 1093 1087 1071 499 1062 274 995 972 961 955 415 929 894 878 862 849 819 815 801 798 770 769 743 734 705 670 645 637 587 538 481 457 439 430 390 350 320 299 252 209 196 187 170 163 154 116 108 106 25</pre>
+  <pre id="testcase14_output">3</pre>
+  <pre id="testcase15_input">100
+3 19 70 111 120 125 135 143 151 201 201 215 222 237 258 249 280 293 307 316 187 328 341 345 359 376 359 221 417 466 466 473 476 477 504 586 616 783 785 819 826 838 870 886 917 939 994 1023 1077 554 1121 1128 1138 1171 1214 1249 1337 1348 1366 1084 1372 1411 1421 1423 1428 1471 1485 1516 1518 1528 1533 1543 1569 1575 1581 1600 1623 1633 1644 1677 1722 1742 1783 1789 1792 1797 1827 1828 1836 1850 1866 1866 1882 1890 1918 174 1970 1980 1982 1993</pre>
+  <pre id="testcase15_output">36</pre>
+  <pre id="testcase16_input">100
+1182 141 1608 673 1764 1746 400 1688 1056 1650 1056 256 1357 247 1732 161 1858 1714 824 1889 590 1530 238 1409 927 1650 977 1911 699 1883 1120 639 1302 1589 280 413 1289 1460 1689 876 221 871 1191 1574 1998 680 2015 47 143 1187 1892 403 462 489 3 536 333 1406 301 573 665 1539 597 1994 1315 492 520 399 676 907 70 717 1908 1269 278 769 766 229 1703 1739 1021 1967 257 152 1943 1938 1369 1991 242 1824 1822 1493 1693 673 1879 1180 563 2015 743 2020</pre>
+  <pre id="testcase16_output">5</pre>
+  <pre id="testcase17_input">100
+17 45 88 149 193 223 240 290 411 446 458 511 569 591 619 628 638 658 761 782 798 810 835 878 887 933 1044 1059 1132 1139 1178 1187 1219 1340 1353 1525 1653 1658 1666 1688 1694 1717 1835 1838 1850 1910 1914 1975 1984 1987 2001 1386 65 493 349 1510 1292 1360 362 565 1418 1478 1831 828 535 1912 905 1417 1682 923 1726 694 574 528 1148 608 1703 1189 1106 63 657 236 820 1113 1549 1198 112 594 1819 1875 1147 1774 1926 1676 1231 1689 55 22 248 278</pre>
+  <pre id="testcase17_output">51</pre>
+  <pre id="testcase18_input">100
+384 1420 1532 665 380 1660 1334 1318 1296 213 1877 1697 87 696 486 1601 1317 1417 1268 1119 621 1009 681 80 1005 491 303 1139 1603 1066 520 1696 369 542 869 912 1947 1259 1464 79 1345 1761 903 1674 1880 1377 86 598 2003 1678 41 42 56 63 75 186 201 222 257 281 323 378 420 487 718 734 777 790 827 839 911 972 1078 1079 1087 1089 1153 1155 1155 1232 1249 1268 1299 1316 1329 1439 1516 1526 1578 1622 1652 1671 1691 1721 1805 1922 1953 1969 1998 2016</pre>
+  <pre id="testcase18_output">50</pre>
+  <pre id="testcase19_input">100
+1986 1935 1910 1906 1851 1820 1810 1808 1789 1788 1769 1732 1697 1691 1690 1664 1648 1100 1627 1620 1614 1613 1581 196 1534 1534 1534 1532 1531 1524 1509 1480 1447 1390 1352 1308 1297 1243 1242 1239 1228 1200 1209 1180 1148 1142 1133 813 1118 1082 1070 1066 1010 981 965 934 899 852 829 814 800 793 762 758 753 744 712 707 701 692 657 650 641 629 621 578 538 435 392 382 334 331 282 274 261 246 215 183 150 147 127 117 107 23 88 61 38 15 14 13</pre>
+  <pre id="testcase19_output">4</pre>
+  <pre id="testcase20_input">100
+2 17 65 58 75 101 122 37 150 152 155 173 165 191 192 236 291 304 353 356 196 381 393 398 413 423 470 555 564 568 577 584 591 609 628 632 693 715 731 776 788 492 808 859 894 917 921 923 346 966 969 971 986 989 1018 1052 1095 1118 1121 1168 1180 1180 1182 1190 1191 1249 1254 1273 1286 1305 1314 1317 1333 1350 659 1373 616 1491 1498 1508 1557 1574 1589 1598 1613 1661 1664 1684 1196 1744 1789 1842 1858 1860 1867 1870 1901 1903 1989 2009</pre>
+  <pre id="testcase20_output">26</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 19 回日本情報オリンピック JOI 2019/2020 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

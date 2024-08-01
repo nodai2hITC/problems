@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>画数数え (Stroke Count) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>画数数え (Stroke Count) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+文字 <code>j</code> の画数は <var>2</var> 画，文字 <code>o</code> の画数は <var>1</var> 画，文字 <code>i</code> の画数は <var>2</var> 画である．
+</p>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．
+</p>
+
+<p>
+<var>S</var> の各文字の画数の合計を求めよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．</li>
+<li><var>N</var> は整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>S</var> の各文字の画数の合計を，単位 (画) を省いて出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2024-practice">練習問題やその解答例</a>を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+6
+jjooii
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+10
+</pre>
+
+<ul>
+<li><code>jjooii</code> の <var>1</var> 文字目は <code>j</code> であり，その画数は <var>2</var> 画である．</li>
+<li><code>jjooii</code> の <var>2</var> 文字目は <code>j</code> であり，その画数は <var>2</var> 画である．</li>
+<li><code>jjooii</code> の <var>3</var> 文字目は <code>o</code> であり，その画数は <var>1</var> 画である．</li>
+<li><code>jjooii</code> の <var>4</var> 文字目は <code>o</code> であり，その画数は <var>1</var> 画である．</li>
+<li><code>jjooii</code> の <var>5</var> 文字目は <code>i</code> であり，その画数は <var>2</var> 画である．</li>
+<li><code>jjooii</code> の <var>6</var> 文字目は <code>i</code> であり，その画数は <var>2</var> 画である．</li>
+</ul>
+
+<ul>
+<li>これらより，文字列 <code>jjooii</code> の各文字の画数の合計は <var>10</var> 画である．したがって，<var>10</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+1
+i
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+2
+</pre>
+
+<ul>
+<li><code>i</code> の画数は <var>2</var> 画であるため，<var>2</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+13
+joiojiioijoio
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+21
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">1
+j</pre>
+  <pre id="testcase1_output">2</pre>
+  <pre id="testcase2_input">1
+o</pre>
+  <pre id="testcase2_output">1</pre>
+  <pre id="testcase3_input">10
+jiiioojojo</pre>
+  <pre id="testcase3_output">16</pre>
+  <pre id="testcase4_input">10
+ojjiijjoio</pre>
+  <pre id="testcase4_output">17</pre>
+  <pre id="testcase5_input">50
+jjojiojjioijijiiooojjiiioijjojojojiojiiijojjoooojo</pre>
+  <pre id="testcase5_output">83</pre>
+  <pre id="testcase6_input">50
+iiojoiiiiiiojjooooioooooijjoiooiiiioiijojiiioiiioj</pre>
+  <pre id="testcase6_output">81</pre>
+  <pre id="testcase7_input">100
+jjiioijioooiooojooiiooiijooojjioiojijojoooijijojijiiioioijiiojijioojooojjoooiiioijjiijooojiojiiiiioj</pre>
+  <pre id="testcase7_output">162</pre>
+  <pre id="testcase8_input">100
+jooiojijjoijiiiooiojioojojjjooojojioojoojojjooiiijjiiiooiijojioijjooiojiijojijijiooiiijojioioojjiioi</pre>
+  <pre id="testcase8_output">164</pre>
+  <pre id="testcase9_input">100
+ijojijoiiiooojiojjijoojoiioojjojjijjjoiioiiiijjiiooiiijoijiiijjjiiiijoiiojojijiojiioojoiijjiojiiojoo</pre>
+  <pre id="testcase9_output">172</pre>
+  <pre id="testcase10_input">100
+ijijojjijioijioojjioijiojiojojoojjjjoojoioiojoiioiiijojijiooioiijojjjjjjoioojioojjjoiioijiioooojoooo</pre>
+  <pre id="testcase10_output">163</pre>
+  <pre id="testcase11_input">100
+ojojiijjiojiojjiijijijojoijijjjojjjoijjoiojiooiijjijojjojoojjjioiiooooooojoiiiiiojojjioiojiijooojooi</pre>
+  <pre id="testcase11_output">166</pre>
+  <pre id="testcase12_input">100
+ioioooiiojijjjijojjiojjjoioijijoojjjoiiojoooooijojjjjooojoioooijojjoiioiijoojiijijjiijjjoijjoiijoijo</pre>
+  <pre id="testcase12_output">165</pre>
+  <pre id="testcase13_input">100
+oiijijoojijiiooijjjiojiijijiiioooioojjijioojjioijijiooiojojjioiijjiojijjojjjojijojioiiooiiiojojojiio</pre>
+  <pre id="testcase13_output">170</pre>
+  <pre id="testcase14_input">100
+jioiojooiiiooiioioioijiijjjjoiijjiooijijojjiiiioojjijjooijoiiojojooijjojjoooijjjiiiioooooiioojjiiiio</pre>
+  <pre id="testcase14_output">166</pre>
+  <pre id="testcase15_input">100
+ooojoiioiijojjioiojjoijjiojiijiioiooiojojjjjiooiojojojijjoiiojoojjiijjojjjoojioojooojjjjiooioioiijoj</pre>
+  <pre id="testcase15_output">163</pre>
+  <pre id="testcase16_input">100
+jjoojooijiojooiioiijioojojoiioooioooijiioooioioijoiiijioioiiijoijjoojoijooiiijoiiijjiooioiijojioiijj</pre>
+  <pre id="testcase16_output">162</pre>
+  <pre id="testcase17_input">100
+oiooiijiiojiiijjooojjooooojjojjijjioooijooiojojoioioijijiojjijiiijjoioiiijijijoioooojioojooiiijioijo</pre>
+  <pre id="testcase17_output">163</pre>
+  <pre id="testcase18_input">100
+joojoiojojiioojioiiiiioojjjjoijioijoiiojjjiioijjijoiiiojijjjojjiooiijoiiioojjjoojjjjjiijijiojijoiooi</pre>
+  <pre id="testcase18_output">171</pre>
+  <pre id="testcase19_input">100
+oojijiojoiijoojijjjjjoiijijjojiijoioiiojojjioojjiiiiioiioijijjoiioijiiijoioooiiojojooiojjjjoioojjjji</pre>
+  <pre id="testcase19_output">170</pre>
+  <pre id="testcase20_input">100
+jjojjiioojiioijjiojjijjooijiiijoojjoojiijoiiojooooioooiiijjioojioooiioiiioiojoojioijoioiijjiiiojoooj</pre>
+  <pre id="testcase20_output">163</pre>
+  <pre id="testcase21_input">100
+oiioijoijjjijjjjoiijojioijojooijojooooijoojiooojoooijoojjiiiojjjoojjooooiiijojoiooooiojiiiooijojiiii</pre>
+  <pre id="testcase21_output">159</pre>
+  <pre id="testcase22_input">100
+oiiioijjjjiojjiojjjjojiijojoooijjoojijjioiijiiiioioijioojiioojjjijjjjjoooojoijooijjijoojiijiiiioijoi</pre>
+  <pre id="testcase22_output">171</pre>
+  <pre id="testcase23_input">100
+jiiijoijiijjojiiiiojjjioiooiiojjojoojiojjjioijooooojjijoioiiiojiijjjijjiiooioiioioiiiijiijjiooiijjio</pre>
+  <pre id="testcase23_output">172</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 23 回日本情報オリンピック JOI 2023/2024 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

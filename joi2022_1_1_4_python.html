@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>二人三脚 (Three-Legged Race) [Python]</title>
+  </head>
+
+  <body>
+    <h1>二人三脚 (Three-Legged Race) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+JOI 高校には <var>2N</var> (= <var>2 ✕ N</var>) 人の生徒がおり，<var>1</var> から <var>2N</var> までの番号が付けられている．
+</p>
+
+<p>
+来月 JOI 高校では運動会が開催され，その中の競技「二人三脚」では，<var>2N</var> 人の生徒が <var>N</var> 組の <var>2</var> 人組に分かれレースを行う．
+</p>
+
+<p>
+組には <var>1</var> から <var>N</var> までの番号が付けられており，生徒 <var>i</var> (<var>1 ≦ i ≦ 2N</var>) は組 <var>A_i</var> に属している．
+</p>
+
+<p>
+あなたはどの生徒がどの組に属しているかの表を作ったが，どういうわけか，生徒 <var>2N</var> がどの組に属しているか分からなくなってしまった．
+</p>
+
+<p>
+<var>A_1, A_2, …, A_{2N-1}</var> が与えられるので，生徒 <var>2N</var> が属する組の番号 <var>A_{2N}</var> を求めよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>1 ≦ A_i ≦ N</var> (<var>1 ≦ i ≦ 2N - 1</var>)．</li>
+<li>どの <var>x</var> (<var>1 ≦ x ≦ N</var>) も <var>A_1, A_2, …, A_{2N-1}</var> の中に <var>2</var> 回までしか出現しない．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>…</var> <var>A_{2N-1}</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+生徒 <var>2N</var> が属する組の番号 <var>A_{2N}</var> を出力せよ．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+4
+1 4 2 1 3 4 3
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+2
+</pre>
+
+<ul>
+<li>組 <var>1</var> は生徒 <var>1</var> と生徒 <var>4</var> の <var>2</var> 人組である．</li>
+<li>組 <var>3</var> は生徒 <var>5</var> と生徒 <var>7</var> の <var>2</var> 人組である．</li>
+<li>組 <var>4</var> は生徒 <var>2</var> と生徒 <var>6</var> の <var>2</var> 人組である．</li>
+</ul>
+
+<p>
+したがって，生徒 <var>8</var> は組 <var>2</var> に属するから，<var>2</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+10
+5 7 1 9 8 8 2 9 6 5 1 3 6 4 7 3 10 2 4
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+10
+</pre>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+1
+1
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+1
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">2
+1 1 2</pre>
+  <pre id="testcase1_output">2</pre>
+  <pre id="testcase2_input">3
+3 3 2 1 1</pre>
+  <pre id="testcase2_output">2</pre>
+  <pre id="testcase3_input">3
+1 1 2 3 2</pre>
+  <pre id="testcase3_output">3</pre>
+  <pre id="testcase4_input">4
+4 3 3 1 2 1 2</pre>
+  <pre id="testcase4_output">4</pre>
+  <pre id="testcase5_input">100
+11 2 88 13 63 61 16 19 61 4 82 93 3 6 74 34 85 39 38 54 96 80 21 42 65 26 98 60 3 86 11 66 5 58 92 29 15 2 95 41 76 9 16 100 83 36 44 81 1 46 17 43 48 46 64 54 88 66 50 80 27 23 18 20 49 24 97 97 20 14 68 79 23 43 65 56 99 74 37 70 62 10 31 79 49 32 85 90 63 39 59 22 77 73 55 82 29 33 33 76 62 27 26 19 35 58 47 35 75 14 40 45 57 12 51 41 69 100 25 75 64 31 81 59 77 15 21 84 67 47 13 72 30 57 71 51 96 83 78 98 17 18 67 68 78 22 30 55 12 28 38 87 56 48 24 89 10 53 70 7 37 5 91 25 69 86 87 34 45 40 32 44 94 60 73 4 53 72 90 93 1 42 94 36 7 50 71 99 8 52 89 52 92 6 8 95 84 91 9</pre>
+  <pre id="testcase5_output">28</pre>
+  <pre id="testcase6_input">77
+22 60 11 67 33 51 39 58 20 21 12 4 22 74 6 64 15 14 2 76 42 46 43 52 72 74 15 46 59 73 49 23 13 26 30 35 50 7 45 30 58 47 44 40 32 55 61 68 26 31 8 38 60 6 25 11 62 37 31 39 19 32 33 3 9 59 63 44 13 3 71 54 57 56 53 76 69 72 66 29 56 38 20 18 40 34 48 27 54 50 66 27 18 57 77 49 28 16 5 75 51 29 5 21 77 1 65 35 42 1 70 10 36 41 75 28 36 70 24 24 71 19 2 9 23 65 43 16 45 41 47 34 12 55 17 4 48 8 67 68 52 25 7 14 10 53 63 62 64 61 37 69 17</pre>
+  <pre id="testcase6_output">73</pre>
+  <pre id="testcase7_input">43
+2 39 43 6 11 21 26 33 12 26 36 17 32 20 12 25 14 18 31 23 33 13 3 22 1 41 8 3 9 4 34 5 29 2 13 16 14 31 4 35 36 21 16 9 25 40 38 30 38 19 1 7 19 27 28 43 18 15 22 8 42 10 32 6 39 41 42 24 40 5 35 11 15 37 17 23 29 20 27 24 10 37 7 30 28</pre>
+  <pre id="testcase7_output">34</pre>
+  <pre id="testcase8_input">8
+8 4 2 4 1 6 2 6 7 5 7 5 8 1 3</pre>
+  <pre id="testcase8_output">3</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 22 回日本情報オリンピック JOI 2022/2023 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

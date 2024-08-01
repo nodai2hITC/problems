@@ -1,5 +1,77 @@
 [OnBrowserJudge](https://github.com/nodai2hITC/onbrowserjudge) を利用した、プログラミング問題集です。
 
+## 情報オリンピック過去問題
+
+3 問制だった 2019, 2020 年の第 1 問～第 3 問は、現在の第 2 問～第 4 問に入れています。
+
+### 情報オリンピック一次予選 第1問
+
+- JOI 2021/2022 一次予選(第1回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_1_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_1_1_python.html)
+- JOI 2021/2022 一次予選(第2回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_2_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_2_1_python.html)
+- JOI 2021/2022 一次予選(第3回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_3_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_3_1_python.html)
+- JOI 2022/2023 一次予選(第1回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_1_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_1_1_python.html)
+- JOI 2022/2023 一次予選(第2回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_2_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_2_1_python.html)
+- JOI 2022/2023 一次予選(第3回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_3_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_3_1_python.html)
+- JOI 2023/2024 一次予選(第1回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_1_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_1_1_python.html)
+- JOI 2023/2024 一次予選(第2回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_2_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_2_1_python.html)
+- JOI 2023/2024 一次予選(第3回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_3_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_3_1_python.html)
+
+### 情報オリンピック一次予選 第2問
+
+- JOI 2019/2020 一次予選(第1回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_1_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_1_1_python.html)
+- JOI 2019/2020 一次予選(第2回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_2_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_2_1_python.html)
+- JOI 2019/2020 一次予選(第3回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_3_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_3_1_python.html)
+- JOI 2020/2021 一次予選(第1回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_1_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_1_1_python.html)
+- JOI 2020/2021 一次予選(第2回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_2_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_2_1_python.html)
+- JOI 2020/2021 一次予選(第3回)　問題1 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_3_1_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_3_1_python.html)
+- JOI 2021/2022 一次予選(第1回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_1_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_1_2_python.html)
+- JOI 2021/2022 一次予選(第2回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_2_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_2_2_python.html)
+- JOI 2021/2022 一次予選(第3回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_3_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_3_2_python.html)
+- JOI 2022/2023 一次予選(第1回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_1_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_1_2_python.html)
+- JOI 2022/2023 一次予選(第2回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_2_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_2_2_python.html)
+- JOI 2022/2023 一次予選(第3回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_3_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_3_2_python.html)
+- JOI 2023/2024 一次予選(第1回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_1_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_1_2_python.html)
+- JOI 2023/2024 一次予選(第2回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_2_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_2_2_python.html)
+- JOI 2023/2024 一次予選(第3回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_3_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_3_2_python.html)
+
+### 情報オリンピック一次予選 第3問
+
+- JOI 2019/2020 一次予選(第1回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_1_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_1_2_python.html)
+- JOI 2019/2020 一次予選(第2回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_2_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_2_2_python.html)
+- JOI 2019/2020 一次予選(第3回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_3_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_3_2_python.html)
+- JOI 2020/2021 一次予選(第1回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_1_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_1_2_python.html)
+- JOI 2020/2021 一次予選(第2回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_2_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_2_2_python.html)
+- JOI 2020/2021 一次予選(第3回)　問題2 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_3_2_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_3_2_python.html)
+- JOI 2021/2022 一次予選(第1回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_1_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_1_3_python.html)
+- JOI 2021/2022 一次予選(第2回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_2_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_2_3_python.html)
+- JOI 2021/2022 一次予選(第3回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_3_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_3_3_python.html)
+- JOI 2022/2023 一次予選(第1回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_1_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_1_3_python.html)
+- JOI 2022/2023 一次予選(第2回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_2_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_2_3_python.html)
+- JOI 2022/2023 一次予選(第3回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_3_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_3_3_python.html)
+- JOI 2023/2024 一次予選(第1回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_1_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_1_3_python.html)
+- JOI 2023/2024 一次予選(第2回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_2_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_2_3_python.html)
+- JOI 2023/2024 一次予選(第3回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_3_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_3_3_python.html)
+
+### 情報オリンピック一次予選 第4問
+
+- JOI 2019/2020 一次予選(第1回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_1_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_1_3_python.html)
+- JOI 2019/2020 一次予選(第2回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_2_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_2_3_python.html)
+- JOI 2019/2020 一次予選(第3回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2019_1_3_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2019_1_3_3_python.html)
+- JOI 2020/2021 一次予選(第1回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_1_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_1_3_python.html)
+- JOI 2020/2021 一次予選(第2回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_2_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_2_3_python.html)
+- JOI 2020/2021 一次予選(第3回)　問題3 [Ruby](https://nodai2hitc.github.io/problems/joi2020_1_3_3_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2020_1_3_3_python.html)
+- JOI 2021/2022 一次予選(第1回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_1_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_1_4_python.html)
+- JOI 2021/2022 一次予選(第2回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_2_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_2_4_python.html)
+- JOI 2021/2022 一次予選(第3回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2021_1_3_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2021_1_3_4_python.html)
+- JOI 2022/2023 一次予選(第1回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_1_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_1_4_python.html)
+- JOI 2022/2023 一次予選(第2回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_2_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_2_4_python.html)
+- JOI 2022/2023 一次予選(第3回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2022_1_3_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2022_1_3_4_python.html)
+- JOI 2023/2024 一次予選(第1回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_1_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_1_4_python.html)
+- JOI 2023/2024 一次予選(第2回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_2_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_2_4_python.html)
+- JOI 2023/2024 一次予選(第3回)　問題4 [Ruby](https://nodai2hitc.github.io/problems/joi2023_1_3_4_ruby.html) / [Python](https://nodai2hitc.github.io/problems/joi2023_1_3_4_python.html)
+
+----
+
 ## オリジナル問題
 
 ### 難易度
@@ -11,8 +83,6 @@
 - ★★★★★：情報オリンピック二次予選 序盤問題
 
 ※ ☆は0.5個分
-
-----
 
 - ☆ We are ITC! [Ruby](https://nodai2hitc.github.io/problems/we_are_itc_ruby.html) / [Python](https://nodai2hitc.github.io/problems/we_are_itc_python.html)
 - ☆ やまびこ [Ruby](https://nodai2hitc.github.io/problems/echo_ruby.html) / [Python](https://nodai2hitc.github.io/problems/echo_python.html)

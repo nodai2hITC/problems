@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>ハミング距離 (Hamming Distance) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>ハミング距離 (Hamming Distance) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+整数 <var>N</var> と，<var>2</var> つの長さ <var>N</var> の 文字列 <var>S, T</var> が与えられる．<var>S</var> と <var>T</var> のハミング距離を出力せよ．
+</p>
+
+<p>
+ここで <var>S</var> と <var>T</var> のハミング距離とは，<var>S</var> の <var>i</var> 文字目と <var>T</var> の <var>i</var> 文字目が異なるような <var>i</var> (<var>1 ≦ i ≦ N</var>) の個数である．
+</p>
+
+<div style="text-align: center;">
+<img style="max-width: 100%;" alt="" src="./2023-yo1a-t1-fig.png">
+</div>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>N</var> は整数である．</li>
+<li><var>S, T</var> は英小文字からなる長さ <var>N</var> の文字列である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+<var>T</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>S</var> と <var>T</var> のハミング距離を出力せよ．
+</p>
+
+<p>
+結果以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2024-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+3
+joi
+ioi
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+1
+</pre>
+
+<ul>
+<li><var>S</var> と <var>T</var> それぞれの <var>1</var> 文字目は <code>j</code> と <code>i</code> であり，異なる．</li>
+<li><var>S</var> と <var>T</var> それぞれの <var>2</var> 文字目は <code>o</code> と <code>o</code> であり，一致する．</li>
+<li><var>S</var> と <var>T</var> それぞれの <var>3</var> 文字目は <code>i</code> と <code>i</code> であり，一致する．</li>
+<li>よって <code>joi</code> と <code>ioi</code> のハミング距離は <var>1</var> であるので，<var>1</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+5
+march
+april
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+4
+</pre>
+
+<ul>
+<li><code>march</code> と <code>april</code> のハミング距離は <var>4</var> であるので，<var>4</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+6
+sample
+sample
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+0
+</pre>
+
+<ul>
+<li><code>sample</code> と <code>sample</code> のハミング距離は <var>0</var> であるので，<var>0</var> を出力する．</li>
+</ul><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">3
+zqu
+zqu</pre>
+  <pre id="testcase1_output">0</pre>
+  <pre id="testcase2_input">95
+tjxsvodcizoeihwngkltyluakwotiyjlrvktsrwimjzqevtwkvquihhlmmtgwjwmnqtffcoikgxfkuvedqewpqfowtyeuqn
+tjxsvodcizoeihwngkltyluakwotiyjlrvktsrwimjzqevtwkvquihhlmmtgwjwmnqtffcoikgxfkuvedqewpqfowtyeuqn</pre>
+  <pre id="testcase2_output">0</pre>
+  <pre id="testcase3_input">94
+llbkqhjfeguurzyfbkpblsmhhzyxgtmzlozzazdknvrxbybvretjeanvrguaoteqkmyzxjxljurqfcwdaxtngqnmuuikvu
+llbkqhjfeguurzyfbkpblsmhhzyxgtmzlozzazdknvrxbybvretjeanvrguaoteqkmyzxjxljurqfcwdaxtngqnmuuikvu</pre>
+  <pre id="testcase3_output">0</pre>
+  <pre id="testcase4_input">99
+qodrtyimdfukblkzafyyeevszzzcpooivabzfqkydazsqufskriefatjjaefxyfoxgnaexnconalklflyuadhlrbpyxpydfnmtk
+qodrtyimdfukblkzafyyeevszzzcpooivabzfqkydazsqufskriefatjjaefxyfoxgnaexnconalklflyuadhlrbpyxpydfnmtk</pre>
+  <pre id="testcase4_output">0</pre>
+  <pre id="testcase5_input">3
+hvs
+pui</pre>
+  <pre id="testcase5_output">3</pre>
+  <pre id="testcase6_input">76
+qedyexawnbpndlifnthhwsrihzmawweuklwvishgcrevfhqkioqakaorxkxwjbclpitwrmffsxts
+liactwuxkpzjsozlemgztcrzqldgtfkcxlejqyjltyltlgnrpynhmtzpvzctrrwthouzpoubwkyr</pre>
+  <pre id="testcase6_output">74</pre>
+  <pre id="testcase7_input">41
+aikcxiktocpwhxsfxrsbuzgbqivzzygtqjsnjkpot
+zqxmslnregxeckugxuyglbjsztwkoqaxfwizqxhjn</pre>
+  <pre id="testcase7_output">40</pre>
+  <pre id="testcase8_input">100
+zqzmemycipsmdxcynozkvgieeecqgsmwkkxhjuswcimmcmaowbuxecgpetyxugcauvbxvhlhomwkujqgyiwmutxzkourdauiwbfk
+tfeeglewoqwfuhygkfexxqryiabkuupusivpmxhucgwhziefywlmhhmjvtrwpehormsygxrpafaagaesskbkeyndsdfvkykcagvn</pre>
+  <pre id="testcase8_output">98</pre>
+  <pre id="testcase9_input">2
+vi
+gq</pre>
+  <pre id="testcase9_output">2</pre>
+  <pre id="testcase10_input">39
+ygbljdcavcitdsbjwrteqoqeqohbzaonleugshh
+fouqnsqwtetgcynmzdyjbruykpkplnjdvqixoer</pre>
+  <pre id="testcase10_output">39</pre>
+  <pre id="testcase11_input">10
+evjbrdxxeh
+ibeyefttjq</pre>
+  <pre id="testcase11_output">10</pre>
+  <pre id="testcase12_input">98
+lzbrgsqsnphhcywivhntxmyqujemebjjtkdzrlkybylzvmalvanwxrtvagmuenufsfkmqkllajwjdwkanvhlfbmceglwyupzfs
+ggmucvbnuixdzwzxuzrxqoszxcttmtgntfsfqtbqgnpajtpcyzxgdhpsxskkzduytgobeynvyerykoxdvclpvbvlpsqbgnpvjn</pre>
+  <pre id="testcase12_output">94</pre>
+  <pre id="testcase13_input">2
+nr
+hn</pre>
+  <pre id="testcase13_output">2</pre>
+  <pre id="testcase14_input">50
+ledezvpicdugoknihetcfqmyydhgsfylabzjekwtzitycahpln
+kywcteqklubjilbymfxjvisfreilpnhcsnhnggocxqojsszopk</pre>
+  <pre id="testcase14_output">50</pre>
+  <pre id="testcase15_input">11
+rozmchthbpd
+kfjvjuqwiqk</pre>
+  <pre id="testcase15_output">11</pre>
+  <pre id="testcase16_input">99
+sfdnzfvpynudwlginhnffkljxujdsxkidlnzdcaizcokydbvzbyrdfdosqkhizyvlwzmlurpgyldnusilycbnjxrxwrsoydvosr
+bnocwmqvojnsffbzgcmjywftzhdfdhfoiqtkxjcjlatmbjdmhfxdxztlblavynqdyaauxkngfzmsqgnegqjykrffhbdpnptjsqn</pre>
+  <pre id="testcase16_output">99</pre>
+  <pre id="testcase17_input">1
+k
+k</pre>
+  <pre id="testcase17_output">0</pre>
+  <pre id="testcase18_input">19
+ghjbxhbqospxcxrjlbs
+ghjbxhbqospxcxrjlbs</pre>
+  <pre id="testcase18_output">0</pre>
+  <pre id="testcase19_input">61
+bjuuycalwzukgwkxctngtcortuejbzcmozwypgvjlfxovkgcyvwoqfeddonfj
+bjuuycalwzukgwkxctngtcortuejbzcmozwypgvjlfxovkgcyvwoqfeddonfj</pre>
+  <pre id="testcase19_output">0</pre>
+  <pre id="testcase20_input">100
+qldcxtrxdjddnuumxtnkwgeitvtisxwibtbrunnfibpwbasdbosvsikvlywhdgfjarradtrqnepodgigvaoiymsimjeedcogyyuy
+qldcxtrxdjddnuumxtnkwgeitvtisxwibtbrunnfibpwbasdbosvsikvlywhdgfjarradtrqnepodgigvaoiymsimjeedcogyyuy</pre>
+  <pre id="testcase20_output">0</pre>
+  <pre id="testcase21_input">2
+vs
+fi</pre>
+  <pre id="testcase21_output">2</pre>
+  <pre id="testcase22_input">1
+u
+d</pre>
+  <pre id="testcase22_output">1</pre>
+  <pre id="testcase23_input">94
+nvnkchsciaagxdjfznsqmkvqvwpiucuzvxbwsfbnuhdsoyppypekceyhsfueubwrxpcdxptuxuhkzvlgmzqpovnlppcnjb
+zqcojwszdpiuvonbwsatrtsymfovtagruhpcmmgoqndkvpuzwmynkqlxyfzsjypdmqznhjkogirgkenckexsjboeqgebbj</pre>
+  <pre id="testcase23_output">91</pre>
+  <pre id="testcase24_input">99
+cfncwtimovghbvpakvbrocslyxmkrhtrxvffdtbhaaxwhjbnlwkhzbciixlxbbghpnifcwlubkuvlxwiniyijzjpzbqalayehqx
+inzohcowdjnwsdrjtplwhqfgwazucradyblzcptbqzirrezcjtofzjrqkhrhlvsyymgtyaqqmcwatxllkidogmkhijfhvbnkoqz</pre>
+  <pre id="testcase24_output">95</pre>
+  <pre id="testcase25_input">3
+dmx
+gve</pre>
+  <pre id="testcase25_output">3</pre>
+  <pre id="testcase26_input">2
+bt
+hy</pre>
+  <pre id="testcase26_output">2</pre>
+  <pre id="testcase27_input">49
+aurduojkblczmheltgqjvhpqofwcujzrnnfgpoxhtopgrxhdf
+kcydxzpiwybksybgcddkwovqkguprpsrjqihfctvubxuaigad</pre>
+  <pre id="testcase27_output">46</pre>
+  <pre id="testcase28_input">99
+waaantxzhzuhkhfcypvckkfwsyjexmryjbupqzfrekewssdgdtocylzybvzfwztzkbwqljfifnoasznypjgszbpnnjqbkkvsoym
+lujubbvejcwjtdmxleoyrmwveoffvjrxxnbcqxelrxsipidajycltxswdhktuphtppvfisgdklibcvrlwpxtmuuzfakxskincwy</pre>
+  <pre id="testcase28_output">95</pre>
+  <pre id="testcase29_input">1
+n
+s</pre>
+  <pre id="testcase29_output">1</pre>
+  <pre id="testcase30_input">57
+guganbwwbfdeygrksxambdweuownakvfzqjavdvtpdjzoudgitasymhqb
+ckjdthgyaqvyqfjdvkcfaeyfmvgaiqiligsuhawmvhgdnqtvdevywwsgp</pre>
+  <pre id="testcase30_output">57</pre>
+  <pre id="testcase31_input">23
+dkpbqcxknwnpxkjougdfbkm
+fdheoevcvoyqdjkmeeiquct</pre>
+  <pre id="testcase31_output">23</pre>
+  <pre id="testcase32_input">98
+bieecisuzrkabpkpyqmtzgvlzdrbjgutietanhnxawxbmscfvmjicvwiygqmmppdovjdhxeznvzfpxhclyczbnkekxovtaljst
+olltxmadkgudzerzfgjjqnypqllucujzeqvvorgevabzoldodqxgrgcthqkwizrvittmvmxgjpjwnapkmxorrbfyqukngyenkn</pre>
+  <pre id="testcase32_output">98</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 23 回日本情報オリンピック JOI 2023/2024 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

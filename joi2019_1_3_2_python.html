@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>キャピタリゼーション (Capitalization) [Python]</title>
+  </head>
+
+  <body>
+    <h1>キャピタリゼーション (Capitalization) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+JOI 君は長さ <var>N</var> の文字列 <var>S</var> を見つけた．<var>S</var> に含まれる文字はすべて英小文字である．
+</p>
+
+<p>
+JOI 君はこの文字列から自分の名前である <code>joi</code> が連続している部分を先頭から順にすべて探しだすことにした．そして <code>joi</code> を見つけるたびに，強調のためにそれを大文字の <code>JOI</code> に置き換えることにした．
+</p>
+
+<p>
+文字列 <var>S</var> が与えられたとき，<var>S</var> に含まれる <code>joi</code> をすべて <code>JOI</code> に置き換えた文字列を出力するプログラムを作成せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>3 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> は英小文字からなる．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>S</var> に含まれる <code>joi</code> をすべて <code>JOI</code> に置き換えた文字列を <var>1</var> 行で出力せよ．
+</p>
+
+<h2>
+  入出力例</h2>
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">11
+joinojoijin
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">JOInoJOIjin
+</pre>
+
+<ul>
+<li><var>1</var> 文字目から <var>3</var> 文字目の <code>joi</code> と <var>6</var> 文字目から <var>8</var> 文字目までの <code>joi</code> を <code>JOI</code> に置き換える．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">16
+jjooiiijoiojioij
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">jjooiiiJOIojioij
+</pre>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">13
+nihongoutenai
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">nihongoutenai
+</pre>
+
+<ul>
+<li><var>S</var> に <code>joi</code> がひとつも含まれない場合もあることに注意せよ．</li>
+</ul><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">3
+ijo</pre>
+  <pre id="testcase1_output">ijo</pre>
+  <pre id="testcase2_input">3
+ioj</pre>
+  <pre id="testcase2_output">ioj</pre>
+  <pre id="testcase3_input">3
+jio</pre>
+  <pre id="testcase3_output">jio</pre>
+  <pre id="testcase4_input">3
+joi</pre>
+  <pre id="testcase4_output">JOI</pre>
+  <pre id="testcase5_input">3
+oij</pre>
+  <pre id="testcase5_output">oij</pre>
+  <pre id="testcase6_input">3
+oji</pre>
+  <pre id="testcase6_output">oji</pre>
+  <pre id="testcase7_input">5
+jojoi</pre>
+  <pre id="testcase7_output">joJOI</pre>
+  <pre id="testcase8_input">5
+joioi</pre>
+  <pre id="testcase8_output">JOIoi</pre>
+  <pre id="testcase9_input">5
+jjoii</pre>
+  <pre id="testcase9_output">jJOIi</pre>
+  <pre id="testcase10_input">4
+jooi</pre>
+  <pre id="testcase10_output">jooi</pre>
+  <pre id="testcase11_input">100
+ojojiijjiojiojjiijijijojoijijjjojjjoijjoiojiooiijjijojjojoojjjioiiooooooojoiiiiiojojjioiojiijooojooi</pre>
+  <pre id="testcase11_output">ojojiijjiojiojjiijijijoJOIjijjjojjJOIjJOIojiooiijjijojjojoojjjioiioooooooJOIiiiiojojjioiojiijooojooi</pre>
+  <pre id="testcase12_input">100
+jijjjojijoioojjjojiodjiieoojoigooitioeiiijbojioojoioiifjsojoopzijkriijojjoiovoojsivlqijpoicjnioouoxi</pre>
+  <pre id="testcase12_output">jijjjojiJOIoojjjojiodjiieooJOIgooitioeiiijbojiooJOIoiifjsojoopzijkriijojJOIovoojsivlqijpoicjnioouoxi</pre>
+  <pre id="testcase13_input">100
+cflgzfzxkqvwadqpsuyipbchjuidgfrsnovprynvqkmariulvzbcxxhzibqqldvjhkwphowpzyhckpnrvnrnfdwkvkosrcpdbrgh</pre>
+  <pre id="testcase13_output">cflgzfzxkqvwadqpsuyipbchjuidgfrsnovprynvqkmariulvzbcxxhzibqqldvjhkwphowpzyhckpnrvnrnfdwkvkosrcpdbrgh</pre>
+  <pre id="testcase14_input">98
+joijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijo</pre>
+  <pre id="testcase14_output">JOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIjo</pre>
+  <pre id="testcase15_input">99
+joijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoi</pre>
+  <pre id="testcase15_output">JOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOI</pre>
+  <pre id="testcase16_input">100
+joijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoijoij</pre>
+  <pre id="testcase16_output">JOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIJOIj</pre>
+  <pre id="testcase17_input">98
+oiooiijiiojiiijjooojjooooojjojjijjioooijooiojojoioioijijiojjijiiijjoioiiijijijoioooojioojooiiijioi</pre>
+  <pre id="testcase17_output">oiooiijiiojiiijjooojjooooojjojjijjioooijooiojoJOIoioijijiojjijiiijJOIoiiijijiJOIoooojioojooiiijioi</pre>
+  <pre id="testcase18_input">98
+iiiijwijmouioijoooiuoooooijiooolfijobiifoijijojoiiiiojojozomjjicijijoimjhoionjjsijgjioojqiijojojjj</pre>
+  <pre id="testcase18_output">iiiijwijmouioijoooiuoooooijiooolfijobiifoijijoJOIiiiojojozomjjicijiJOImjhoionjjsijgjioojqiijojojjj</pre>
+  <pre id="testcase19_input">99
+oojijiojoiijoojijjjjjoiijijjojiijoioiiojojjioojjiiiiioiioijijjoiioijiiijoioooiiojojooiojjjjoioojjjj</pre>
+  <pre id="testcase19_output">oojijioJOIijoojijjjjJOIijijjojiiJOIoiiojojjioojjiiiiioiioijijJOIioijiiiJOIoooiiojojooiojjjJOIoojjjj</pre>
+  <pre id="testcase20_input">99
+soioijigooiojvojojjrkiioiojoiijojoiosoijgluzpwoixjjjooyjjojmcjjoqjolcjoiouidjjsoioijiiqioijjaziirjo</pre>
+  <pre id="testcase20_output">soioijigooiojvojojjrkiioioJOIijoJOIosoijgluzpwoixjjjooyjjojmcjjoqjolcJOIouidjjsoioijiiqioijjaziirjo</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 19 回日本情報オリンピック JOI 2019/2020 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

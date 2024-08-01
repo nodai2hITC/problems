@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>ビ太郎と IOI (Bitaro and IOI) [Python]</title>
+  </head>
+
+  <body>
+    <h1>ビ太郎と IOI (Bitaro and IOI) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>B</code>，<code>I</code>，<code>T</code>，<code>A</code>，<code>R</code>，<code>O</code> のいずれかである．</p>
+
+<p>
+文字列 <var>S</var> の (連続しているとは限らない) 部分列に <code>IOI</code> が存在するか判定せよ．つまり，次の条件を満たす <var>3</var> つの整数の組 <var>(i,j,k)</var> が存在するか判定せよ．</p>
+
+<ul>
+<li><var>1 ≦ i ＜ j ＜ k ≦ N</var>．</li>
+<li><var>S</var> の <var>i</var> 文字目は <code>I</code> である．</li>
+<li><var>S</var> の <var>j</var> 文字目は <code>O</code> である．</li>
+<li><var>S</var> の <var>k</var> 文字目は <code>I</code> である．</li>
+</ul>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は <code>B</code>，<code>I</code>，<code>T</code>，<code>A</code>，<code>R</code>，<code>O</code> のいずれかである．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で標準入力から与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+文字列 <var>S</var> の部分列に <code>IOI</code> が存在する場合は <code>Yes</code> を，そうでない場合は <code>No</code> を出力せよ．</p>
+
+<h2>
+  入出力例</h2>
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">8
+BITAROOI
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">Yes
+</pre>
+
+<ul>
+<li><var>3</var> つの整数の組 <var>(2,6,8)</var> や <var>(2,7,8)</var> は問題文中の <var>(i,j,k)</var> の条件を満たす．つまり，文字列 <var>S</var> の部分列に <code>IOI</code> が存在するので，<code>Yes</code> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">6
+BBOOII
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">No
+</pre>
+
+<ul>
+<li>文字列 <var>S</var> の部分列に <code>IOI</code> は存在しないので，<code>No</code> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">5
+IOIOI
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">Yes
+</pre>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">9
+RATRATRAT
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">No
+</pre>
+
+<hr />
+
+<h2>入力例 5</h2>
+<pre id="sample5_input" class="sample">1
+A
+</pre>
+
+<h2>出力例 5</h2>
+<pre id="sample5_output" class="sample">No
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">8
+IIIIIIII</pre>
+  <pre id="testcase1_output">No</pre>
+  <pre id="testcase2_input">8
+OOOOOOOO</pre>
+  <pre id="testcase2_output">No</pre>
+  <pre id="testcase3_input">8
+IIOOOOII</pre>
+  <pre id="testcase3_output">Yes</pre>
+  <pre id="testcase4_input">12
+IBRRATABTAOI</pre>
+  <pre id="testcase4_output">Yes</pre>
+  <pre id="testcase5_input">12
+IIIIOOOOIIII</pre>
+  <pre id="testcase5_output">Yes</pre>
+  <pre id="testcase6_input">99
+BARTRAATARBATBRBTBRBATTRBIRRTTTTTOTTRTBTAATBBBARBRRRRAATTAARRRTBTTRRTBTAATARBRBRRABBBRABIRARARRBABR</pre>
+  <pre id="testcase6_output">Yes</pre>
+  <pre id="testcase7_input">99
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase7_output">Yes</pre>
+  <pre id="testcase8_input">100
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase8_output">No</pre>
+  <pre id="testcase9_input">100
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</pre>
+  <pre id="testcase9_output">No</pre>
+  <pre id="testcase10_input">100
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase10_output">Yes</pre>
+  <pre id="testcase11_input">8
+ROBOTBTA</pre>
+  <pre id="testcase11_output">No</pre>
+  <pre id="testcase12_input">8
+TAITIIRI</pre>
+  <pre id="testcase12_output">No</pre>
+  <pre id="testcase13_input">8
+OITBOART</pre>
+  <pre id="testcase13_output">No</pre>
+  <pre id="testcase14_input">8
+IIIIIIOO</pre>
+  <pre id="testcase14_output">No</pre>
+  <pre id="testcase15_input">8
+OTTAOOOI</pre>
+  <pre id="testcase15_output">No</pre>
+  <pre id="testcase16_input">12
+TABOBBIRORRT</pre>
+  <pre id="testcase16_output">No</pre>
+  <pre id="testcase17_input">12
+TIIIIBIIIIOO</pre>
+  <pre id="testcase17_output">No</pre>
+  <pre id="testcase18_input">12
+OOOOOOOROOOI</pre>
+  <pre id="testcase18_output">No</pre>
+  <pre id="testcase19_input">16
+TROOIAAIITOOAATA</pre>
+  <pre id="testcase19_output">No</pre>
+  <pre id="testcase20_input">60
+TTRTBBOORTABOBROOOTAAORRROATIIBIAARIRIIAOTOTROOTRAOBOAOBOAOA</pre>
+  <pre id="testcase20_output">No</pre>
+  <pre id="testcase21_input">99
+RARBRRBRABABATTBABATAARTTTBTTTAATTRBBARTTBTTAATABTRRATTRAABTATRRBATRTRRARRTBATRRTTTBORTTRITITABRRBB</pre>
+  <pre id="testcase21_output">No</pre>
+  <pre id="testcase22_input">100
+BAOTTOAAAOARTOAROTROBAABOOTIITARATAIIRIRIRBTBIATIRBRBIBTIAIRTBAITTRIIRATATRRIIOOOOOATTTARABBAOROARRO</pre>
+  <pre id="testcase22_output">No</pre>
+  <pre id="testcase23_input">8
+OOIOOOIO</pre>
+  <pre id="testcase23_output">Yes</pre>
+  <pre id="testcase24_input">12
+IOIOOOOOOIOI</pre>
+  <pre id="testcase24_output">Yes</pre>
+  <pre id="testcase25_input">16
+IIIIOIIOOIOIIIOO</pre>
+  <pre id="testcase25_output">Yes</pre>
+  <pre id="testcase26_input">60
+IOIOOOOIIIOOOOIOIOIIOOIIIIIIIOIOIOOOIOOOOOIOOOIOOIIIIOIIOIOO</pre>
+  <pre id="testcase26_output">Yes</pre>
+  <pre id="testcase27_input">99
+OIIOOIOOOIOIOOOIOIOIOOIOOOIOOOIIOOIIIOIOIOOIIOIIIOIIOIIOOIOIIIOIIIIIOOIOOOIOIOIOIIIIIOIOIOIIIOOIOII</pre>
+  <pre id="testcase27_output">Yes</pre>
+  <pre id="testcase28_input">100
+IIIOIOIIIIOOOIOIIIIOOOOIOIOIOIOOOIOIOOIIOOIIOOIOOIIOOOIOOIOOOIIOOOIIOIOOOIOIOIOIIOOOOOIIIOIOOIIIIIIO</pre>
+  <pre id="testcase28_output">Yes</pre>
+  <pre id="testcase29_input">8
+RABIRITT</pre>
+  <pre id="testcase29_output">No</pre>
+  <pre id="testcase30_input">10
+OARTTARATA</pre>
+  <pre id="testcase30_output">No</pre>
+  <pre id="testcase31_input">12
+RRAOBRRABOII</pre>
+  <pre id="testcase31_output">No</pre>
+  <pre id="testcase32_input">14
+OOIOAIAOABTTTB</pre>
+  <pre id="testcase32_output">Yes</pre>
+  <pre id="testcase33_input">16
+ABAIATOOAIBOTRTR</pre>
+  <pre id="testcase33_output">Yes</pre>
+  <pre id="testcase34_input">18
+BTTATTOBITRROOOTOA</pre>
+  <pre id="testcase34_output">No</pre>
+  <pre id="testcase35_input">60
+TTITIRAROOIIIBORIBROAIBBIRIBOAATTABBAIIOOABBAROBAAARIOBARBAR</pre>
+  <pre id="testcase35_output">Yes</pre>
+  <pre id="testcase36_input">80
+IAITABRAIOAAAAOOTRBAIORBBTRTAOAIATTIRROORBAAAOITRABOAARIARBARATRTABTTTAATIIROOBR</pre>
+  <pre id="testcase36_output">Yes</pre>
+  <pre id="testcase37_input">99
+AOBTBROAIITBBRRTIITROOABTTOTAAOIATBARBTBRTTBIRROTITIRTATIBAIBIAIORAOOATTTTOITOTTOOBIRTATTIIRRIROAAI</pre>
+  <pre id="testcase37_output">Yes</pre>
+  <pre id="testcase38_input">100
+TTOARITAOIBATRIOABOOOOBTIOBIRBTIBBTIARARRITARTRRRBBTOIABRTATORIITTIRABTBITAABRBATOIOIBTTBAAOBRTATTIA</pre>
+  <pre id="testcase38_output">Yes</pre>
+  <pre id="testcase39_input">1
+I</pre>
+  <pre id="testcase39_output">No</pre>
+  <pre id="testcase40_input">1
+O</pre>
+  <pre id="testcase40_output">No</pre>
+  <pre id="testcase41_input">2
+II</pre>
+  <pre id="testcase41_output">No</pre>
+  <pre id="testcase42_input">2
+IO</pre>
+  <pre id="testcase42_output">No</pre>
+  <pre id="testcase43_input">2
+OI</pre>
+  <pre id="testcase43_output">No</pre>
+  <pre id="testcase44_input">2
+OO</pre>
+  <pre id="testcase44_output">No</pre>
+  <pre id="testcase45_input">3
+III</pre>
+  <pre id="testcase45_output">No</pre>
+  <pre id="testcase46_input">3
+IIO</pre>
+  <pre id="testcase46_output">No</pre>
+  <pre id="testcase47_input">3
+IOI</pre>
+  <pre id="testcase47_output">Yes</pre>
+  <pre id="testcase48_input">3
+IOO</pre>
+  <pre id="testcase48_output">No</pre>
+  <pre id="testcase49_input">3
+OII</pre>
+  <pre id="testcase49_output">No</pre>
+  <pre id="testcase50_input">3
+OIO</pre>
+  <pre id="testcase50_output">No</pre>
+  <pre id="testcase51_input">3
+OOI</pre>
+  <pre id="testcase51_output">No</pre>
+  <pre id="testcase52_input">3
+OOO</pre>
+  <pre id="testcase52_output">No</pre>
+  <pre id="testcase53_input">1
+B</pre>
+  <pre id="testcase53_output">No</pre>
+  <pre id="testcase54_input">2
+RA</pre>
+  <pre id="testcase54_output">No</pre>
+  <pre id="testcase55_input">3
+IAI</pre>
+  <pre id="testcase55_output">No</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 20 回日本情報オリンピック JOI 2020/2021 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
