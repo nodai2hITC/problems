@@ -58,37 +58,37 @@
 </p>
 
 <p>
-このテキストエディタは，<code>j</code>，<code>o</code>，<code>i</code> の <var>3</var> つのキーで操作することができる．<code>j</code>，<code>o</code>，<code>i</code> のいずれかのキーを押すと，そのキーに書かれている英小文字が入力されるが，同じ英小文字が <var>2</var> つ隣接すると，ただちにその <var>2</var> 文字が対応する英大文字に置換される．すなわち，<code>jj</code> は <code>JJ</code> に，<code>oo</code> は <code>OO</code> に，<code>ii</code> は <code>II</code> に置換される．
+このテキストエディタは，<code>j</code>，<code>o</code>，<code>i</code> の \(3\) つのキーで操作することができる．<code>j</code>，<code>o</code>，<code>i</code> のいずれかのキーを押すと，そのキーに書かれている英小文字が入力されるが，同じ英小文字が \(2\) つ隣接すると，ただちにその \(2\) 文字が対応する英大文字に置換される．すなわち，<code>jj</code> は <code>JJ</code> に，<code>oo</code> は <code>OO</code> に，<code>ii</code> は <code>II</code> に置換される．
 </p>
 
 <p>
-例えば，<code>j</code>，<code>o</code>，<code>o</code>，<code>o</code>，<code>i</code> のキーをこの順番で押すと，<code>j</code>，<code>o</code>，<code>o</code> までキーを押した直後，<var>2</var> 文字目と <var>3</var> 文字目の並びが <code>oo</code> となる．同じ英小文字が <var>2</var> つ隣接しているので，この <var>2</var> 文字がただちに <code>OO</code> に置換される．最終的に JOI Editor に書かれている文字列は <code>jOOoi</code> となる．<code>joOOi</code> や <code>jOOOi</code> とはならないことに注意せよ．
+例えば，<code>j</code>，<code>o</code>，<code>o</code>，<code>o</code>，<code>i</code> のキーをこの順番で押すと，<code>j</code>，<code>o</code>，<code>o</code> までキーを押した直後，\(2\) 文字目と \(3\) 文字目の並びが <code>oo</code> となる．同じ英小文字が \(2\) つ隣接しているので，この \(2\) 文字がただちに <code>OO</code> に置換される．最終的に JOI Editor に書かれている文字列は <code>jOOoi</code> となる．<code>joOOi</code> や <code>jOOOi</code> とはならないことに注意せよ．
 </p>
 
 <p>
-長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．
+長さ \(N\) の文字列 \(S\) が与えられる．\(S\) の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．
 </p>
 
 <p>
-<var>N</var> 回キーを押す．<var>S</var> の <var>i</var> 文字目 (<var>1 ≦ i ≦ N</var>) は <var>i</var> 回目に押すキーを表す．最終的に JOI Editor に書かれている文字列を出力せよ．
+\(N\) 回キーを押す．\(S\) の \(i\) 文字目 (\(1 ≦ i ≦ N\)) は \(i\) 回目に押すキーを表す．最終的に JOI Editor に書かれている文字列を出力せよ．
 </p>
 
 <h2>
   制約</h2>
 
 <ul>
-<li><var>1 ≦ N ≦ 100</var>．</li>
-<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
-<li><var>S</var> の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．</li>
-<li><var>N</var> は整数である．</li>
+<li>\(1 ≦ N ≦ 100\)．</li>
+<li>\(S\) は長さ \(N\) の文字列である．</li>
+<li>\(S\) の各文字は <code>j</code>，<code>o</code>，<code>i</code> のいずれかである．</li>
+<li>\(N\) は整数である．</li>
 </ul>
 
 <h2>
   入力</h2>
 
 <p>入力は以下の形式で与えられる．</p>
-<div class="io_format"><var>N</var>
-<var>S</var>
+<div class="io_format">\(N\)
+\(S\)
 </div>
 
 <h2>
@@ -112,20 +112,20 @@ JJoIIi
 </pre>
 
 <ul>
-<li><var>1</var> 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>j</code> となる．</li>
-<li><var>2</var> 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>jj</code> となる．
+<li>\(1\) 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>j</code> となる．</li>
+<li>\(2\) 回目に押すキーは <code>j</code> のキーである．JOI Editor に書かれている文字列は <code>jj</code> となる．
 <ul>
 <li>同じ英小文字が隣接しているので，<code>jj</code> が <code>JJ</code> に置換され，JOI Editor に書かれている文字列は <code>JJ</code> となる．</li>
 </ul>
 </li>
-<li><var>3</var> 回目に押すキーは <code>o</code> のキーである．JOI Editor に書かれている文字列は <code>JJo</code> となる．</li>
-<li><var>4</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoi</code> となる．</li>
-<li><var>5</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoii</code> となる．
+<li>\(3\) 回目に押すキーは <code>o</code> のキーである．JOI Editor に書かれている文字列は <code>JJo</code> となる．</li>
+<li>\(4\) 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoi</code> となる．</li>
+<li>\(5\) 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoii</code> となる．
 <ul>
 <li>同じ英小文字が隣接しているので，<code>ii</code> が <code>II</code> に置換され，JOI Editor に書かれている文字列は <code>JJoII</code> となる．</li>
 </ul>
 </li>
-<li><var>6</var> 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoIIi</code> となる．</li>
+<li>\(6\) 回目に押すキーは <code>i</code> のキーである．JOI Editor に書かれている文字列は <code>JJoIIi</code> となる．</li>
 </ul>
 
 <p>
@@ -209,7 +209,7 @@ jjjjjjjjjjjjjjjjjjjjjjjjjjiiiiiiiiiiiiooooooooooooooooooooooooooooiiiiiiiiiiiiii
 
     <p class="source">
       <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
-      情報オリンピック日本委員会作 『第 22 回日本情報オリンピック JOI 2022/2023 一次予選競技課題』 
+      情報オリンピック日本委員会作 『第 22 回日本情報オリンピック JOI 2022/2023 一次予選競技課題』
     </p>
     <textarea id="txt-editor"></textarea>
     <p>

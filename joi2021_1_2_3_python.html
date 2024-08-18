@@ -54,45 +54,45 @@
   問題文</h2>
 
 <p>
-長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．
+長さ \(N\) の文字列 \(S\) が与えられる．\(S\) の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．
 </p>
 
 <p>
-ビーバーのビ太郎は，<var>N - 1</var> 回の動作を行った．<var>i</var> 回目 (<var>1 ≦ i ≦ N - 1</var>) の動作は，次のように行われた．
+ビーバーのビ太郎は，\(N - 1\) 回の動作を行った．\(i\) 回目 (\(1 ≦ i ≦ N - 1\)) の動作は，次のように行われた．
 </p>
 
 <ul>
-<li><var>S</var> の <var>i + 1</var> 文字目を確認する．さらに，<var>S</var> の <var>i + 1</var> 文字目が <code>J</code> であったならば，<var>S</var> の <var>i</var> 文字目を黒板に書く．</li>
+<li>\(S\) の \(i + 1\) 文字目を確認する．さらに，\(S\) の \(i + 1\) 文字目が <code>J</code> であったならば，\(S\) の \(i\) 文字目を黒板に書く．</li>
 </ul>
 
 <p>
-<var>N - 1</var> 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
+\(N - 1\) 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
 </p>
 
 <h2>
   制約</h2>
 
 <ul>
-<li><var>2 ≦ N ≦ 100</var>．</li>
-<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
-<li><var>S</var> の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．</li>
-<li><var>N</var> は整数である．</li>
-<li>黒板に書かれた文字が <var>1</var> つ以上存在する．</li>
+<li>\(2 ≦ N ≦ 100\)．</li>
+<li>\(S\) は長さ \(N\) の文字列である．</li>
+<li>\(S\) の各文字は <code>J</code>，<code>O</code>，<code>I</code> のいずれかである．</li>
+<li>\(N\) は整数である．</li>
+<li>黒板に書かれた文字が \(1\) つ以上存在する．</li>
 </ul>
 
 <h2>
   入力</h2>
 
 <p>入力は以下の形式で標準入力から与えられる．</p>
-<div class="io_format"><var>N</var>
-<var>S</var>
+<div class="io_format">\(N\)
+\(S\)
 </div>
 
 <h2>
   出力</h2>
 
 <p>
-<var>N - 1</var> 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
+\(N - 1\) 回の動作においてビ太郎が黒板に書いたすべての文字を，ビ太郎が書いた順に改行区切りで出力せよ．
 </p>
 
 <hr />
@@ -110,15 +110,15 @@ I
 </pre>
 
 <p>
-ビ太郎は，以下のように <var>5</var> 回の動作を行った．
+ビ太郎は，以下のように \(5\) 回の動作を行った．
 </p>
 
 <ul>
-<li><var>1</var> 回目の動作では，<var>S</var> の <var>2</var> 文字目を確認した．</li>
-<li><var>2</var> 回目の動作では，<var>S</var> の <var>3</var> 文字目を確認した．さらに，<var>S</var> の <var>3</var> 文字目が <code>J</code> であったため，黒板に <var>S</var> の <var>2</var> 文字目である <code>O</code> を書いた．</li>
-<li><var>3</var> 回目の動作では，<var>S</var> の <var>4</var> 文字目を確認した．</li>
-<li><var>4</var> 回目の動作では，<var>S</var> の <var>5</var> 文字目を確認した．</li>
-<li><var>5</var> 回目の動作では，<var>S</var> の <var>6</var> 文字目を確認した．さらに，<var>S</var> の <var>6</var> 文字目が <code>J</code> であったため，黒板に <var>S</var> の <var>5</var> 文字目である <code>I</code> を書いた．</li>
+<li>\(1\) 回目の動作では，\(S\) の \(2\) 文字目を確認した．</li>
+<li>\(2\) 回目の動作では，\(S\) の \(3\) 文字目を確認した．さらに，\(S\) の \(3\) 文字目が <code>J</code> であったため，黒板に \(S\) の \(2\) 文字目である <code>O</code> を書いた．</li>
+<li>\(3\) 回目の動作では，\(S\) の \(4\) 文字目を確認した．</li>
+<li>\(4\) 回目の動作では，\(S\) の \(5\) 文字目を確認した．</li>
+<li>\(5\) 回目の動作では，\(S\) の \(6\) 文字目を確認した．さらに，\(S\) の \(6\) 文字目が <code>J</code> であったため，黒板に \(S\) の \(5\) 文字目である <code>I</code> を書いた．</li>
 </ul>
 
 <p>
@@ -139,7 +139,7 @@ J
 </pre>
 
 <p>
-ビ太郎は，<var>1</var> 回目の動作で <var>S</var> の <var>1</var> 文字目である <code>J</code> を黒板に書いた．<var>2</var> 回目と <var>3</var> 回目の動作では，黒板に何も書かなかった．
+ビ太郎は，\(1\) 回目の動作で \(S\) の \(1\) 文字目である <code>J</code> を黒板に書いた．\(2\) 回目と \(3\) 回目の動作では，黒板に何も書かなかった．
 </p>
 
 <p>
@@ -1239,7 +1239,7 @@ JIOIJ</pre>
 
     <p class="source">
       <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
-      情報オリンピック日本委員会作 『第 21 回日本情報オリンピック JOI 2021/2022 一次予選競技課題』 
+      情報オリンピック日本委員会作 『第 21 回日本情報オリンピック JOI 2021/2022 一次予選競技課題』
     </p>
     <textarea id="txt-editor"></textarea>
     <p>

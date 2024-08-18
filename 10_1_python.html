@@ -53,46 +53,46 @@
 
 
     <h2>問題文</h2>
-<var>2</var>桁の正の整数 <var>X</var> が与えられます。
+\(2\)桁の正の整数 \(X\) が与えられます。
     <p>この整数に対し、以下の <strong>【操作】</strong> をおこないます。</p>
-<strong>【操作】</strong>： <var>X</var> の <var>10</var>の位の数と <var>1</var>の位の数をかけあわせ、その計算結果を新たな <var>X</var> の値とする。
-    <p><var>X</var> が <var>1</var>桁になるまで、この <strong>【操作】</strong> を繰り返します。（無限にこの <strong>【操作】</strong> が続くことはなく、いつかは必ず <var>1</var>桁になります。）</p>
-    <p><var>1</var>桁の数になったときの <var>X</var> はいくつになるでしょうか？</p>
+<strong>【操作】</strong>： \(X\) の \(10\)の位の数と \(1\)の位の数をかけあわせ、その計算結果を新たな \(X\) の値とする。
+    <p>\(X\) が \(1\)桁になるまで、この <strong>【操作】</strong> を繰り返します。（無限にこの <strong>【操作】</strong> が続くことはなく、いつかは必ず \(1\)桁になります。）</p>
+    <p>\(1\)桁の数になったときの \(X\) はいくつになるでしょうか？</p>
 
     <h2>制約</h2>
     <ul>
-      <li><var>10 ≦ X ≦ 99</var></li>
-      <li><var>X</var> は整数</li>
+      <li>\(10 ≦ X ≦ 99\)</li>
+      <li>\(X\) は整数</li>
     </ul>
 
     <h2>入力</h2>
-    <div class="io_format"><var>X</var></div>
+    <div class="io_format">\(X\)</div>
     <ul>
-      <li><var>1</var> 行目に正の整数 <var>X</var> が与えられます。</li>
+      <li>\(1\) 行目に正の整数 \(X\) が与えられます。</li>
     </ul>
 
     <h2>出力</h2>
-    <p><var>X</var> に <strong>【操作】</strong> を繰り返し、<var>1</var>桁になった際の数を出力してください。</p>
+    <p>\(X\) に <strong>【操作】</strong> を繰り返し、\(1\)桁になった際の数を出力してください。</p>
 
     <h2>入力例1</h2>
     <pre id="sample1_input" class="sample">87</pre>
 
     <h2>出力例1</h2>
     <pre id="sample1_output" class="sample">0</pre>
-    <p>87→<var>8×7=56</var>→<var>5×6=30</var>→<var>3×0=0</var><br />
-    と、<var>3</var> 回の <strong>【操作】</strong> を繰り返した結果 <var>1</var>桁の数である <var>0</var> になったので、<var>0</var> を出力します。</p>
+    <p>87→\(8×7=56\)→\(5×6=30\)→\(3×0=0\)<br />
+    と、\(3\) 回の <strong>【操作】</strong> を繰り返した結果 \(1\)桁の数である \(0\) になったので、\(0\) を出力します。</p>
     <hr />
 
     <h2>入力例2</h2>
     <pre id="sample2_input" class="sample">99</pre>
-    <p>→<var>9×9=81</var>→<var>8×1=8</var></p>
+    <p>→\(9×9=81\)→\(8×1=8\)</p>
 
     <h2>出力例2</h2>
     <pre id="sample2_output" class="sample">8</pre>
 
     <h2>入力例3</h2>
     <pre id="sample3_input" class="sample">12</pre>
-    <p>→<var>1×2=2</var></p>
+    <p>→\(1×2=2\)</p>
 
     <h2>出力例3</h2>
     <pre id="sample3_output" class="sample">2</pre>
