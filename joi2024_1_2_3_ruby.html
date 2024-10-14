@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>じゃんけん (Rock-Scissors-Paper) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>じゃんけん (Rock-Scissors-Paper) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>長さ \(N\) の文字列 \(S, T\) が与えられる．\(S\) の各文字は <code>R</code>，<code>S</code> のいずれかである．\(T\) の各文字は <code>R</code>，<code>P</code> のいずれかである．</p>
+<p>葵とビ太郎は \(N\) 回じゃんけんを行った．葵が \(i\) 回目 (\(1 \leqq i \leqq N\)) のじゃんけんで出した手は \(S\) の \(i\) 文字目が <code>R</code>，<code>S</code> のときそれぞれグー，チョキである．ビ太郎が \(i\) 回目 (\(1 \leqq i \leqq N\)) のじゃんけんで出した手は \(T\) の \(i\) 文字目が <code>R</code>，<code>P</code> のときそれぞれグー，パーである．</p>
+<p>全 \(N\) 回のじゃんけんにおいて，葵が勝った回数とビ太郎が勝った回数を求めよ．</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(1 ≦ N ≦ 100\)．</li>
+<li>\(N\) は整数である．</li>
+<li>\(S\) は長さ \(N\) の文字列である．</li>
+<li>\(S\) の各文字は <code>R</code>，<code>S</code> のいずれかである．</li>
+<li>\(T\) は長さ \(N\) の文字列である．</li>
+<li>\(T\) の各文字は <code>R</code>，<code>P</code> のいずれかである．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(N\)
+\(S\)
+\(T\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+全 \(N\) 回のじゃんけんにおいて，葵が勝った回数とビ太郎が勝った回数を単位 (回) を除いて空白区切りで出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2025-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+3
+RSR
+PPR
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+1 1
+</pre>
+
+<ul>
+<li>\(1\) 回目のじゃんけんでは葵はグーを出し，ビ太郎はパーを出した．したがって，ビ太郎が勝った．</li>
+<li>\(2\) 回目のじゃんけんでは葵はチョキを出し，ビ太郎はパーを出した．したがって，葵が勝った．</li>
+<li>\(3\) 回目のじゃんけんでは葵はグーを出し，ビ太郎はグーを出した．したがって，あいこになった．</li>
+</ul>
+
+<p>
+葵とビ太郎の勝った回数はそれぞれ \(1\) 回と \(1\) 回である．したがって \(1\) と \(1\) を空白区切りで出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+5
+RRRRR
+PPPPP
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+0 5
+</pre>
+
+<p>
+どのじゃんけんにおいても葵はグーを出し，ビ太郎はパーを出した．したがって，どのじゃんけんにおいてもビ太郎が勝った．
+</p>
+
+<p>
+葵とビ太郎の勝った回数はそれぞれ \(0\) 回と \(5\) 回である．したがって \(0\) と \(5\) を空白区切りで出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+4
+RSRR
+RPRR
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+1 0
+</pre>
+
+<ul>
+<li>\(1\) 回目のじゃんけんでは葵はグーを出し，ビ太郎はグーを出した．したがって，あいこになった．</li>
+<li>\(2\) 回目のじゃんけんでは葵はチョキを出し，ビ太郎はパーを出した．したがって，葵が勝った．</li>
+<li>\(3\) 回目のじゃんけんでは葵はグーを出し，ビ太郎はグーを出した．したがって，あいこになった．</li>
+<li>\(4\) 回目のじゃんけんでは葵はグーを出し，ビ太郎はグーを出した．したがって，あいこになった．</li>
+</ul>
+
+<p>
+葵とビ太郎の勝った回数はそれぞれ \(1\) 回と \(0\) 回である．したがって \(1\) と \(0\) を空白区切りで出力する．
+</p>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+6
+RSSRSS
+PPRRRP
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+2 3
+</pre>
+
+<hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">2
+SS
+PP</pre>
+  <pre id="testcase1_output">2 0</pre>
+  <pre id="testcase2_input">7
+RSRRSRR
+PRPRPPR</pre>
+  <pre id="testcase2_output">1 4</pre>
+  <pre id="testcase3_input">5
+SRSRS
+RPRPR</pre>
+  <pre id="testcase3_output">0 5</pre>
+  <pre id="testcase4_input">6
+RRSSRR
+RRPPPP</pre>
+  <pre id="testcase4_output">2 2</pre>
+  <pre id="testcase5_input">6
+RSSSRR
+RPPRRR</pre>
+  <pre id="testcase5_output">2 1</pre>
+  <pre id="testcase6_input">9
+SSSRRSSRR
+RPRPRRPPP</pre>
+  <pre id="testcase6_output">2 6</pre>
+  <pre id="testcase7_input">99
+SSRSSSRRSRSSSSSRSSRRSRRSSSRSRSSRSRRSSSRRSSSRRRRRSSSRSRRSRRSSSSRRRRSRSRSSRRSSRSSSRSRSRRRRRRSSRRRRSRR
+RRRPRPPRPPRRPRRPRRPRRPPPRPPPPPPPPRPPPPPRPPRRPPRPRRPPPRRRPPRPRPPPRPPPPPRPPPPRPRRRPRPPRRPRPRPRPPPPPRP</pre>
+  <pre id="testcase7_output">26 58</pre>
+  <pre id="testcase8_input">98
+SRRSRRRSRRRRSRSSSRSSRSRSRRSSRSRRSSRSSSRSRRSSSRRRSRSSSSSRSRRRRSRSSRSSRRRSSSRRSSRSRRSSSRRRSSSSRRRRRS
+PRRPPPPPRPPRRRPRPRRRPPPRPPPPRRRPRPRPRPRRRRPRPPPPRRRPPRPRPPRPRRPRPPRRPPRPRPRRPPPRPPPPPRPPPRPPPPPPPP</pre>
+  <pre id="testcase8_output">29 49</pre>
+  <pre id="testcase9_input">100
+RSRSSRRSRSRRSRSRSSSRSSSSRSSSRRRSSRRSSSSRSSSRSRSRSRRRRSSSRSSSRRSSSSSSRSRSRSSRSRRRRSRRRRRSSRRSSRRRSRRS
+PRRPRRRPPRRPPRRRPPRRPPPPPPPPPPRRPPRRPRPPPPRPPRRRPRRPRPRPPRPPPRRRRRRRPRPPPRRRPRRPRPPPRPRPPRPPPRPPRRRR</pre>
+  <pre id="testcase9_output">30 45</pre>
+  <pre id="testcase10_input">100
+SRRRSRSRSRRSSRRRRRRSSRSSSRSRSRRSRRRRSRSSRRSRSSSSRRRRRSRRSSSRRSSSRRRSRRSSSRSSSRRSRSSRSSRSSRSSSRSSRRRS
+PPPRRRRRRPPPPPRRPPPPPPRPPPPRPPRRPPPRPRPPPRPRPRRPPPRPPPRPRPPPPPPRRPPRPPRRPRRPRPRPPPPRRPRRRRRPPRRRPPRR</pre>
+  <pre id="testcase10_output">28 51</pre>
+  <pre id="testcase11_input">99
+RRRRRSSSRSRRSSRSSRRRSSRRSSSSRSSSSSSRSRRSRRRRSRRSRRRRSRSRRSRRSRRRRRSSRSRSRSRRRRRRRSSSRRSSRRRRRRSRSRR
+RRRPRPRRPRRPRRPRRPRPPRPPPRRRRRRPRPPRRRRPRRPRPRPRPRRRRPPPRPPPPPPPPPRPRPRRRRPRPRRRPRRPPRPPPRPPRRRPPPP</pre>
+  <pre id="testcase11_output">17 53</pre>
+  <pre id="testcase12_input">99
+SRRRSRSRSRRSSRSRSSRRSRSRSSSSRRRSSRSSRRSSSSRSSSSRRSRSSRSSSSSRSSSSSSRRRSSRSSRSRSRRSRRSSSRRSSRRSSRRSSS
+RRPPPRPPRRPPRPPRRRPRPRPRPPRPRRRRPPPRPRPPPPRPRPRRPPPRRPPRRRPPPRRRRPRPRPPPPRRPPRPPPPPRRPRPRPRPRRRRRPR</pre>
+  <pre id="testcase12_output">30 49</pre>
+  <pre id="testcase13_input">1
+R
+R</pre>
+  <pre id="testcase13_output">0 0</pre>
+  <pre id="testcase14_input">2
+RR
+RR</pre>
+  <pre id="testcase14_output">0 0</pre>
+  <pre id="testcase15_input">3
+RRR
+RRR</pre>
+  <pre id="testcase15_output">0 0</pre>
+  <pre id="testcase16_input">98
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</pre>
+  <pre id="testcase16_output">0 0</pre>
+  <pre id="testcase17_input">99
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</pre>
+  <pre id="testcase17_output">0 0</pre>
+  <pre id="testcase18_input">100
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</pre>
+  <pre id="testcase18_output">0 0</pre>
+  <pre id="testcase19_input">100
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP</pre>
+  <pre id="testcase19_output">100 0</pre>
+  <pre id="testcase20_input">100
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP</pre>
+  <pre id="testcase20_output">0 100</pre>
+  <pre id="testcase21_input">100
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR</pre>
+  <pre id="testcase21_output">0 0</pre>
+  <pre id="testcase22_input">100
+SSSSSSRSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSRSSRSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPRPPPPPPPPPPPPPPPPPPPPPPPRPPPPPRPPPPPPPPPPPPP</pre>
+  <pre id="testcase22_output">95 4</pre>
+  <pre id="testcase23_input">100
+SSSSSSSSSSSSSSSSSSRSSSSSSSSSSSSSSSSSSSSSSRSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSRSSSSSSSSSSS
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRPRRRRRRRRRRRRRRRRRRRRRR</pre>
+  <pre id="testcase23_output">1 96</pre>
+  <pre id="testcase24_input">100
+RRRRRRSRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRSRRRRRRRRRRRRRRRRRR
+PPPPPPRPPPPPRPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP</pre>
+  <pre id="testcase24_output">1 98</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 24 回日本情報オリンピック JOI 2024/2025 一次予選競技課題』
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

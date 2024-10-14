@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>鉄道旅行 3 (Railway Trip 3) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>鉄道旅行 3 (Railway Trip 3) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+ビ太郎は JOI 鉄道に乗って旅行をする．JOI 鉄道の運賃ははじめの \(P\)km までは \(1\)km あたり \(A\) 円，それ以降の運賃は \(1\)km あたり \(B\) 円で計算される．
+</p>
+
+<p>
+\(Q\)km 乗車するとき，運賃はいくらになるか出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(1 ≦ P ≦ 100\)．</li>
+<li>\(1 ≦ Q ≦ 100\)．</li>
+<li>\(1 ≦ A ≦ 100\)．</li>
+<li>\(1 ≦ B ≦ 100\)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(P\) \(Q\)
+\(A\) \(B\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+\(Q\)km 乗車するときの運賃はいくらか，単位 (円) を除いて出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2025-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+3 5
+2 1
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+8
+</pre>
+
+<p>
+乗車距離 \(5\)km のうち，はじめの \(3\)km までは \(1\)km あたり \(2\) 円かかる．それ以降の \(2\)km については \(1\)km あたり \(1\) 円かかる．よって，合計して \(8 (=2×3+1×2)\) 円かかる．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+3 2
+2 1
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+4
+</pre>
+
+<p>
+乗車距離が \(2\)km なので，通して \(1\)km あたり \(2\) 円かかる．よって，合計して \(4 (=2×2)\) 円かかる．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+3 3
+5 5
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+15
+</pre>
+
+<p>
+乗車距離が \(3\)km なので，通して \(1\)km あたり \(5\) 円かかる．よって，合計して \(15 (=5×3)\) 円かかる．
+</p>
+
+<hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">94 99
+26 54</pre>
+  <pre id="testcase1_output">2714</pre>
+  <pre id="testcase2_input">55 83
+62 10</pre>
+  <pre id="testcase2_output">3690</pre>
+  <pre id="testcase3_input">11 23
+61 37</pre>
+  <pre id="testcase3_output">1115</pre>
+  <pre id="testcase4_input">69 23
+95 88</pre>
+  <pre id="testcase4_output">2185</pre>
+  <pre id="testcase5_input">24 7
+48 90</pre>
+  <pre id="testcase5_output">336</pre>
+  <pre id="testcase6_input">43 34
+97 46</pre>
+  <pre id="testcase6_output">3298</pre>
+  <pre id="testcase7_input">79 68
+60 83</pre>
+  <pre id="testcase7_output">4080</pre>
+  <pre id="testcase8_input">61 43
+6 55</pre>
+  <pre id="testcase8_output">258</pre>
+  <pre id="testcase9_input">1 1
+1 1</pre>
+  <pre id="testcase9_output">1</pre>
+  <pre id="testcase10_input">100 100
+100 100</pre>
+  <pre id="testcase10_output">10000</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 24 回日本情報オリンピック JOI 2024/2025 一次予選競技課題』
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

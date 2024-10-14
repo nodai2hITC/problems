@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>三角足し算 (Triangle Addition) [Python]</title>
+  </head>
+
+  <body>
+    <h1>三角足し算 (Triangle Addition) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>\(N\) 個の整数が黒板に左から右に書いてある．</p>
+<p>左から \(i\) 番目 (\(1 \leqq i \leqq N\)) の整数は \(A_i\) である．</p>
+<p>黒板に書いてある整数列に対し，以下の操作を繰り返し行う．</p>
+<p><br></p>
+<h3>操作</h3>
+<p>現在黒板の一番下の行に書いてある整数列の長さを \(k\) とおく．
+この整数列の値を参照しながら，下に次のような長さ \(k - 1\) の新たな整数列を作り書き加える．</p>
+<ul>
+<li>\(i=1, 2, \cdots , k-1\) について，\(i\) 番目の整数が，参照元の整数列の左から \(i\) 番目と \(i+1\) 番目の整数の合計となっている．</li>
+</ul>
+<p><br></p>
+<p>この操作を \(N-1\) 回行うとき，黒板に書き加える整数列をすべて求めよ．</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(2 ≦ N ≦ 10\)．</li>
+<li>\(1≦ A_i ≦ 10\) (\(1≦ i ≦ N\))．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(N\)
+\(A_1\) \(A_2\) \(…\) \(A_N\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+\(N−1\) 回の操作において黒板に書き込む整数列を，\(N−1\) 行ですべて出力せよ．
+</p>
+<p>
+\(i\) 行目 \((1≦i≦N)\) には，\(i\) 回目の操作において黒板に書き込む整数列を空白区切りで出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2025-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+5
+1 3 5 7 9
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+4 8 12 16
+12 20 28
+32 48
+80
+</pre>
+
+<p>初め，黒板には整数列 \((1, 3, 5, 7, 9)\) が書かれている．</p>
+<p>この整数列を参照し作られる新しい整数列は，</p>
+<ul>
+<li>\(1 + 3 = 4\)</li>
+<li>\(3 + 5 = 8\)</li>
+<li>\(5 + 7 = 12\)</li>
+<li>\(7 + 9 = 16\)</li>
+</ul>
+<p>より， \((4, 8, 12, 16)\) である．</p>
+<p>この整数列を参照し作られる新しい整数列は，</p>
+<ul>
+<li>\(4 + 8 = 12\)</li>
+<li>\(8 + 12 = 20\)</li>
+<li>\(12 + 16 = 28\)</li>
+</ul>
+<p>より，\((12, 20, 28)\) である．  </p>
+<p>この整数列を参照し作られる新しい整数列は，</p>
+<ul>
+<li>\(12 + 20 = 32\)</li>
+<li>\(20 + 28 = 48\)</li>
+</ul>
+<p>より，\((32, 48)\) である．</p>
+<p>この整数列を参照し作られる新しい整数列は，</p>
+<ul>
+<li>\(32 + 48 = 80\)</li>
+</ul>
+<p>より，\((80)\) である．</p>
+<p>よって，これらの整数列を出力する．</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+7
+1 2 3 4 3 2 1
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+3 5 7 7 5 3
+8 12 14 12 8
+20 26 26 20
+46 52 46
+98 98
+196
+</pre>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+10
+1 9 2 4 4 9 2 3 5 6
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+10 11 6 8 13 11 5 8 11
+21 17 14 21 24 16 13 19
+38 31 35 45 40 29 32
+69 66 80 85 69 61
+135 146 165 154 130
+281 311 319 284
+592 630 603
+1222 1233
+2455
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">2
+2 1</pre>
+  <pre id="testcase1_output">3</pre>
+  <pre id="testcase2_input">10
+5 3 2 10 4 3 4 6 1 9</pre>
+  <pre id="testcase2_output">8 5 12 14 7 7 10 7 10
+13 17 26 21 14 17 17 17
+30 43 47 35 31 34 34
+73 90 82 66 65 68
+163 172 148 131 133
+335 320 279 264
+655 599 543
+1254 1142
+2396</pre>
+  <pre id="testcase3_input">10
+3 6 1 7 7 1 9 9 2 10</pre>
+  <pre id="testcase3_output">9 7 8 14 8 10 18 11 12
+16 15 22 22 18 28 29 23
+31 37 44 40 46 57 52
+68 81 84 86 103 109
+149 165 170 189 212
+314 335 359 401
+649 694 760
+1343 1454
+2797</pre>
+  <pre id="testcase4_input">10
+2 1 5 8 9 5 1 5 10 4</pre>
+  <pre id="testcase4_output">3 6 13 17 14 6 6 15 14
+9 19 30 31 20 12 21 29
+28 49 61 51 32 33 50
+77 110 112 83 65 83
+187 222 195 148 148
+409 417 343 296
+826 760 639
+1586 1399
+2985</pre>
+  <pre id="testcase5_input">10
+1 3 8 10 8 4 6 3 3 10</pre>
+  <pre id="testcase5_output">4 11 18 18 12 10 9 6 13
+15 29 36 30 22 19 15 19
+44 65 66 52 41 34 34
+109 131 118 93 75 68
+240 249 211 168 143
+489 460 379 311
+949 839 690
+1788 1529
+3317</pre>
+  <pre id="testcase6_input">10
+3 10 7 6 9 8 4 2 7 7</pre>
+  <pre id="testcase6_output">13 17 13 15 17 12 6 9 14
+30 30 28 32 29 18 15 23
+60 58 60 61 47 33 38
+118 118 121 108 80 71
+236 239 229 188 151
+475 468 417 339
+943 885 756
+1828 1641
+3469</pre>
+  <pre id="testcase7_input">10
+9 8 10 3 8 5 9 1 5 3</pre>
+  <pre id="testcase7_output">17 18 13 11 13 14 10 6 8
+35 31 24 24 27 24 16 14
+66 55 48 51 51 40 30
+121 103 99 102 91 70
+224 202 201 193 161
+426 403 394 354
+829 797 748
+1626 1545
+3171</pre>
+  <pre id="testcase8_input">10
+1 3 6 5 9 8 1 3 4 5</pre>
+  <pre id="testcase8_output">4 9 11 14 17 9 4 7 9
+13 20 25 31 26 13 11 16
+33 45 56 57 39 24 27
+78 101 113 96 63 51
+179 214 209 159 114
+393 423 368 273
+816 791 641
+1607 1432
+3039</pre>
+  <pre id="testcase9_input">10
+6 1 8 1 10 2 10 1 10 10</pre>
+  <pre id="testcase9_output">7 9 9 11 12 12 11 11 20
+16 18 20 23 24 23 22 31
+34 38 43 47 47 45 53
+72 81 90 94 92 98
+153 171 184 186 190
+324 355 370 376
+679 725 746
+1404 1471
+2875</pre>
+  <pre id="testcase10_input">10
+10 10 10 10 10 10 10 10 10 10</pre>
+  <pre id="testcase10_output">20 20 20 20 20 20 20 20 20
+40 40 40 40 40 40 40 40
+80 80 80 80 80 80 80
+160 160 160 160 160 160
+320 320 320 320 320
+640 640 640 640
+1280 1280 1280
+2560 2560
+5120</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 24 回日本情報オリンピック JOI 2024/2025 一次予選競技課題』
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
