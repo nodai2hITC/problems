@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>いずれか片方 (Either, but Not Both) [Python]</title>
+  </head>
+
+  <body>
+    <h1>いずれか片方 (Either, but Not Both) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+正整数 \(N\)，\(A\)，\(B\) が与えられる．ここで，\(A ≠ B\) である．
+</p>
+
+<p>
+\(1\) 以上 \(N\) 以下の整数のうち，\(A\) と \(B\) のいずれか片方のみで割り切れるものの個数を出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(1 ≦ N ≦ 100\)．</li>
+<li>\(1 ≦ A ≦ 100\)．</li>
+<li>\(1 ≦ B ≦ 100\)．</li>
+<li>\(A ≠ B\)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(N\)
+\(A\)
+\(B\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+\(1\) 以上 \(N\) 以下の整数のうち，\(A\) と \(B\) のいずれか片方のみで割り切れるものの個数を単位 (個) を除いて出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2025-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+6
+2
+3
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+3
+</pre>
+
+<ul>
+<li>\(1\) は \(2\) でも \(3\) でも割り切れない．</li>
+<li>\(2\) は \(2\) で割り切れるが，\(3\) で割り切れない．</li>
+<li>\(3\) は \(2\) で割り切れないが，\(3\) で割り切れる．</li>
+<li>\(4\) は \(2\) で割り切れるが，\(3\) で割り切れない．</li>
+<li>\(5\) は \(2\) でも \(3\) でも割り切れない．</li>
+<li>\(6\) は \(2\) でも \(3\) でも割り切れる．</li>
+</ul>
+
+<p>
+よって \(1\) 以上 \(6\) 以下の整数のうち，\(2\) と \(3\) のいずれか片方のみで割り切れるものは \(2\)，\(3\)，\(4\) の \(3\) 個である．従って，\(3\) を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+1
+5
+3
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+0
+</pre>
+
+<ul>
+<li>\(1\) は \(5\) でも \(3\) でも割り切れない．</li>
+</ul>
+
+<p>
+よって \(1\) 以上 \(1\) 以下の整数のうち，\(5\) と \(3\) のいずれか片方のみで割り切れるものは \(1\) つも存在しない，すなわち \(0\) 個である．従って，\(0\) を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+100
+1
+2
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+50
+</pre>
+
+<p>
+\(1\) 以上 \(100\) 以下の整数のうち，\(1\) と \(2\) のいずれか片方のみで割り切れるものは \(1\) 以上 \(100\) 以下のすべての奇数 \(50\) 個である．従って，\(50\) を出力する．
+</p><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">100
+100
+1</pre>
+  <pre id="testcase1_output">99</pre>
+  <pre id="testcase2_input">100
+51
+100</pre>
+  <pre id="testcase2_output">2</pre>
+  <pre id="testcase3_input">100
+99
+100</pre>
+  <pre id="testcase3_output">2</pre>
+  <pre id="testcase4_input">98
+100
+99</pre>
+  <pre id="testcase4_output">0</pre>
+  <pre id="testcase5_input">1
+1
+2</pre>
+  <pre id="testcase5_output">1</pre>
+  <pre id="testcase6_input">50
+50
+51</pre>
+  <pre id="testcase6_output">1</pre>
+  <pre id="testcase7_input">50
+51
+49</pre>
+  <pre id="testcase7_output">1</pre>
+  <pre id="testcase8_input">99
+1
+100</pre>
+  <pre id="testcase8_output">99</pre>
+  <pre id="testcase9_input">99
+2
+4</pre>
+  <pre id="testcase9_output">25</pre>
+  <pre id="testcase10_input">98
+6
+9</pre>
+  <pre id="testcase10_output">16</pre>
+  <pre id="testcase11_input">96
+26
+75</pre>
+  <pre id="testcase11_output">4</pre>
+  <pre id="testcase12_input">53
+46
+4</pre>
+  <pre id="testcase12_output">14</pre>
+  <pre id="testcase13_input">1
+85
+39</pre>
+  <pre id="testcase13_output">0</pre>
+  <pre id="testcase14_input">34
+79
+49</pre>
+  <pre id="testcase14_output">0</pre>
+  <pre id="testcase15_input">30
+98
+19</pre>
+  <pre id="testcase15_output">1</pre>
+  <pre id="testcase16_input">47
+46
+83</pre>
+  <pre id="testcase16_output">1</pre>
+  <pre id="testcase17_input">80
+64
+92</pre>
+  <pre id="testcase17_output">1</pre>
+  <pre id="testcase18_input">74
+83
+15</pre>
+  <pre id="testcase18_output">4</pre>
+  <pre id="testcase19_input">22
+39
+21</pre>
+  <pre id="testcase19_output">1</pre>
+  <pre id="testcase20_input">72
+19
+21</pre>
+  <pre id="testcase20_output">6</pre>
+  <pre id="testcase21_input">35
+29
+25</pre>
+  <pre id="testcase21_output">2</pre>
+  <pre id="testcase22_input">63
+31
+39</pre>
+  <pre id="testcase22_output">3</pre>
+  <pre id="testcase23_input">54
+34
+52</pre>
+  <pre id="testcase23_output">2</pre>
+  <pre id="testcase24_input">2
+2
+1</pre>
+  <pre id="testcase24_output">1</pre>
+  <pre id="testcase25_input">73
+92
+90</pre>
+  <pre id="testcase25_output">0</pre>
+  <pre id="testcase26_input">55
+98
+86</pre>
+  <pre id="testcase26_output">0</pre>
+  <pre id="testcase27_input">20
+4
+9</pre>
+  <pre id="testcase27_output">7</pre>
+  <pre id="testcase28_input">27
+7
+10</pre>
+  <pre id="testcase28_output">5</pre>
+  <pre id="testcase29_input">9
+10
+7</pre>
+  <pre id="testcase29_output">1</pre>
+  <pre id="testcase30_input">80
+60
+4</pre>
+  <pre id="testcase30_output">19</pre>
+  <pre id="testcase31_input">12
+9
+21</pre>
+  <pre id="testcase31_output">1</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 24 回日本情報オリンピック JOI 2024/2025 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

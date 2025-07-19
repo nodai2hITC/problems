@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>周期文字列 (Cycle String) [Python]</title>
+  </head>
+
+  <body>
+    <h1>周期文字列 (Cycle String) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ \(N\) の文字列 \(S\) が与えられる．\(S\) の各文字は英小文字である．
+</p>
+
+<p>
+ある文字列 \(T\) および整数 \(m (2 ≦ m)\) が存在して，空文字列に対して \(T\) を \(m\) 回順に繋げた文字列が \(S\) に一致する時，\(S\) は<strong>周期的</strong>であるとする．
+</p>
+
+<p>
+\(S\) が周期的であるなら <code>Yes</code> を，そうでないならば <code>No</code> を出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(2 ≦ N ≦ 1000\)．</li>
+<li>\(S\) は長さ \(N\) の文字列である．</li>
+<li>\(S\) の各文字は英小文字である．</li>
+<li>\(N\) は整数である．<!--整数が1つのみあるいは整数以外の入力がある場合は個別に書く--></li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(N\)
+\(S\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+\(S\) が周期的であるなら <code>Yes</code> を，そうでないならば <code>No</code> を出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2025-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+6
+ababab
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+Yes
+</pre>
+
+<ul>
+<li>空文字列に対して <code>ab</code> を \(3\) 回順に繋げると <code>ababab</code> になるため，\(S\) は周期的である．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+7
+abcabca
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+No
+</pre>
+
+<ul>
+<li>空文字列に対して <code>abcabca</code> を \(1\) 回順に繋げると <code>abcabca</code> になるが，繋げるのが \(1\) 回であるため \(S\) は周期的でない事に注意せよ．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+2
+aa
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+Yes
+</pre>
+
+<ul>
+<li>空文字列に対して <code>a</code> を \(2\) 回順に繋げると <code>aa</code> になるため，\(S\) は周期的である．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+8
+ababcdcd
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+No
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">201
+dliggpxhhrtnxkhqgrmnhyowwxytsdchfmqhynbhrszonrdighykmvlijjyhbwhnbbldliggpxhhrtnxkhqgrmnhyowwxytsdchfmqhynbhrszonrdighykmvlijjyhbwhnbbldliggpxhhrtnxkhqgrmnhyowwxytsdchfmqhynbhrszonrdighykmvlijjyhbwhnbbl</pre>
+  <pre id="testcase1_output">Yes</pre>
+  <pre id="testcase2_input">506
+rnnynbmgxsbpihygwbdiilfxujakxitpecxuvlybmeluviuaolbhpvodjcrbrurtuxwocijyphpwlcbgtexzbgrdbpqguxoyivcptnanwghgiywjcoejoretunhhygykefidgdbcllqrqshxzvlisdszdffqrprocadybuemvxsuhynmbhtjcsosjqjzdkakjqnqhyihjfjaysifzoudtouzmbdvcjqlwjpnianmwfbvwlmjzwvradvgzocofrnnynbmgxsbpihygwbdiilfxujakxitpecxuvlybmeluviuaolbhpvodjcrbrurtuxwocijyphpwlcbgtexzbgrdbpqguxoyivcptnanwghgiywjcoejoretunhhygykefidgdbcllqrqshxzvlisdszdffqrprocadybuemvxsuhynmbhtjcsosjqjzdkakjqnqhyihjfjaysifzoudtouzmbdvcjqlwjpnianmwfbvwlmjzwvradvgzocof</pre>
+  <pre id="testcase2_output">Yes</pre>
+  <pre id="testcase3_input">951
+ccmusiplrtxdsmfhrsnpriaitnfidbnovicvrdftcpuqjlnrnwfiqnbvflwetxxnwoqyzjqemxnfjjztffqydtznqqhxacucotlmdompedflzfvgqfictslfhodltifjzyrpqrweacpvygfscecayedabmodqlmmnhcgwkdqrffsynxcdylftcmptrfetjtwcfclvshknatvrligbcijekgapydlvvawbvkwanqcpytxrtkhiunwjuafvysjbawswqsnogtkaofyftdzgklecsoebegqpkjhbejywrqhgdfntqbuptpebbxdqrqpnccmusiplrtxdsmfhrsnpriaitnfidbnovicvrdftcpuqjlnrnwfiqnbvflwetxxnwoqyzjqemxnfjjztffqydtznqqhxacucotlmdompedflzfvgqfictslfhodltifjzyrpqrweacpvygfscecayedabmodqlmmnhcgwkdqrffsynxcdylftcmptrfetjtwcfclvshknatvrligbcijekgapydlvvawbvkwanqcpytxrtkhiunwjuafvysjbawswqsnogtkaofyftdzgklecsoebegqpkjhbejywrqhgdfntqbuptpebbxdqrqpnccmusiplrtxdsmfhrsnpriaitnfidbnovicvrdftcpuqjlnrnwfiqnbvflwetxxnwoqyzjqemxnfjjztffqydtznqqhxacucotlmdompedflzfvgqfictslfhodltifjzyrpqrweacpvygfscecayedabmodqlmmnhcgwkdqrffsynxcdylftcmptrfetjtwcfclvshknatvrligbcijekgapydlvvawbvkwanqcpytxrtkhiunwjuafvysjbawswqsnogtkaofyftdzgklecsoebegqpkjhbejywrqhgdfntqbuptpebbxdqrqpn</pre>
+  <pre id="testcase3_output">Yes</pre>
+  <pre id="testcase4_input">413
+ejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzletoejkaoydhyntdqaxmuffdjtlpidjhglmthatbhqgxplfvdglqvqondgzleto</pre>
+  <pre id="testcase4_output">Yes</pre>
+  <pre id="testcase5_input">786
+hhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfkhhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfkhhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfkhhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfkhhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfkhhrfxycbmpqcbrfhtkgbnquoaxgtpkpljrzaeevmvcmuakliejsrgtcpxntiqddpqhiuvyrulhgpustlyzzytgpkyxojzsdkybxmhqwwldugksrumfzaggjgxnazwtzegfk</pre>
+  <pre id="testcase5_output">Yes</pre>
+  <pre id="testcase6_input">966
+putvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyolsyhvvkgrlcmnkpnwbdnsbqklihynedrdcbzrefprajziggbtqffwyapbxrgptzejisiwmtjnbbqvfntputvpyols</pre>
+  <pre id="testcase6_output">No</pre>
+  <pre id="testcase7_input">355
+yhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmqjnbgayhouqmahkkbnzgecvhzurrchnnescqclopbgonmq</pre>
+  <pre id="testcase7_output">No</pre>
+  <pre id="testcase8_input">726
+cstwibwyodofstnygutxufnlfgtlocfbyglptkozjeikxozjbdihgzxcbrwcmxmpgukigaeclilcmjvbesodaasumzycattzvpsrqtozkbgcezlgobyfancskvgtqpvydxhundhwasfqdydknjdkszjwwbdavzqcstwibwyodofstnygutxufnlfgtlocfbyglptkozjeikxozjbdihgzxcbrwcmxmpgukigaeclilcmjvbesodaasumzycattzvpsrqtozkbgcezlgobyfancskvgtqpvydxhundhwasfqdydknjdkszjwwbdavzqcstwibwyodofstnygutxufnlfgtlocfbyglptkozjeikxozjbdihgzxcbrwcmxmpgukigaeclilcmjvbesodaasumzycattzvpsrqtozkbgcezlgobyfancskvgtqpvydxhundhwasfqdydknjdkszjwwbdavzqcstwibwyodofstnygutxufnlfgtlocfbyglptkozjeikxozjbdihgzxcbrwcmxmpgukigaeclilcmjvbesodaasumzycattzvpsrqtozkbgcezlgobyfancskvgtqpvydxhundhwasfqdydknjdkszjwwbdavzqcstwibwyodofstnygutxufnlfgtlocfbyglptkozjeikxozjbdihgzxcbrwcmxmpgukigaeclilcmjvbesodaasumz</pre>
+  <pre id="testcase8_output">No</pre>
+  <pre id="testcase9_input">600
+ohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddattefvdwiyhztllxwbvzkmuquroquohddat</pre>
+  <pre id="testcase9_output">No</pre>
+  <pre id="testcase10_input">964
+rxpqyrdegheylfzputkgowooankxmnfivwlmoxummggixapbncfpdwxctdzqqsbkpobulflxlhfoksmfomblfcofwtmpjsfdrxbjrzfscpyndfbqlnapivzjnbdycynqtglfbiqcxaghirvdigiwxmtphbipnvgwrwtzfutldsdyubadqbxfenbqqjsbtogntzfoedataducyrmubfazsjraqqsxxdqoxveviyxqksypdrrxpqyrdegheylfzputkgowooankxmnfivwlmoxummggixapbncfpdwxctdzqqsbkpobulflxlhfoksmfomblfcofwtmpjsfdrxbjrzfscpyndfbqlnapivzjnbdycynqtglfbiqcxaghirvdigiwxmtphbipnvgwrwtzfutldsdyubadqbxfenbqqjsbtogntzfoedataducyrmubfazsjraqqsxxdqoxveviyxqksypdrrxpqyrdegheylfzputkgowooankxmnfivwlmoxummggixapbncfpdwxctdzqqsbkpobulflxlhfoksmfomblfcofwtmpjsfdrxbjrzfscpyndfbqlnapivzjnbdycynqtglfbiqcxaghirvdigiwxmtphbipnvgwrwtzfutldsdyubadqbxfenbqqjsbtogntzfoedataducyrmubfazsjraqqsxxdqoxveviyxqksypdrrxpqyrdegheylfzputkgowooankxmnfivwlmoxummggixapbncfpdwxctdzqqsbkpobulflxlhfoksmfomblfcofwtmpjsfdrxbjrzfscpyndfbqlnapivzjnbdycynqtglfbiqcxaghirvdigiwxmtphbipnvgwrwtzfutldsdyubadqbxfenbqqjsbtogntzfoedataducyrmubfazsjraqqsxxdqoxveviyxqksypdrrxpqyrdeghey</pre>
+  <pre id="testcase10_output">No</pre>
+  <pre id="testcase11_input">8
+abbaabbb</pre>
+  <pre id="testcase11_output">No</pre>
+  <pre id="testcase12_input">3
+bbb</pre>
+  <pre id="testcase12_output">Yes</pre>
+  <pre id="testcase13_input">6
+ababab</pre>
+  <pre id="testcase13_output">Yes</pre>
+  <pre id="testcase14_input">8
+abbaaabb</pre>
+  <pre id="testcase14_output">No</pre>
+  <pre id="testcase15_input">7
+aabbaaa</pre>
+  <pre id="testcase15_output">No</pre>
+  <pre id="testcase16_input">8
+bbabaaaa</pre>
+  <pre id="testcase16_output">No</pre>
+  <pre id="testcase17_input">4
+aabb</pre>
+  <pre id="testcase17_output">No</pre>
+  <pre id="testcase18_input">6
+bbbbab</pre>
+  <pre id="testcase18_output">No</pre>
+  <pre id="testcase19_input">8
+aaabbbab</pre>
+  <pre id="testcase19_output">No</pre>
+  <pre id="testcase20_input">3
+aab</pre>
+  <pre id="testcase20_output">No</pre>
+  <pre id="testcase21_input">4
+aaab</pre>
+  <pre id="testcase21_output">No</pre>
+  <pre id="testcase22_input">4
+bbbb</pre>
+  <pre id="testcase22_output">Yes</pre>
+  <pre id="testcase23_input">887
+wwieejwqtbzfslbmjpnqeizeepjjqckgtjciknssuuslpvlrbhupxqeiadxulqdmflettjuqfrsxusjavpdgyexnrcrujggsxjelqmadzmwsfglgpanugpszmtjxbonltwtubndjlbywhjkpdmqrbjbmjgkbxwhpzikvwysnwavtiaspstnpeqknqzfoehrsfdtdnfqrapvakszhwuqiddasbjbxjouokztdooiwbevmrygjvapphvxbugviluukhmyahfuzxpvtcyjxchkphtndtcarmtzmpxfiqorkhxmgyoupmxvtwouubagzzskckdpntkscqsjswufpibfisuzmfsadffewfkucembewfxyswwmmehwhcaguqtqkojidbkqephguhkylyyzeajpfasggqpoldeuechrlmivcdmbmsiqbzuagcrnyilfwpkqyigayyzmdskoyhkdmjdtxhaijslqovdjduynthdldzvpfpjeasuszssclxgemzkbobevmgyqajckuhkrtgurbxuwqtkxkjeeftalxmfsmnwxdqcbmpyqmuqvymczdnmgmijnmemffcytgbfuhvrdsrbptldrfpfxxcknqipuoxqadutmcptksffmvojmmqwrhqhafjmtnrflaxcblapicpmaviwihpypoudqoejuhzarhdjgqtzwoxypjnyadbawkrbdealsrdtctmjlfqrhlzsnvsjkantddhbnjhxwdfljlzekxwzitoaoffssozjeygagffgewzvouvfmljetchidmpganaxoshkiikqnmyynttpvcwnsperotmloxdqvagmqiuqbejyblpvvffyzhwuqgzopfsdouhzdwwpyeosinalgmzbppio</pre>
+  <pre id="testcase23_output">No</pre>
+  <pre id="testcase24_input">713
+cltncudzoydglqgzrhpucdyevczbdhuftxeojrermivajgkmwvhewrwoyuoofwinrmnsssmfwoukgttleahsvilooaeqgjswqjszbgylhlkjmsoiihzyghfqpxuvkbclvchleuzuwkhwpclgidcldvotidahlndmvzxpaovylsuxjrxkjbeijuwshzfdtgaivsrpflhhclfkmjjwwkabjfweedcyrmnybvcmwxbfqdvkuwoiachmggiulqlylsntduiuduzasegmokmcucopalxnrindpmumqtrevpcuigifrnpvnuidhowlmggsjndizwyufwotudsrylnbnhemybabncgdzcecykjzksltkapekoqvmhsfmfyksxrsxejrtqrglgrtdrxvakvohaueculxmngcnyaxufxsebgipqxydmbwepltzcoqrwtiagaxicqvstzphzdbjkmzktktbjrmghvupxmpshksojsbmdpeinhdadxkbsnbtpmmnfxnakpxgixakrivgenmtwmmdymirofisoevdkyrmrvykyktkgkbvdnicjmxbheuakqanygsichqlubuywsmclvjfqyhwzcqymltttluuruerrnqbtxrdwyhyahjlcsxfvadcfjuivquhsgqxekgwczzinhyypxjaqdlhmgjtwnrflnnzvpjkwiubvkshqodsdopfzywzjecn</pre>
+  <pre id="testcase24_output">No</pre>
+  <pre id="testcase25_input">606
+qcirqizttfbhbeofsimyeulcfupvmssrlbrouscwnhsiwjeprjiiryajhivifkixgftqrqahtqptizboghofqetdwdvwszttzllzxhimwyvhjgdxmqnlbevayivgfdujzqgijmksbyjcbcotdjegmkgzocixbhstnuczmltbdofgjmvqymgtadxlwttvjkrnsmluszyilcbwwttqstzvramrbiqzswrpszainqfqrzqauhbjqhrdztmhurjofhmchhfvdyozcwqczzzlnjxkwnshcoaqmfgkggttynuzpnrnzthcdsawloiqvgeqyjhxmxdrgxjdgjydwwmqgcfzxzvoflgnincgpjmcikcoelvvcnytqxfsplgrzwiewnbuzdcwhojgwradmpmlrkuazxnspjcmkggspucyggazsrowodbtjuthfkfljthlezuawqzzpdizujgccczeeemavyxtqrlixhdtmhkamkettargmvlqiiryazwdwzcvbyquszxltceukpjqsqbtybvolukjwiqiefnddjbeuxqodxdmaxxtbsalvxvocwybukaiudekjiqgqjzulotlzjsmuucxfkhjsp</pre>
+  <pre id="testcase25_output">No</pre>
+  <pre id="testcase26_input">2
+zz</pre>
+  <pre id="testcase26_output">Yes</pre>
+  <pre id="testcase27_input">2
+ab</pre>
+  <pre id="testcase27_output">No</pre>
+  <pre id="testcase28_input">1000
+smeeqkriycqxdaaurmicxvayapjggaquieotpqaumoaawxzorqapcnzyqyvbpglpvzsetjtirhqdzdvscwfnrkqbyipukwsorzbbyovstdphizaopigqpvdprckyuqpncpzylnkyyjwynizjmtletfekjtetmhzuoejliyjhwdjopnqwcpfbpdlpgfjkmpbdzuejvmapaevecflqalqjebhzckvdsmutoumfymgdvwfnppnariozurjywohbjtjdtibhilevacvlvkhlanodkwxcyampsgeaogogrxnztewnqkoiaflcbquvjvrxhcvsvwjywtzdwbctmlkgdwzsiherxandgnzvrafsdzxlycfiebdlbeosxcrmmwhnzhlfcujtbgvnmhhszrospjezeesrjuaesuvncxapdickityxwpxbayuwpoksfcotzijkqrzfymjlgqpkmbrzasyycqmyifffkrtkwivmvieqxptxyupaeyqdrmhsghwhlshxaqklmusspvbedyxzflhhkgtmwjlephkzgyjqquqfsxxfrfjfxctqvspcucuoccmaqecrowuxkryluiynppxahtvdlikrisxwceurshwzlxujzvsvkvjchquvwyqnnqjoticegcvjjotggdugrsglaakoeuggpikhouokbqgywjbrdrduqwhqnbldymyeokdamnlfmfrdhzcakygrmvdrvscktnobfqlwixpgnptjnrsgkchfsyzelwtsldynoyffgmqymfuzwqxxukgbcnjviutmhljkaqgrpnuuzdmfjdbpyfsnrnnwfncvwqjpfhtbaqlzqrajeuyvggyojggbebphvztvoacbzgzqpfxhirorwexrjawczyttugtooewirspgflnzpxzxsgvpbvssgqgqblgqtsxyvqcxphbmozytrqnxwjnghbmjfrniowyximjnoiboyijgsjoxsgedxahwfgehoaerxmitcxzd</pre>
+  <pre id="testcase28_output">No</pre>
+  <pre id="testcase29_input">1000
+rburmufhwrndxntioenycidzosvicwlfufvjpgqwdeofrqaukyzpsborooheyubzkwywgsurmtabjxfbcinqjqlrjekirppxglloxzffzoqicyvxxucrardyymblsrnxfkrggmbmywyimvzvtzeejgbbrsdchsoijsicuhnxqwchvfkzxpzitlqsvtsmijgrnomenmknnoixtjsyhyvblxzftjenubliyppdiahxswxlqaffmjojfcyolfzvheqnahnnizhkakwspmbbvdjrrfeixfyxscggadludotqmtagbcqjsrvcbzjbacixgppqnysndyxgmrqwnvcoqffdeutmejxchyljnmulrtlesgavrlcjfgjecwiukwhunnjhsuxeonagzfravqofrzrstctzddoybavrsznlxjdxriinxlsqqbvhlgxrhpxybzwfbhqaivvhdtaxmyvxuslaoeowdsuctnhlazomniwpfqphtmrbiesdqosjjgfraytyzmjxvmbejjjpksfxbgmntivaaeaflfhpijmpujctksslkpwikqnucjtcyftvyuspwyvcrkubeofiooakgoxqwcxkophvthuuvpxzlkqzyjawgirxmpjdhyeavabvmbcdbmaxbmountsrbolfhyoxqomddgltubbwxbbwgxopzxqozuyfnkzkplxdxvomagfztvhcqgcvpkbwsckvafwiipkluydsmcivodyabaxuvfbjgbarutseuqkyxmwekzcyttvvevwzpngokzsygtszjfmbkpxziybhrmtllwkyyvyjrjbqwczldspjlscobpfbhkidzllcqsnyyytidzkincscrwjjwqdqinthsyycnslszwjjrjzzkoqwvpytfixazhrlzitarwprwfwzbiemptexhhbsqpjfohqsnapsstmmqtpwnxskxsegnnsqubgdgoedsttczjcqiwogecpefnvazgxbclkubcggnpre</pre>
+  <pre id="testcase29_output">No</pre>
+  <pre id="testcase30_input">1000
+ytaiflmlsigzbwkuwivlckyewmeguhtpwutqmbksunbdizdkphlkfdfncoxvqfnbhqnfctcetjzyeilhsesmmlccytxezddzghujwxqftnxlblnyqnrehxknlndbxqfmylwzqsiswhtfzsctnmsptwhjzyjionbzbpcwkxjzersjerczjmeodprjqhiotlwjetfvxvjwnegkqutwfehdrxxsxexixwlfplmmpvjwefrtunnixawuaxsmkjpvhcscxtaoaadcpsnxxbrrwvpfuhvmnrfwjltfqjyghxlnncyntaevtynwbydzwaupviggepavdsvaszqdapbmporvijsmucotlulkbewzdlncadyvuhrrexgbvejzvsdvlncrfnqpndefiswftudpjmofqtxmgeezbhbqtblpcomqsigtwndbebyxxevsgmhafbnfsghditlnlvagubsbojzjlylvaopoacmpjylsengoeixxdxbemjkcqvklqskjsrhntrnruhcrsollmnzylkugjwpxygqwtzzlkufhqrpvtdxxdbqzfgmxewzwoountyzsdxjayvczdfehrwugkclzabmfwplhntxinnchvcimwzqgjhxclkattioponynnmubfynluvlhxvlrkqefvcdhghkqfhxolofleuwrdydjhralgaxajswnjcwlrhhwauidnvchninuaqxvqswyeeiaikzchphrotmvwvuiuzujovbsvzyvpcddmbnhmwhsffphmmkwrdyyxtnctmdqjqsdlbweicrvbknmsicqqtelxjekhnhtplrmlbyxkjfpetxhknmfejsyxrfklcilwobdmyyfnimgsevhzbowyrlfgrqgklryhieutiahsqzcfcbayqtamfkhjzwfjmxtwnpmvwxfgpdvytjnzgeiwmqosfkokdgwuoouubdbxtqkuciazbwgsdbvldgzjhgbotrviolyvifnnnsxvdnxffya</pre>
+  <pre id="testcase30_output">No</pre>
+  <pre id="testcase31_input">1000
+afjmzhypurrnvitxzyfrnwwzxxpxbnupcqgyvkguyrexejlqxrenzabsfokziydvauhhnnwhsjudwohgvwychnmwcdwfvczfcuucdakazsvpsjacsleprrgkjvniwugxnfsavnsvjuusbuacczpvegnlqniqvpnzqejwwgnhlolppxutijnysuwnjgjyzwwyhtcieabytrbwyhwxgcdmhufgemmxidrnponhayfbuoijbuysnagelmldczwbcbfwgcuzncisnmhdchxctuvskxjvogofhfrijtdiftmjqytysbebkorzdsebbmehwqsdqkljfqbnkjlpysevkrpdpcgetfyzhthjdncbwhyvfqpaprysyuoiqoekxtlhcyvngdfjkbohfdphxhiospiinwrtumivjzfqjzncliyewjxyshesdrrcvymrzhjhymfkbtisunlsycrwemnsiyopdccfgqbddcbthlnxkstizjoklzadnypuitkmyrpsngdxqfwnnhbzlnkjdhfkxodlscmkcvdxystjmhbewfxqqaotamkkcockaljkzyjganrplunizufyvtarzzyilttyqsbpeoovukfnrdgfinzdimljzbyyhatxvolsicvalsakfxviyhhzzlsqysmcwopsmyxxaudlkivcphvxzyeypeivlkcwkditnadiwpbwlahurfcerfgraahnwpveyldetjrgvauxckuwhxmlsjzwygemvsikunkjghydfznverggonokpgloczavxzzbjpapghmciholfzfznpdbqbvpyxdrrbnkdlrxglasgrshubpvpwfsaztmzkngwzyxlucatdhzqcddfolmifoojqhbuocaqpgzfjejbkivgictqhdpxyujzzakgqsbdowsiesmvyrqerzxmakimbrqwqpuxnfbyirecvkyrqdsycfpwdzmqsdjpmieslkfkcjzyicvpicrisyxrflqhyrowpbs</pre>
+  <pre id="testcase31_output">No</pre>
+  <pre id="testcase32_input">1000
+pmewgrwiwjrjaicldhpzyhmgrqytktpnamisouxiaxxdwqwgwqxnbnimrlcxeykytzlusbzqltehmxnrtalrelshgprrgvzeutswzouefqqnqemdesusekcwibfdpvkiffvyccgqogeaypnfzqkmyiwteqapcrojqdirfcyxvkmqtxeirlosvirdwlvafndkdxvbpwlasbgxclotjljewjyvlyuwdevgyewenfxeeunhzhcvunxguccmuzcapwxlpjacsmygmhmwsihdvflgrtfyqhhkemucheswpaxriyssprqnevzhhqovqotiqaqkcfzjhawbiqqosxssoqxufprrbpqnjsazjhrrxxgdueaauktakqmnclrxwmgacgtevfbwqvhczejwhiaezghmbzauwfcuhbsmetmeoipykbyhvtjclgrztszkpbarcdttyjlvxbekrbrcczcfoxwsacfgscdwjncwkavlkmcvatljkxjovvrbpkrewnuazsucuhgsbjnzuktmkqtuffqputlhikfatnydxxksfehnarzkvilkakhmrqgdowpwnffeasimejhvvxsikscyqwlyftqkqkfdpddqbhgvmozhdrhrywbotsoaxztipnsuymtrbdhfglbrnhykdtoxdlfwfncyhyhfejnetsxcnntzzgzitohyhjyhrwtufsyejvvwgknxdkowygphxywglyslevqvlhfybazwunfhdgtjywmadpniqykasgckvkoeuvzwrioarstfknspjrrcunvgbeeehsqicroxbpmykgzmrwevxthsucrvheklynkglhtfvfyzejbusnotnomcpijgrtijldrbzrvjmubmocacgacqwtdojdmeuftmkcfrzjrybfgmqecqqywkpmufetqctnufjtexlkenfcmoaagudsyhzirydojqhzuzuiriuudneechtluyjtjsnjnqqgfuzsrqfjsmnleyihlkhimk</pre>
+  <pre id="testcase32_output">No</pre>
+  <pre id="testcase33_input">1000
+xrmjjfdslbdmxgzwbyeutsbmmhakletsiasdbbyvccqyzvnzdawsbctfsxpeanynccldqcfolmnsncyqygvjdbyzdmfgwlbufnkjbpnegdgswnsoyyhniankuikonznnqtfkltfzelustivhfqmnbkcufuhakkdahzqxhsrhceobmvtxnmrqxsrjmaknpsrhnxxburtmsbpiteevjrhtcbpewmtizhwhwgoaxfzpqnojfozblujotiwlvcdhgkyhwrbhpcvflpqjdlxvrnkfhqqoaoafdxbfuztpwnusxgrfenqckrbrlmyggrgcnrtaxcqyofviupzxmgodwqvcqgjyzbjeyahcucglpdwoaniplhuqprgqlyfcykfeljzhslpeltjhyxjqplomnckurjuzysppylhmyinmnmdytvnctizsaxxiaabhkxecffysgaozofnsoxcnxofbwksutrnlicsynjjqsrclicbpcowflesymcvyzymwvllgkvgdzsggxfqzeepjniflzkhsfojfpalxdntmzfvcuzlabjznlabwcikhxdaahhwpnbgaruryygpdfurkiopchppfqemkutzmonmylpamqojogpqpydhkesmhtbwhhviktsufyavejpajohngqbpfxerbghelwzzkrrwpktaixcdkgomgssytbcofvxhgdnlhftencmzdmcfpwzfhcfyrwmbizgrgdthimnohnnyjgdnjfuophrswisqoosnisaipvqzymtofgdchcbwyuqvndzcisyoqictbpjkorclmmeeqbkfsrckeliupsxtpdwoazepuymnogygmijuihpnwrhqsykqhpfpqnoodajfcyrhgvscksshzfahjngnuetmrtpimzhelzvdudpktoghfnrgqycyoxelzqeawcuddyswqhulljtjrgfynjucelijenikhikpmxsohxsagqdtjnqygmkcyihyuamlsfvmhgnzz</pre>
+  <pre id="testcase33_output">No</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 24 回日本情報オリンピック JOI 2024/2025 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
