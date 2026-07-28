@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>距離 (Distance) [Python]</title>
+  </head>
+
+  <body>
+    <h1>距離 (Distance) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+<var>N</var> 個のボールが <var>1</var> 列に並べてある．左から順にボール <var>1,2,…,N</var> と呼ぶ．ボール <var>i</var> は色 <var>C_i</var> で塗られている．
+</p>
+
+<p>
+各 <var>i=1,2,…,N</var> について，以下の値を求めよ．
+</p>
+
+<ul>
+<li>ボール <var>i</var> と色が等しいすべてのボールに対する，ボール <var>i</var> との距離の総和．ただし，ボール <var>i</var> とボール <var>j</var> の距離は |<var>i-j</var>| で定義される．</li>
+</ul>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>1 ≦ C_i ≦ 100</var> (<var>1 ≦ i ≦ N</var>)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>C_1</var> <var>C_2</var> <var>…</var> <var>C_N</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>N</var> 行にわたり出力せよ．<var>i</var> 行目 (<var>1 ≦ i ≦ N</var>) には，ボール <var>i</var> と色が等しいすべてのボールに対する，ボール <var>i</var> との距離の総和を出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2026-practice">練習問題やその解答例</a>を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+4
+1 2 1 1
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+5
+0
+3
+4
+</pre>
+
+<p>
+ボール <var>1</var> が色 <var>1</var> で，ボール <var>2</var> が色 <var>2</var> で，ボール <var>3</var> が色 <var>1</var> で，ボール <var>4</var> が色 <var>1</var> で塗られている．
+</p>
+
+<ul>
+<li><var>i = 1</var> について，ボール <var>1</var> と色が等しいボールはボール <var>1,3,4</var> であり，それぞれボール <var>1</var> との距離は <var>0,2,3</var> なので <var>0+2+3=5</var> を出力する．</li>
+<li><var>i = 2</var> について，ボール <var>2</var> と色が等しいボールはボール <var>2</var> のみであり，ボール <var>2</var> との距離は <var>0</var> なので <var>0</var> を出力する．</li>
+<li><var>i = 3</var> について，ボール <var>3</var> と色が等しいボールはボール <var>1,3,4</var> であり，それぞれボール <var>3</var> との距離は <var>2,0,1</var> なので <var>2+0+1=3</var> を出力する．</li>
+ <li><var>i = 4</var> について，ボール <var>4</var> と色が等しいボールはボール <var>1,3,4</var> であり，それぞれボール <var>4</var> との距離は <var>3,1,0</var> なので <var>3+1+0=4</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+1
+100
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+0
+</pre>
+
+<p>
+ボール <var>1</var> が色 <var>100</var> で塗られている．
+</p>
+
+<ul>
+<li><var>i = 1</var> について，ボール <var>1</var> と色が等しいボールはボール <var>1</var> のみであり，ボール <var>1</var> との距離は <var>0</var> なので <var>0</var> を出力する．</li>
+</ul>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+8
+1 3 9 7 3 3 7 9
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+0
+7
+5
+3
+4
+5
+3
+5
+</pre>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+10
+1 1 1 1 1 1 1 1 1 1
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+45
+37
+31
+27
+25
+25
+27
+31
+37
+45
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">100
+100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100</pre>
+  <pre id="testcase1_output">4950
+4852
+4756
+4662
+4570
+4480
+4392
+4306
+4222
+4140
+4060
+3982
+3906
+3832
+3760
+3690
+3622
+3556
+3492
+3430
+3370
+3312
+3256
+3202
+3150
+3100
+3052
+3006
+2962
+2920
+2880
+2842
+2806
+2772
+2740
+2710
+2682
+2656
+2632
+2610
+2590
+2572
+2556
+2542
+2530
+2520
+2512
+2506
+2502
+2500
+2500
+2502
+2506
+2512
+2520
+2530
+2542
+2556
+2572
+2590
+2610
+2632
+2656
+2682
+2710
+2740
+2772
+2806
+2842
+2880
+2920
+2962
+3006
+3052
+3100
+3150
+3202
+3256
+3312
+3370
+3430
+3492
+3556
+3622
+3690
+3760
+3832
+3906
+3982
+4060
+4140
+4222
+4306
+4392
+4480
+4570
+4662
+4756
+4852
+4950</pre>
+  <pre id="testcase2_input">75
+13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13</pre>
+  <pre id="testcase2_output">2775
+2702
+2631
+2562
+2495
+2430
+2367
+2306
+2247
+2190
+2135
+2082
+2031
+1982
+1935
+1890
+1847
+1806
+1767
+1730
+1695
+1662
+1631
+1602
+1575
+1550
+1527
+1506
+1487
+1470
+1455
+1442
+1431
+1422
+1415
+1410
+1407
+1406
+1407
+1410
+1415
+1422
+1431
+1442
+1455
+1470
+1487
+1506
+1527
+1550
+1575
+1602
+1631
+1662
+1695
+1730
+1767
+1806
+1847
+1890
+1935
+1982
+2031
+2082
+2135
+2190
+2247
+2306
+2367
+2430
+2495
+2562
+2631
+2702
+2775</pre>
+  <pre id="testcase3_input">13
+86 86 86 86 86 86 86 86 86 86 86 86 86</pre>
+  <pre id="testcase3_output">78
+67
+58
+51
+46
+43
+42
+43
+46
+51
+58
+67
+78</pre>
+  <pre id="testcase4_input">42
+31 95 88 39 5 61 35 100 44 22 26 52 67 41 46 81 13 76 28 64 18 86 90 9 10 19 27 92 54 60 16 48 30 36 49 53 58 4 45 69 72 93</pre>
+  <pre id="testcase4_output">0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0</pre>
+  <pre id="testcase5_input">91
+63 48 90 98 74 26 73 30 9 94 77 65 16 14 78 19 51 66 91 25 3 58 47 44 22 8 38 68 12 87 1 11 20 33 40 35 59 57 5 95 28 24 52 80 79 99 100 89 15 4 84 45 67 55 96 54 72 61 88 31 27 69 75 2 70 37 23 10 41 18 43 36 29 97 49 92 7 93 17 71 50 83 62 34 85 76 81 6 82 60 64</pre>
+  <pre id="testcase5_output">0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0</pre>
+  <pre id="testcase6_input">98
+89 65 93 80 100 97 50 53 53 90 86 55 63 54 59 74 80 59 66 58 57 84 93 93 95 93 80 86 86 85 50 67 68 64 67 95 85 83 67 89 77 91 82 72 71 74 60 83 85 90 60 75 84 92 67 81 84 63 83 52 84 63 90 99 58 62 72 66 100 58 59 55 84 95 74 85 65 57 53 53 61 73 60 75 52 93 85 86 99 98 68 77 70 60 67 59 58 83</pre>
+  <pre id="testcase6_output">39
+75
+147
+36
+64
+0
+24
+144
+142
+93
+112
+60
+94
+0
+140
+89
+23
+134
+49
+172
+57
+156
+87
+86
+60
+88
+33
+78
+78
+129
+24
+96
+58
+0
+87
+49
+108
+91
+83
+39
+51
+0
+0
+23
+0
+59
+87
+71
+96
+53
+79
+32
+63
+0
+99
+0
+59
+49
+71
+25
+63
+53
+66
+25
+82
+0
+23
+49
+64
+82
+134
+60
+99
+87
+88
+123
+75
+57
+142
+144
+0
+0
+79
+32
+25
+268
+156
+196
+25
+0
+58
+51
+0
+101
+219
+184
+136
+149</pre>
+  <pre id="testcase7_input">91
+93 88 63 68 81 88 78 58 92 82 56 82 81 54 73 68 98 74 80 70 87 93 55 60 80 81 90 88 50 74 51 79 53 54 62 50 60 93 66 77 50 76 95 66 97 70 69 94 91 72 87 89 77 94 57 86 85 72 84 66 96 55 54 59 54 88 57 86 71 82 54 90 77 54 83 76 70 72 74 94 78 52 70 56 65 74 58 89 55 100 65</pre>
+  <pre id="testcase7_output">58
+94
+0
+12
+29
+86
+74
+79
+0
+62
+73
+60
+21
+237
+0
+12
+0
+141
+6
+146
+30
+37
+105
+13
+6
+34
+45
+86
+19
+117
+0
+0
+0
+157
+0
+12
+13
+53
+26
+46
+17
+34
+0
+21
+0
+94
+0
+38
+0
+36
+30
+36
+33
+32
+12
+12
+0
+28
+0
+37
+0
+66
+99
+0
+99
+162
+12
+12
+0
+118
+111
+45
+53
+123
+0
+34
+94
+48
+117
+58
+74
+0
+106
+73
+6
+131
+79
+36
+93
+0
+6</pre>
+  <pre id="testcase8_input">100
+74 82 99 85 56 51 87 78 95 75 83 82 84 64 66 94 78 76 73 80 59 50 82 54 77 68 91 54 74 80 90 55 60 77 79 54 68 67 60 86 87 61 90 69 90 73 75 82 77 86 82 83 61 59 89 73 94 82 85 59 92 66 66 59 86 61 54 79 88 100 73 59 59 96 51 99 95 55 77 86 80 53 86 65 84 68 78 53 67 59 70 80 61 94 100 58 70 57 50 91</pre>
+  <pre id="testcase8_output">28
+182
+73
+55
+0
+69
+34
+88
+68
+37
+41
+142
+72
+0
+95
+119
+79
+0
+116
+143
+287
+77
+120
+59
+87
+71
+73
+51
+28
+123
+26
+46
+6
+69
+33
+51
+60
+51
+6
+118
+34
+86
+14
+0
+16
+62
+37
+120
+69
+88
+126
+41
+64
+122
+0
+62
+78
+154
+55
+104
+0
+48
+49
+100
+73
+64
+113
+33
+0
+25
+92
+108
+111
+0
+69
+73
+68
+46
+129
+88
+123
+6
+97
+0
+72
+109
+149
+6
+51
+196
+6
+145
+118
+115
+25
+0
+6
+0
+77
+73</pre>
+  <pre id="testcase9_input">98
+66 84 72 87 61 59 84 55 64 95 78 67 85 67 58 82 55 96 72 99 73 63 55 79 75 54 98 94 64 51 81 97 79 94 55 87 93 89 78 73 90 50 60 80 57 76 54 62 68 59 100 54 91 84 85 59 70 97 99 92 53 86 50 72 94 84 93 61 73 67 87 50 71 58 50 81 60 90 84 58 72 92 66 86 98 56 61 91 52 58 83 94 59 87 54 68 80 65</pre>
+  <pre id="testcase9_output">82
+198
+155
+189
+145
+181
+183
+51
+20
+0
+28
+60
+42
+58
+199
+0
+33
+0
+123
+39
+67
+0
+33
+9
+0
+116
+58
+107
+20
+0
+45
+26
+9
+95
+57
+125
+30
+0
+28
+48
+37
+84
+34
+53
+0
+0
+74
+0
+47
+93
+0
+74
+35
+136
+42
+93
+0
+26
+39
+22
+0
+22
+42
+123
+95
+148
+30
+82
+77
+114
+125
+42
+0
+81
+48
+45
+34
+37
+187
+81
+157
+22
+82
+22
+58
+0
+101
+35
+0
+101
+0
+149
+167
+171
+160
+47
+53
+0</pre>
+  <pre id="testcase10_input">66
+34 60 44 22 70 69 81 68 30 1 43 52 91 81 28 48 24 10 35 4 45 27 49 15 1 81 77 78 75 16 1 26 82 65 98 45 54 11 27 98 37 79 23 33 19 79 52 71 98 6 66 3 90 74 66 93 48 61 8 90 44 85 53 45 26 51</pre>
+  <pre id="testcase10_output">0
+0
+58
+0
+0
+0
+26
+0
+0
+36
+0
+35
+0
+19
+0
+41
+0
+0
+0
+0
+58
+17
+0
+0
+21
+31
+0
+0
+0
+0
+27
+33
+0
+0
+19
+43
+0
+0
+17
+14
+0
+4
+0
+0
+0
+4
+35
+0
+23
+0
+4
+0
+7
+0
+4
+0
+41
+0
+0
+7
+58
+0
+0
+71
+33
+0</pre>
+  <pre id="testcase11_input">1
+65</pre>
+  <pre id="testcase11_output">0</pre>
+  <pre id="testcase12_input">92
+60 96 8 58 63 97 50 14 14 90 86 59 60 22 4 35 7 5 15 5 10 48 11 68 89 47 18 90 9 82 77 88 79 44 79 89 72 5 75 53 32 41 41 30 1 38 49 13 23 39 82 74 23 45 74 69 20 36 30 54 35 79 91 76 10 61 86 59 96 100 76 45 94 23 36 10 75 69 6 23 14 16 61 34 83 19 25 30 49 68 16 97</pre>
+  <pre id="testcase12_output">12
+67
+0
+0
+0
+86
+0
+74
+73
+18
+56
+56
+12
+0
+0
+45
+0
+22
+0
+20
+99
+0
+0
+66
+11
+0
+0
+18
+0
+21
+0
+0
+31
+0
+29
+11
+0
+38
+38
+0
+0
+1
+1
+59
+0
+0
+42
+0
+60
+0
+21
+3
+52
+18
+3
+22
+0
+17
+44
+0
+45
+56
+0
+7
+55
+17
+56
+56
+67
+0
+7
+18
+0
+52
+17
+66
+38
+22
+0
+64
+145
+9
+17
+0
+0
+0
+0
+73
+42
+66
+9
+86</pre>
+  <pre id="testcase13_input">30
+17 36 9 86 15 48 100 83 98 6 79 72 72 22 65 1 14 8 13 87 91 52 30 92 6 10 2 100 83 13</pre>
+  <pre id="testcase13_output">0
+0
+0
+0
+0
+0
+21
+21
+0
+15
+0
+1
+1
+0
+0
+0
+0
+0
+11
+0
+0
+0
+0
+0
+15
+0
+0
+21
+21
+11</pre>
+  <pre id="testcase14_input">62
+9 42 32 79 47 1 20 60 15 56 33 99 51 80 41 91 63 25 30 98 84 95 85 21 23 56 51 66 57 22 64 28 77 93 91 28 2 70 25 5 55 6 87 76 97 4 47 13 21 21 71 40 95 34 20 30 83 59 50 80 10 99</pre>
+  <pre id="testcase14_output">0
+0
+0
+0
+42
+0
+48
+0
+0
+16
+0
+50
+14
+46
+0
+19
+0
+21
+37
+0
+0
+31
+0
+51
+0
+16
+14
+0
+0
+0
+0
+4
+0
+0
+19
+4
+0
+0
+21
+0
+0
+0
+0
+0
+0
+0
+42
+0
+26
+27
+0
+0
+31
+0
+48
+37
+0
+0
+0
+46
+0
+50</pre>
+  <pre id="testcase15_input">1
+44</pre>
+  <pre id="testcase15_output">0</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 25 回日本情報オリンピック JOI 2025/2026 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>葵とIOI (Aoi and IOI) [Python]</title>
+  </head>
+
+  <body>
+    <h1>葵とIOI (Aoi and IOI) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ <var>N</var> の文字列 <var>S</var> が与えられる．<var>S</var> の各文字は <code>A</code>，<code>O</code>，<code>I</code> のいずれかである．
+</p>
+
+<p>
+<var>S</var> に含まれる連続した <var>3</var> 文字を取り出したとき，順に <code>A</code>，<code>O</code>，<code>I</code> または <code>I</code>，<code>O</code>，<code>I</code> となっているようなものの個数を出力せよ．
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>S</var> は長さ <var>N</var> の文字列である．</li>
+<li><var>S</var> の各文字は <code>A</code>，<code>O</code>，<code>I</code> のいずれかである．</li>
+<li><var>N</var> は整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var>
+<var>S</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+<var>S</var> に含まれる <code>AOI</code> の個数と <code>IOI</code> の個数の合計を出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2026-practice">練習問題やその解答例</a>を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+5
+IAOIO
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+1
+</pre>
+
+<ul>
+<li><var>S</var> の <var>2</var>，<var>3</var>，<var>4</var> 文字目はそれぞれ <code>A</code>，<code>O</code>，<code>I</code> である．</li>
+<li><var>S</var> に <code>I</code>，<code>O</code>，<code>I</code> の <var>3</var> 文字がこの順に連続して現れることはない．</li>
+</ul>
+
+<p>
+<var>S</var> に含まれる <code>AOI</code>，<code>IOI</code> の個数の合計は <var>1</var> 個である．したがって <var>1</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+8
+AOIOIOIA
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+3
+</pre>
+
+<ul>
+<li><var>S</var> の <var>1</var>，<var>2</var>，<var>3</var> 文字目はそれぞれ <code>A</code>，<code>O</code>，<code>I</code> である．</li>
+<li><var>S</var> の <var>3</var>，<var>4</var>，<var>5</var> 文字目はそれぞれ <code>I</code>，<code>O</code>，<code>I</code> である．</li>
+<li><var>S</var> の <var>5</var>，<var>6</var>，<var>7</var> 文字目はそれぞれ <code>I</code>，<code>O</code>，<code>I</code> である．</li>
+</ul>
+
+<p>
+<var>S</var> に含まれる <code>AOI</code>，<code>IOI</code> の個数の合計は <var>3</var> 個である．したがって <var>3</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+6
+IIOOII
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+0
+</pre>
+
+<p>
+<code>AOI</code>，<code>IOI</code> のいずれも <var>S</var> に含まれない．したがって <var>0</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+15
+IAOIAOAOIOIAIOI
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+4
+</pre>
+
+<p>
+<var>S</var> に含まれる <code>AOI</code>，<code>IOI</code> の個数の合計は <var>4</var> 個である．したがって <var>4</var> を出力する．
+</p><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">30
+AOIAOIAOIAOIAOIAOIAOIAOIAOIAOI</pre>
+  <pre id="testcase1_output">10</pre>
+  <pre id="testcase2_input">27
+IOIIOIIOIIOIIOIIOIIOIIOIIOI</pre>
+  <pre id="testcase2_output">9</pre>
+  <pre id="testcase3_input">40
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</pre>
+  <pre id="testcase3_output">0</pre>
+  <pre id="testcase4_input">43
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</pre>
+  <pre id="testcase4_output">0</pre>
+  <pre id="testcase5_input">24
+IIIIIIIIIIIIIIIIIIIIIIII</pre>
+  <pre id="testcase5_output">0</pre>
+  <pre id="testcase6_input">79
+AIOIAOOAOOIAIAAIOIOAAAAOIIIIOAAAIAIAAOOAOIAOIOOIAIOOOOAOIOIIIOIOAOAAAAAAOOIOOAI</pre>
+  <pre id="testcase6_output">8</pre>
+  <pre id="testcase7_input">83
+AIAIIAAOIAAOOOAAOOIIAIIAAAIAOIIOOAOIIIAOOIAOAOOAOOIAOOOAAAOOOIIOOAOOOOOOOOIIIAAOIII</pre>
+  <pre id="testcase7_output">4</pre>
+  <pre id="testcase8_input">98
+OIIOAAAOAAIIAOIOOIOIOOAIIIAAAIOIAOIAOAAIIOIAOOOAAOIAIIAIOAOIOIIIIAIOOIOOOIOIIAIIAAIOOAIAIOAOOOIOAA</pre>
+  <pre id="testcase8_output">9</pre>
+  <pre id="testcase9_input">99
+AOIAAOAOAAOAIAAAIIOAAIIOOIIAIAIOOOIOOAAIIAIAOIIOOOIIIOAIOOOIAOAIAIAAIIAIIIIIOOIIOIAAIOOIIAAOIOOOIIA</pre>
+  <pre id="testcase9_output">4</pre>
+  <pre id="testcase10_input">100
+OIAAIAIOOIAAIOIIAAAOAAAIIAIAAOIAAOAAAAAAAOAAAOAOOIIOOAOOIIOOOIIOAOOIAOIAIAIAAIOIOAOIAOIAOAOIOOOAIIOO</pre>
+  <pre id="testcase10_output">7</pre>
+  <pre id="testcase11_input">1
+I</pre>
+  <pre id="testcase11_output">0</pre>
+  <pre id="testcase12_input">2
+AO</pre>
+  <pre id="testcase12_output">0</pre>
+  <pre id="testcase13_input">3
+OAI</pre>
+  <pre id="testcase13_output">0</pre>
+  <pre id="testcase14_input">3
+AOI</pre>
+  <pre id="testcase14_output">1</pre>
+  <pre id="testcase15_input">3
+IOI</pre>
+  <pre id="testcase15_output">1</pre>
+  <pre id="testcase16_input">11
+OOOOAOIOIIO</pre>
+  <pre id="testcase16_output">2</pre>
+  <pre id="testcase17_input">13
+AIOIOIIAOIIOA</pre>
+  <pre id="testcase17_output">3</pre>
+  <pre id="testcase18_input">1
+O</pre>
+  <pre id="testcase18_output">0</pre>
+  <pre id="testcase19_input">1
+I</pre>
+  <pre id="testcase19_output">0</pre>
+  <pre id="testcase20_input">3
+IOA</pre>
+  <pre id="testcase20_output">0</pre>
+  <pre id="testcase21_input">3
+OIO</pre>
+  <pre id="testcase21_output">0</pre>
+  <pre id="testcase22_input">2
+IO</pre>
+  <pre id="testcase22_output">0</pre>
+  <pre id="testcase23_input">100
+OIOOIOIIOIOOIOOIIIOIOIOIIOIOIOIOIOOIOIOIIIAIOIOIOIOIOIOIOIIAAIOIOIOIOIOIOIOIIAOOOIOIOIIOIOIOIOOIOIOI</pre>
+  <pre id="testcase23_output">32</pre>
+  <pre id="testcase24_input">100
+OIOIOIAOOIOIOIOIIIIOIOOIOIAOIIIOIOIOIIOIOOIOOIOIOIIOIIAIOIOIOIOIIOIAIOIAOIIOOIOIIOIOIIOIOIOIAOOIOIOI</pre>
+  <pre id="testcase24_output">30</pre>
+  <pre id="testcase25_input">97
+OOIOIOOOIOIAAOIIOAOIOIIOIOOOIOIOOIOIOIAOIOIOIAOIOOIIOIOIIOIOIIOIIIOIOIOIIOIOIOIIOIOOIAOOIOIOIOIAI</pre>
+  <pre id="testcase25_output">28</pre>
+  <pre id="testcase26_input">92
+OIIIIOIOIOIOIOIAOIOIIOIAAOIOIOIOIOIOIIOOIOIOIIOIOOIOIIOIIOOIOIOIOOIOIOIOIOIOIOOIIOIIOIOIOIOI</pre>
+  <pre id="testcase26_output">31</pre>
+  <pre id="testcase27_input">91
+OOOOIOIIOIOIAAIOIOIOIOIOIOIOIOIAIOIAOIIOOIOOIOIOIOIAOOIOIOIOIAOIOIIOAOIOOIOIOIOIOIAOIOIOIOI</pre>
+  <pre id="testcase27_output">30</pre>
+  <pre id="testcase28_input">80
+OOIOOIOIOIOIOIOIOOIAOIOOAOIIOIOOIOIIOIIOIOIOIIOOIOIIAOOIIAOOOOIOIOIOIOIAAAIAOIOI</pre>
+  <pre id="testcase28_output">20</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 25 回日本情報オリンピック JOI 2025/2026 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>

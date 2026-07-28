@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>ビルディング 5 (Building 5) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>ビルディング 5 (Building 5) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+JOI 国には <var>N</var> 棟のビルがある．<var>i</var> 番目 (<var>1 ≦ i ≦ N</var>) のビルの高さは <var>H_i</var> メートルである．
+</p>
+
+<p>
+これらのビルのうち，高さが <var>X</var> メートル以上のものは何棟あるかを求めよ．
+</p>
+
+<p>
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ N ≦ 100</var>．</li>
+<li><var>1 ≦ X ≦ 1 000</var>．</li>
+<li><var>1 ≦ H_i ≦ 1 000</var> (<var>1 ≦ i ≦ N</var>)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>N</var> <var>X</var>
+<var>H_1</var> <var>H_2</var> … <var>H_N</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+高さが <var>X</var> メートル以上であるビルの数を，単位 (棟) を省いて出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2026-practice">練習問題やその解答例</a>を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+3 20
+18 25 20
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+2
+</pre>
+
+<p>
+JOI 国には <var>3</var> 棟のビルがあり，それぞれの高さは <var>18</var> メートル，<var>25</var> メートル，<var>20</var> メートルである．
+</p>
+
+<p>
+これらのうち，高さが <var>20</var> メートル以上であるビルは <var>2</var> 棟である．したがって <var>2</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+4 10
+3 9 1 3
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+0
+</pre>
+
+<p>
+JOI 国には <var>4</var> 棟のビルがあり，それぞれの高さは <var>3</var> メートル，<var>9</var> メートル，<var>1</var> メートル，<var>3</var> メートルである．
+</p>
+
+<p>
+これらのうち，高さが <var>10</var> メートル以上であるビルは存在しない．したがって <var>0</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+1 100
+100
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+1
+</pre>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+5 634
+829 679 632 601 600
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+2
+</pre><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">100 907
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</pre>
+  <pre id="testcase1_output">0</pre>
+  <pre id="testcase2_input">5 920
+1 1 1 1 1</pre>
+  <pre id="testcase2_output">0</pre>
+  <pre id="testcase3_input">4 798
+1000 1000 1000 1000</pre>
+  <pre id="testcase3_output">4</pre>
+  <pre id="testcase4_input">51 691
+1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000</pre>
+  <pre id="testcase4_output">51</pre>
+  <pre id="testcase5_input">81 61
+828 217 546 807 370 795 68 194 615 410 692 202 25 956 365 758 487 71 66 70 588 124 774 766 818 421 943 617 895 527 222 94 422 527 111 998 769 822 613 728 774 791 139 54 905 79 373 936 311 13 415 210 885 414 6 980 938 74 437 972 876 304 698 775 969 285 583 56 46 467 788 14 604 248 901 496 488 638 416 308 742</pre>
+  <pre id="testcase5_output">74</pre>
+  <pre id="testcase6_input">32 805
+33 167 377 204 279 884 567 495 192 914 567 726 789 272 858 63 192 937 662 994 30 466 266 377 653 675 347 443 786 411 111 552</pre>
+  <pre id="testcase6_output">5</pre>
+  <pre id="testcase7_input">70 336
+854 963 884 235 575 440 513 494 260 596 475 477 319 270 551 593 614 808 542 8 853 707 38 419 514 821 72 820 327 119 612 903 423 94 750 88 608 710 891 565 980 97 71 4 15 370 533 398 235 488 481 915 413 680 720 782 239 247 489 730 952 694 129 261 165 560 521 278 824 458</pre>
+  <pre id="testcase7_output">48</pre>
+  <pre id="testcase8_input">9 447
+464 74 21 118 939 65 28 912 713</pre>
+  <pre id="testcase8_output">4</pre>
+  <pre id="testcase9_input">3 355
+951 931 880</pre>
+  <pre id="testcase9_output">3</pre>
+  <pre id="testcase10_input">82 475
+477 480 479 471 472 480 479 476 473 480 478 471 479 480 470 473 472 475 478 475 479 476 473 474 470 472 474 476 478 475 471 476 470 478 471 475 472 472 478 472 478 472 471 474 473 472 478 478 472 472 471 472 477 475 470 470 471 475 475 477 474 470 473 476 472 476 474 480 480 470 473 479 470 480 479 470 470 480 472 473 470 474</pre>
+  <pre id="testcase10_output">38</pre>
+  <pre id="testcase11_input">53 41
+45 44 44 42 38 39 40 38 46 46 36 45 38 36 37 42 45 46 46 44 41 46 44 39 46 43 45 44 38 42 39 43 37 37 44 41 42 39 43 36 40 44 43 36 46 37 36 46 43 38 40 44 45</pre>
+  <pre id="testcase11_output">32</pre>
+  <pre id="testcase12_input">82 856
+857 856 857 856 855 857 855 856 855 857 856 856 855 856 855 855 857 857 855 855 855 857 857 855 856 857 855 857 857 855 857 857 856 855 856 855 855 855 857 856 857 857 855 857 856 855 855 855 856 857 855 856 855 856 857 857 857 857 856 855 857 857 856 856 855 857 857 856 855 855 855 857 855 857 855 855 856 856 855 855 855 857</pre>
+  <pre id="testcase12_output">49</pre>
+  <pre id="testcase13_input">94 275
+274 276 274 274 274 274 275 274 275 275 275 275 275 274 275 275 275 274 275 274 276 274 275 274 275 274 274 274 276 274 274 276 275 274 274 275 275 276 274 276 274 276 275 274 276 274 276 274 275 275 275 274 276 275 275 275 274 274 276 276 275 276 276 276 276 276 275 275 275 275 276 274 274 276 274 274 274 274 276 274 276 276 276 276 275 275 275 276 275 276 274 276 275 276</pre>
+  <pre id="testcase13_output">60</pre>
+  <pre id="testcase14_input">84 455
+455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455 455</pre>
+  <pre id="testcase14_output">84</pre>
+  <pre id="testcase15_input">15 78
+78 78 78 78 78 78 78 78 78 78 78 78 78 78 78</pre>
+  <pre id="testcase15_output">15</pre>
+  <pre id="testcase16_input">73 513
+512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512 512</pre>
+  <pre id="testcase16_output">0</pre>
+  <pre id="testcase17_input">92 405
+404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404</pre>
+  <pre id="testcase17_output">0</pre>
+  <pre id="testcase18_input">90 820
+821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821 821</pre>
+  <pre id="testcase18_output">90</pre>
+  <pre id="testcase19_input">9 335
+336 336 336 336 336 336 336 336 336</pre>
+  <pre id="testcase19_output">9</pre>
+  <pre id="testcase20_input">1 1
+1</pre>
+  <pre id="testcase20_output">1</pre>
+  <pre id="testcase21_input">1 29
+450</pre>
+  <pre id="testcase21_output">1</pre>
+  <pre id="testcase22_input">100 610
+464 254 481 816 724 421 605 447 467 945 452 720 860 338 36 814 892 759 411 614 118 201 566 144 709 640 213 496 193 575 748 475 977 766 322 352 589 768 737 37 250 272 375 767 861 464 878 66 322 62 294 3 1 416 621 930 815 481 984 726 272 176 400 880 817 445 153 472 508 149 974 858 180 947 489 843 803 545 419 655 819 90 623 414 501 937 144 496 818 432 455 994 196 13 689 85 995 511 161 434</pre>
+  <pre id="testcase22_output">39</pre>
+  <pre id="testcase23_input">100 124
+697 828 704 256 903 383 892 153 487 979 428 229 342 319 115 232 953 34 625 814 769 952 483 691 360 673 28 12 406 105 629 269 73 480 984 106 572 901 884 912 847 371 923 554 370 8 17 734 87 384 25 375 402 586 178 896 116 289 729 76 929 422 390 914 6 685 458 712 177 182 108 222 291 909 67 893 786 468 556 124 466 19 684 876 277 475 870 113 307 968 610 595 897 285 163 505 926 566 163 586</pre>
+  <pre id="testcase23_output">82</pre>
+  <pre id="testcase24_input">100 349
+638 73 156 555 89 394 234 792 220 964 781 110 696 315 528 772 425 409 571 500 436 185 554 26 519 91 921 742 395 211 96 658 781 6 523 648 392 984 837 633 238 908 584 969 150 511 508 913 623 136 645 2 772 599 72 611 839 451 879 240 795 824 621 55 63 465 373 40 946 29 329 502 253 829 351 29 695 524 597 375 225 20 734 837 32 402 860 258 183 224 621 359 290 343 5 129 897 811 440 648</pre>
+  <pre id="testcase24_output">64</pre>
+  <pre id="testcase25_input">100 1000
+1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000</pre>
+  <pre id="testcase25_output">100</pre>
+  <pre id="testcase26_input">100 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</pre>
+  <pre id="testcase26_output">100</pre>
+  <pre id="testcase27_input">100 1
+454 749 104 348 248 801 745 43 356 933 149 747 144 477 389 180 973 710 129 474 224 30 354 325 190 943 891 747 516 770 322 965 764 593 830 970 924 451 175 155 832 990 998 255 701 174 535 154 308 573 291 411 905 667 51 890 606 660 74 148 893 705 692 802 895 897 91 256 438 564 599 106 17 678 270 289 714 711 80 424 957 651 794 373 397 302 463 887 140 402 934 243 333 308 477 296 289 167 530 210</pre>
+  <pre id="testcase27_output">100</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 25 回日本情報オリンピック JOI 2025/2026 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
