@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "ruby.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>スポーツ大会 (Sports Contest) [Ruby]</title>
+  </head>
+
+  <body>
+    <h1>スポーツ大会 (Sports Contest) [Ruby]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+<var>32</var> チームが参加するスポーツ大会が行われる．それぞれのチームには <var>1</var> から <var>32</var> まで番号が付けられている．
+</p>
+
+<p>
+チーム <var>i</var> (<var>1 ≦ i ≦ 32</var>) の強さは <var>A_i</var> で，すべてのチームの強さは互いに異なる．<var>2</var> チームが試合をすると，<b>強さが大きいチームが必ず勝つ</b>．
+</p>
+
+<p>
+大会は全 <var>5</var> ラウンドのトーナメント戦で行われる．
+</p>
+
+<p>
+第 <var>1</var> ラウンドの開始時，チームは左からチーム <var>1, 2, …, 32</var> の順に一列に並んでいる．
+</p>
+
+<p>
+各ラウンドでは，左から順に隣り合う <var>2</var> チームずつ組になり，それぞれ試合を行う．
+そのラウンドにおけるすべての試合が終了すると，それぞれの試合の勝者だけが次のラウンドに進む．勝者たちは，このラウンドで試合が行われた順番に左から一列に並び，次のラウンドに進む．
+</p>
+
+<p>
+この操作をチームが <var>1</var> つになるまで繰り返す．第 <var>5</var> ラウンドでは <var>2</var> チームが残り，試合を行う．この試合を決勝戦と呼び，決勝戦に勝ったチームが優勝，負けたチームが準優勝となる．
+</p>
+
+<p>
+決勝戦である第 <var>5</var> ラウンドの試合で敗れ，準優勝となるチームの番号を求めよ．
+</p>
+
+<p>
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li><var>1 ≦ A_i ≦ 1 000</var> (<var>1 ≦ i ≦ 32</var>)．</li>
+<li><var>A_i ≠ A_j</var> (<var>1 ≦ i &lt; j ≦ 32</var>)．</li>
+<li>入力される値はすべて整数である．</li>
+</ul>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format"><var>A_1</var> <var>A_2</var> … <var>A_{32}</var>
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+準優勝するチームの番号を出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2027-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+16
+</pre>
+
+<p>
+第 <var>5</var> ラウンドの試合ではチーム <var>16</var> とチーム <var>32</var> が試合を行う．チーム <var>16</var> の強さは <var>A_{16} = 16</var> で，チーム <var>32</var> の強さは <var>A_{32} = 32</var> であるため，チーム <var>32</var> が勝利し，チーム <var>16</var> が準優勝となる．よって，<var>16</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+15 17 29 6 7 19 16 26 20 13 32 5 21 4 27 2 22 12 14 28 24 8 30 10 31 1 11 18 25 3 23 9
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+25
+</pre>
+
+<p>
+第 <var>5</var> ラウンドの試合ではチーム <var>11</var> とチーム <var>25</var> が試合を行う．チーム <var>11</var> の強さは <var>A_{11} = 32</var> で，チーム <var>25</var> の強さは <var>A_{25} = 31</var> であるため，チーム <var>11</var> が勝利し，チーム <var>25</var> が準優勝となる．よって，<var>25</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+19 2 5 12 44 40 24 16 3 26 23 21 41 28 9 39 43 22 15 14 7 49 17 46 34 4 32 30 45 27 33 36
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+5
+</pre>
+
+<p>
+第 <var>5</var> ラウンドの試合ではチーム <var>5</var> とチーム <var>22</var> が試合を行う．チーム <var>5</var> の強さは <var>A_5 = 44</var> で，チーム <var>22</var> の強さは <var>A_{22} = 49</var> であるため，チーム <var>22</var> が勝利し，チーム <var>5</var> が準優勝となる．よって，<var>5</var> を出力する．
+</p>
+
+<hr />
+
+<h2>入力例 4</h2>
+<pre id="sample4_input" class="sample">
+538 714 395 303 912 315 903 629 588 760 590 344 794 577 541 193 404 325 544 536 435 975 340 511 806 769 44 95 741 519 332 973
+</pre>
+
+<h2>出力例 4</h2>
+<pre id="sample4_output" class="sample">
+5
+</pre>
+
+<p>
+第 <var>5</var> ラウンドの試合ではチーム <var>5</var> とチーム <var>22</var> が試合を行う．チーム <var>5</var> の強さは <var>A_5 = 912</var> で，チーム <var>22</var> の強さは <var>A_{22} = 975</var> であるため，チーム <var>22</var> が勝利し，チーム <var>5</var> が準優勝となる．よって，<var>5</var> を出力する．
+</p><hr />
+
+<div class="testcase">
+  <pre id="testcase1_input">32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1</pre>
+  <pre id="testcase1_output">17</pre>
+  <pre id="testcase2_input">22 32 19 17 18 25 30 16 6 5 29 24 31 23 2 20 7 9 8 3 4 21 26 28 10 12 11 27 13 1 15 14</pre>
+  <pre id="testcase2_output">24</pre>
+  <pre id="testcase3_input">739 888 609 732 181 747 774 612 264 32 719 636 902 132 835 483 124 370 491 286 615 605 398 525 372 355 226 80 246 954 167 847</pre>
+  <pre id="testcase3_output">13</pre>
+  <pre id="testcase4_input">170 240 785 267 541 436 730 657 46 632 462 70 996 197 426 480 532 975 314 605 784 673 757 531 920 223 548 555 459 141 448 725</pre>
+  <pre id="testcase4_output">18</pre>
+  <pre id="testcase5_input">40 582 104 928 511 189 586 373 875 996 806 328 393 95 205 765 172 831 911 562 55 218 269 745 770 547 776 357 966 865 676 397</pre>
+  <pre id="testcase5_output">29</pre>
+  <pre id="testcase6_input">357 883 937 658 726 364 8 622 98 212 259 223 755 507 951 392 577 576 835 175 986 209 910 345 973 537 360 117 894 866 580 310</pre>
+  <pre id="testcase6_output">15</pre>
+  <pre id="testcase7_input">564 522 689 902 746 551 935 311 592 625 887 402 781 32 367 285 960 249 634 55 999 639 217 686 291 193 21 50 51 394 25 151</pre>
+  <pre id="testcase7_output">7</pre>
+  <pre id="testcase8_input">825 747 368 855 582 936 775 842 731 893 297 886 991 315 713 687 950 676 54 134 248 786 684 151 199 256 34 24 400 732 128 348</pre>
+  <pre id="testcase8_output">17</pre>
+  <pre id="testcase9_input">513 293 157 115 784 557 16 224 816 359 28 618 106 376 800 876 603 959 457 772 333 563 401 206 495 572 464 986 673 412 290 601</pre>
+  <pre id="testcase9_output">16</pre>
+  <pre id="testcase10_input">721 240 191 569 183 762 401 469 258 940 683 271 650 760 330 525 148 597 947 888 651 758 367 198 118 719 285 875 212 377 573 19</pre>
+  <pre id="testcase10_output">10</pre>
+  <pre id="testcase11_input">511 80 972 895 21 294 643 614 797 179 147 333 714 923 813 390 835 778 94 343 624 46 273 252 820 285 211 18 605 695 530 609</pre>
+  <pre id="testcase11_output">17</pre>
+  <pre id="testcase12_input">725 636 915 624 952 212 864 797 671 240 102 313 854 245 79 425 752 421 905 733 898 476 115 392 568 906 774 438 648 267 2 670</pre>
+  <pre id="testcase12_output">26</pre>
+  <pre id="testcase13_input">637 718 216 185 164 588 575 864 741 353 108 384 370 254 540 744 573 194 633 34 460 582 769 980 379 251 743 128 455 376 723 456</pre>
+  <pre id="testcase13_output">8</pre>
+  <pre id="testcase14_input">3 680 479 466 670 917 295 605 316 236 314 453 702 997 665 923 885 852 404 215 500 962 65 309 822 326 328 303 155 639 804 370</pre>
+  <pre id="testcase14_output">22</pre>
+  <pre id="testcase15_input">787 296 528 112 646 419 489 487 252 139 969 944 973 100 979 48 86 221 52 395 708 421 691 318 904 388 881 418 32 821 130 638</pre>
+  <pre id="testcase15_output">25</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 26 回日本情報オリンピック JOI 2026/2027 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "ruby",
+    indentUnit: 2
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
