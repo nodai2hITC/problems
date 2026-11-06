@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="micromodal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- ↓ 書き換え不可 -->
+    <script src="onbrowserjudge.js"></script>
+    <script> OnBrowserJudge.workerFile = "python.js" </script>
+    <!-- ↑ 書き換え不可 -->
+    <script>
+      // ↓ 必ず定義
+      OnBrowserJudge.getProgram = () => editor.getValue()
+      // ↑ 必ず定義
+
+      // OnBrowserJudge.initialData = ["numpy", "scipy", "scikit-learn", "networkx"]
+
+      OnBrowserJudge.dict.ready = "▶実行(Ctrl+Enter)"
+      OnBrowserJudge.dict.running = "■停止"
+      OnBrowserJudge.dict.preparation = "準備中"
+      OnBrowserJudge.dict.case_name = "ケース名"
+      OnBrowserJudge.dict.status = "結果"
+      OnBrowserJudge.dict.exec_time = "実行時間"
+      OnBrowserJudge.dict.copy = "コピー"
+      OnBrowserJudge.dict.copied = "コピーしました"
+      OnBrowserJudge.dict.AC = "正解"
+      OnBrowserJudge.dict.WA = "不正解"
+      OnBrowserJudge.dict.RE = "エラー"
+      OnBrowserJudge.dict.TLE = "時間超過"
+      OnBrowserJudge.dict.WJ = "ジャッジ待ち"
+
+      // OnBrowserJudge.timeLimit = 2000
+
+      // OnBrowserJudge.process = (program, casename, input) => program
+      // OnBrowserJudge.assertEqual = (expected, actual) => expected == actual.trimEnd()
+
+      // ↓ 正解時に実行する関数
+      OnBrowserJudge.congratulations = () => { MicroModal.show("modal-1") }
+    </script>
+    <title>文字列を探せ (Find The String) [Python]</title>
+  </head>
+
+  <body>
+    <h1>文字列を探せ (Find The String) [Python]</h1>
+    <hr />
+
+<h2>
+  問題文</h2>
+
+<p>
+長さ \(N\) の文字列 \(S\) と長さ \(M\) の文字列 \(T\)，および正整数 \(K\) が与えられる．\(S\) と \(T\) の各文字は英小文字である．
+</p>
+
+<p>
+\(S\) を \(K\) 回繰り返した文字列を \(X\) とする．\(X\) の部分文字列として \(T\) が含まれるならば <code>Yes</code> を，そうでないならば <code>No</code> を出力せよ．ただし，\(X\) の部分文字列とは，\(X\) の先頭から \(0\) 文字以上，末尾から \(0\) 文字以上削除して得られる文字列のことを指す．
+</p>
+
+<p>
+</p>
+
+<h2>
+  制約</h2>
+
+<ul>
+<li>\(1 ≦ N ≦ 100\)．</li>
+<li>\(S\) は英小文字のみからなる長さ \(N\) の文字列である．</li>
+<li>\(1 ≦ M ≦ 100\)．</li>
+<li>\(T\) は英小文字のみからなる長さ \(M\) の文字列である．</li>
+<li>\(1 ≦ K ≦ 10^9\)．</li>
+<li>\(N, M, K\) は整数である．</li>
+</ul>
+
+<h2>
+  小課題</h2>
+
+<ol style="line-height: 200%;  margin-left: 30px; margin-right: 30px;">
+<li>(\(25\) 点) \(K = 1\)．</li>
+<li>(\(25\) 点) \(K ≦ 100\)．</li>
+<li>(\(25\) 点) \(S, T\) の各文字は <code>a</code> である．</li>
+<li>(\(25\) 点) 追加の制約はない．</li>
+</ol>
+
+<h2>
+  入力</h2>
+
+<p>入力は以下の形式で与えられる．</p>
+<div class="io_format">\(N\)
+\(S\)
+\(M\)
+\(T\)
+\(K\)
+</div>
+
+<h2>
+  出力</h2>
+
+<p>
+\(X\) の部分文字列として \(T\) が含まれるならば <code>Yes</code> を，そうでないならば <code>No</code> を出力せよ．
+</p>
+
+<p>
+答え以外は何も出力しないこと．(入力を促す文章なども出力しないこと．)
+</p>
+
+<p>
+解答形式については，<a href="https://atcoder.jp/contests/joi2027-practice">練習問題やその解答例</a>
+を参考にしても良い．
+</p>
+
+<hr />
+
+<h2>入力例 1</h2>
+<pre id="sample1_input" class="sample">
+4
+joig
+3
+joi
+1
+</pre>
+
+<h2>出力例 1</h2>
+<pre id="sample1_output" class="sample">
+Yes
+</pre>
+
+<p>
+\(X\) は <code>joig</code> であり，部分文字列として <code>joi</code> を含む．したがって <code>Yes</code> を出力する．
+</p>
+
+<p>
+この入力例は小課題 \(1, 2, 4\) の制約を満たす．
+</p>
+
+<hr />
+
+<h2>入力例 2</h2>
+<pre id="sample2_input" class="sample">
+3
+joi
+4
+joig
+2
+</pre>
+
+<h2>出力例 2</h2>
+<pre id="sample2_output" class="sample">
+No
+</pre>
+
+<p>
+\(X\) は <code>joijoi</code> であり，部分文字列として <code>joig</code> を含まない．したがって <code>No</code> を出力する．
+</p>
+
+<p>
+この入力例は小課題 \(2, 4\) の制約を満たす．
+</p>
+
+<hr />
+
+<h2>入力例 3</h2>
+<pre id="sample3_input" class="sample">
+4
+aaaa
+1
+a
+1000000000
+</pre>
+
+<h2>出力例 3</h2>
+<pre id="sample3_output" class="sample">
+Yes
+</pre>
+
+<p>
+\(X\) は \(4 × 10^9\) 個の <code>a</code> からなる文字列であり，部分文字列として <code>a</code> を含む．したがって <code>Yes</code> を出力する．
+</p>
+
+<p>
+この入力例は小課題 \(3, 4\) の制約を満たす．
+</p><hr />
+
+<div class="testcase">
+  <pre id="testcase01-01_input">1
+g
+2
+gg
+1</pre>
+  <pre id="testcase01-01_output">No</pre>
+  <pre id="testcase01-02_input">2
+cj
+4
+cjcj
+1</pre>
+  <pre id="testcase01-02_output">No</pre>
+  <pre id="testcase01-03_input">99
+myssiabmcrlkxsgzgnqyvggukttvttmtpnjhzmjxgqvcppptuujjizhihpsgysgbmzpjmssymanlbpblgfkkoemappbvdknibeu
+100
+myssiabmcrlkxsgzgnqyvggukttvttmtpnjhzmjxgqvcppptuujjizhihpsgysgbmzpjmssymanlbpblgfkkoemappbvdknibeum
+1</pre>
+  <pre id="testcase01-03_output">No</pre>
+  <pre id="testcase01-04_input">1
+r
+1
+y
+1</pre>
+  <pre id="testcase01-04_output">No</pre>
+  <pre id="testcase01-05_input">2
+iw
+1
+o
+1</pre>
+  <pre id="testcase01-05_output">No</pre>
+  <pre id="testcase01-06_input">100
+egvmyrpvfoygsfsqkiawmhjaeepwxjevefepfnopkpjpnztilbsqsvxbsrgqkanbkhttppbqrukdntcxkvagwidhcdxablpocysq
+69
+vefepfnopkpjpnztilbsqsvxbsrgqkanbkhttppbqrukdntcxkvagwidhcdxablpocysq
+1</pre>
+  <pre id="testcase01-06_output">Yes</pre>
+  <pre id="testcase01-07_input">100
+fahfoqsxogmdtnccweyablovteykmgstyyztetnpszbplbgzapbtvvzefgztuxxmirltemkuebviicgpqrrkdymkgcxtqvsesagh
+28
+zapbtvvzefgztuxxmirltemkuebv
+1</pre>
+  <pre id="testcase01-07_output">Yes</pre>
+  <pre id="testcase02-01_input">1
+l
+2
+ll
+2</pre>
+  <pre id="testcase02-01_output">Yes</pre>
+  <pre id="testcase02-02_input">2
+xb
+20
+xbxbxbxbxbxbxbxbxbxb
+10</pre>
+  <pre id="testcase02-02_output">Yes</pre>
+  <pre id="testcase02-03_input">33
+yyndckyrcrrtboxffmwzhnrdhbtkgjgdo
+99
+yyndckyrcrrtboxffmwzhnrdhbtkgjgdoyyndckyrcrrtboxffmwzhnrdhbtkgjgdoyyndckyrcrrtboxffmwzhnrdhbtkgjgdo
+2</pre>
+  <pre id="testcase02-03_output">No</pre>
+  <pre id="testcase02-04_input">1
+z
+2
+tz
+2</pre>
+  <pre id="testcase02-04_output">No</pre>
+  <pre id="testcase02-05_input">2
+mx
+32
+xmxmxmxmxmxmxmxmxmxmxmxmxmxmxmxm
+100</pre>
+  <pre id="testcase02-05_output">Yes</pre>
+  <pre id="testcase02-06_input">100
+xkefrkqgpwasdjccuemfcefmefefxjpiodbdzcdofnrbdrmaaryvgvmjmzqdgxivzhgbjvgxnpkrxiskzkaaalrmyokwrtdrvoua
+57
+rvouaxkefrkqgpwasdjccuemfcefmefefxjpiodbdzcdofnrbdrmaaryv
+100</pre>
+  <pre id="testcase02-06_output">Yes</pre>
+  <pre id="testcase02-07_input">100
+bwgetrhmyxrnegcnyygoaoqyrabknbgrelgyavlpssamlmalbeuzguvmwgmcogcobghsvybreyjhnxecgwngmtvmzddqriahbwsm
+66
+rhmyxrnegcnyygoaoqyrabknwgrelgyavlpssamlmalbeuzguvmwgmcogcobghsvyb
+100</pre>
+  <pre id="testcase02-07_output">No</pre>
+  <pre id="testcase03-01_input">1
+a
+2
+aa
+2</pre>
+  <pre id="testcase03-01_output">Yes</pre>
+  <pre id="testcase03-02_input">2
+aa
+22
+aaaaaaaaaaaaaaaaaaaaaa
+10</pre>
+  <pre id="testcase03-02_output">No</pre>
+  <pre id="testcase03-03_input">33
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+66
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+2</pre>
+  <pre id="testcase03-03_output">Yes</pre>
+  <pre id="testcase03-04_input">1
+a
+1
+a
+1</pre>
+  <pre id="testcase03-04_output">Yes</pre>
+  <pre id="testcase03-05_input">2
+aa
+13
+aaaaaaaaaaaaa
+716606847</pre>
+  <pre id="testcase03-05_output">Yes</pre>
+  <pre id="testcase03-06_input">100
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+13
+aaaaaaaaaaaaa
+1</pre>
+  <pre id="testcase03-06_output">Yes</pre>
+  <pre id="testcase03-07_input">100
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+65
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+855252116</pre>
+  <pre id="testcase03-07_output">Yes</pre>
+  <pre id="testcase04-01_input">1
+e
+2
+ee
+2</pre>
+  <pre id="testcase04-01_output">Yes</pre>
+  <pre id="testcase04-02_input">2
+fi
+22
+fififififififififififi
+10</pre>
+  <pre id="testcase04-02_output">No</pre>
+  <pre id="testcase04-03_input">33
+tfbfckniwohotgqcidchtcerrjxvnbpra
+66
+tfbfckniwohotgqcidchtcerrjxvnbpratfbfckniwohotgqcidchtcerrjxvnbpra
+2</pre>
+  <pre id="testcase04-03_output">Yes</pre>
+  <pre id="testcase04-04_input">1
+q
+41
+qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+807485793</pre>
+  <pre id="testcase04-04_output">Yes</pre>
+  <pre id="testcase04-05_input">1
+m
+63
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+97</pre>
+  <pre id="testcase04-05_output">Yes</pre>
+  <pre id="testcase04-06_input">100
+komcviksakrujygxuyxkczkctmnxstfejddtsnemnykiajyybdnozblckazhkezqpwmfwhrkpvambhpnrxctaauffvzwzynypmzt
+80
+nrxctaauffvzwzynypmztkomcviksakrujygxuyxkczkctmnxstfejddtsnemnykiajyybdnozblckaz
+58</pre>
+  <pre id="testcase04-06_output">Yes</pre>
+  <pre id="testcase04-07_input">100
+giazmqyphmldvllnqkajwfwyushbbzogonvtltyaczmktkwadumcluycdvavbibsxhgjawoiknylndybvlwbnwsspornawezdpeb
+45
+avbibsxhgjawoiknylndybvlwbnwsspornawezdpebgia
+238668603</pre>
+  <pre id="testcase04-07_output">Yes</pre>
+  <pre id="testcase04-08_input">100
+aeiocwzbqvqmwnuavjkwvzlbguzhafcfwidntpoqcfqiwwsipiwniuiqejsvxlnaaklvftvjunhcuqxmycdpwrlbmxyiwxvvtphq
+88
+vftvjunhcuqxmycdpwrlbmxyiwxvvtphqaeiocwzbqvqmwnuavjkwvzlbguzhafcfwidntpoqcfqiwwsipiwniui
+83</pre>
+  <pre id="testcase04-08_output">Yes</pre>
+  <pre id="testcase04-09_input">100
+vrdojaorvhhsdhvyawtzkkgehtpunksprmpvrmmnhkgzolqwawltmjypmcywsvjuzfbhozurcxcfmzstimdiunxbhdyxhdpctxao
+7
+ksprmpv
+34</pre>
+  <pre id="testcase04-09_output">Yes</pre>
+  <pre id="testcase04-10_input">100
+nntszkqnpcwcfsedboufkplqloncqfhyxgtbmnplptijerbmbqqvogfmebezqueydxfxvmgsdclttsuqqxgxokcxjhadnvjyyehi
+46
+oufkplqloncqfhyxgtbmnplptijerbmbqqvogbmebezque
+531685080</pre>
+  <pre id="testcase04-10_output">No</pre>
+</div>
+
+    <p class="source">
+      <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"></a>
+      情報オリンピック日本委員会作 『第 26 回日本情報オリンピック JOI 2026/2027 一次予選競技課題』 
+    </p>
+    <textarea id="txt-editor"></textarea>
+    <p>
+      <!-- ↓ button#run は必ず用意 -->
+      <button id="run"></button>
+      <input type="checkbox" id="autocopy" checked /><label for="autocopy">実行時にプログラムを自動的にコピーしておく</label>
+    </p>
+    <p>実行結果:</p>
+    <!-- ↓ table#result は必ず用意 -->
+    <table id="result"></table>
+
+    <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Congratulations!
+            </h2>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            <p class="cracker">🥇</p>
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">閉じる</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script>
+const editor = CodeMirror.fromTextArea(document.getElementById("txt-editor"), {
+    lineNumbers: true,
+    mode: "python",
+    indentUnit: 4
+})
+editor.setOption("extraKeys", {
+    "Tab": function(cm) {
+        if (cm.somethingSelected()) cm.indentSelection("add")
+        else cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input")
+    },
+    "Shift-Tab": function(cm) {
+        cm.execCommand("indentLess")
+    },
+    "Ctrl-Enter": function(cm) {
+        OnBrowserJudge.runButtonPressed()
+    }
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+  const vars = document.getElementsByTagName("var")
+  for (const elm of vars) elm.innerHTML = "\\(" + elm.innerHTML + "\\)"
+})
+
+MicroModal.init()
+
+    </script>
+  </body>
+</html>
